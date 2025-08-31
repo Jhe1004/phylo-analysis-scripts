@@ -1,0 +1,2 @@
+Filename,Total cp genome size (bp),Length of inverted repeat region (bp),Length of large single copy region (bp),Length of small single copy region (bp),Total GC content (%),GC content of LSC (%),GC content of IR (%),GC content of SSC (%),Coding size (bp),Nocoding size (bp),Total number of genes,Number of protein encoding genes,Number of tRNA genes,Number of rRNA genes,Number of genes duplicated in IR,Organism,Assembly Name
+ON411429.gb,159681,31073,79483,18052,38.00,36.35,38.13,31.44,81500,78181,112,79,29,4,0,Clematis gouriana,LRD8

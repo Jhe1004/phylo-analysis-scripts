@@ -1,0 +1,4 @@
+Gossypium_hirsutum_SRR8156069.fasta.transdecoder.pep
+Sapindus_saponaria_SRR18600394.fasta.transdecoder.pep
+Xanthoceras_sorbifolium_SRR14470652.fasta.transdecoder.pep
+Acer_pictum_SRR21412921.fasta.transdecoder.pep

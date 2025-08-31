@@ -1,0 +1,4 @@
+DNA, codon1 = 1-20779
+DNA, codon2 = 20780-41558
+DNA, codon3 = 41559-62332
+DNA, codon4 = 62333-65365

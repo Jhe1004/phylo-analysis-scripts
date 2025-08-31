@@ -1,0 +1,13 @@
+[Input]
+treefile: ./Small_Test_Example/combined_output.trees
+numdistributions: 2
+likelihoodthresh: 0.01
+numsteps: 50
+gradascentscalar: 0.5
+totaloutgroup: Symphalangus.fasta.transdecoder.pep
+multiproc: True
+maxcores:1000
+
+
+[Output]
+OutputPath: ./testOut.csv

@@ -1,0 +1,10 @@
+Anemoclema_glauciifolium_19.fasta.transdecoder.pep
+Clematis_lancifolia.fasta.transdecoder.pep
+Clematis_armandii.fasta.transdecoder.pep
+Clematis_macropetala.fasta.transdecoder.pep
+Clematis_delevayi.fasta.transdecoder.pep
+Clematis_brevicaudata.fasta.transdecoder.pep
+Clematis_repens.fasta.transdecoder.pep
+Clematis_glauca_liancheng.fasta.transdecoder.pep
+Clematis_songorica_hami.fasta.transdecoder.pep
+Clematis_viridis_yushu.fasta.transdecoder.pep

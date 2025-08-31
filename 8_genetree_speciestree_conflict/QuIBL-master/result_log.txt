@@ -1,0 +1,132 @@
+Stemona_collinsiae_SRR15465044:Croomia_heterosepala_SRR6220063: [0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Croomia_japonica_SRR6219921: [0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Croomia_pauciflora_SRR8298337: [0, 0], Average: 0.0
+Croomia_japonica_SRR6219921:Sphaeradenia_woodsonii_ERR3487374: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Sphaeradenia_woodsonii_ERR3487374: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_japonica_SRR6219921:Triuris_sp_2_SRR19179851: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Triuris_sp_2_SRR19179851: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_japonica_SRR6219921:Triuris_sp_1_SRR19179850: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Triuris_sp_1_SRR19179850: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_japonica_SRR6219921:Lacandonia_schismatica_SRR19179849: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Lacandonia_schismatica_SRR19179849: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_japonica_SRR6219921:Freycinetia_multiflora_ERR2040706: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Freycinetia_multiflora_ERR2040706: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_japonica_SRR6219921:Pandanus_amaryllifolius_SRR13452149: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Pandanus_amaryllifolius_SRR13452149: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_japonica_SRR6219921:Pandanus_utilis_SRR6374687: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Pandanus_utilis_SRR6374687: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_japonica_SRR6219921:Pandanus_odorifer_SRR5927127: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Pandanus_odorifer_SRR5927127: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_japonica_SRR6219921:Pandanus_tectorius_SRR19179847: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Pandanus_tectorius_SRR19179847: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_japonica_SRR6219921:Acanthochlamys_bracteata_GCA_019914995: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Acanthochlamys_bracteata_GCA_019914995: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_japonica_SRR6219921:Xerophyta_humilis_SRR8334914: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Xerophyta_humilis_SRR8334914: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_japonica_SRR6219921:Talbotia_elegans_SRR19179852: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Talbotia_elegans_SRR19179852: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_japonica_SRR6219921:Xerophyta_villosa_ERR2040709: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Stemona_collinsiae_SRR15465044:Xerophyta_villosa_ERR2040709: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Sphaeradenia_woodsonii_ERR3487374: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Triuris_sp_2_SRR19179851: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Triuris_sp_1_SRR19179850: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Lacandonia_schismatica_SRR19179849: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Freycinetia_multiflora_ERR2040706: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Pandanus_amaryllifolius_SRR13452149: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Pandanus_utilis_SRR6374687: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Pandanus_odorifer_SRR5927127: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Pandanus_tectorius_SRR19179847: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Acanthochlamys_bracteata_GCA_019914995: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Xerophyta_humilis_SRR8334914: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Talbotia_elegans_SRR19179852: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Xerophyta_villosa_ERR2040709: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_pauciflora_SRR8298337:Sphaeradenia_woodsonii_ERR3487374: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_pauciflora_SRR8298337:Triuris_sp_2_SRR19179851: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_pauciflora_SRR8298337:Triuris_sp_1_SRR19179850: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_pauciflora_SRR8298337:Lacandonia_schismatica_SRR19179849: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_pauciflora_SRR8298337:Freycinetia_multiflora_ERR2040706: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_pauciflora_SRR8298337:Pandanus_amaryllifolius_SRR13452149: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_pauciflora_SRR8298337:Pandanus_utilis_SRR6374687: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_pauciflora_SRR8298337:Pandanus_odorifer_SRR5927127: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_pauciflora_SRR8298337:Pandanus_tectorius_SRR19179847: [0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_pauciflora_SRR8298337:Acanthochlamys_bracteata_GCA_019914995: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_pauciflora_SRR8298337:Xerophyta_humilis_SRR8334914: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_pauciflora_SRR8298337:Talbotia_elegans_SRR19179852: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_pauciflora_SRR8298337:Xerophyta_villosa_ERR2040709: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Sphaeradenia_woodsonii_ERR3487374:Triuris_sp_2_SRR19179851: [0.9502799846615406, 0.9502799846615406, 0.9502799846615406, 0.9502799846615406, 0, 0, 0, 0, 0, 0, 0], Average: 0.345556358058742
+Sphaeradenia_woodsonii_ERR3487374:Triuris_sp_1_SRR19179850: [0.9502799846615406, 0.9502799846615406, 0.9502799846615406, 0.9502799846615406, 0, 0, 0, 0, 0, 0, 0], Average: 0.345556358058742
+Sphaeradenia_woodsonii_ERR3487374:Lacandonia_schismatica_SRR19179849: [0.9502799846615406, 0.9502799846615406, 0.9502799846615406, 0.9502799846615406, 0, 0, 0, 0, 0, 0, 0], Average: 0.345556358058742
+Sphaeradenia_woodsonii_ERR3487374:Acanthochlamys_bracteata_GCA_019914995: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Sphaeradenia_woodsonii_ERR3487374:Xerophyta_humilis_SRR8334914: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Sphaeradenia_woodsonii_ERR3487374:Talbotia_elegans_SRR19179852: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Sphaeradenia_woodsonii_ERR3487374:Xerophyta_villosa_ERR2040709: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Triuris_sp_2_SRR19179851:Freycinetia_multiflora_ERR2040706: [0.9999946110799047, 0.9999946110799047, 0.9999946110799047, 0.9999946110799047, 0.9641306318297015, 0, 0, 0, 0, 0, 0], Average: 0.45128264328630185
+Triuris_sp_2_SRR19179851:Pandanus_amaryllifolius_SRR13452149: [0.9999915011423068, 0.9999915011423068, 0.9999915011423068, 0.9999915011423068, 0.9721723232929873, 0, 0, 0, 0, 0, 0], Average: 0.45201257526020133
+Triuris_sp_2_SRR19179851:Pandanus_utilis_SRR6374687: [0.9999953463924796, 0.9999953463924796, 0.9999953463924796, 0.9999953463924796, 0.9673282144571447, 0, 0, 0, 0, 0, 0], Average: 0.4515736000024603
+Triuris_sp_2_SRR19179851:Pandanus_odorifer_SRR5927127: [0.9999902718418856, 0.9999902718418856, 0.9999902718418856, 0.9999902718418856, 0.9626122989837831, 0, 0, 0, 0, 0, 0], Average: 0.45114303512284776
+Triuris_sp_2_SRR19179851:Pandanus_tectorius_SRR19179847: [0.9999880688950687, 0.9999880688950687, 0.9999880688950687, 0.9999880688950687, 0.964201921273849, 0, 0, 0, 0, 0, 0], Average: 0.4512867451685567
+Triuris_sp_2_SRR19179851:Acanthochlamys_bracteata_GCA_019914995: [0, 0.9999999761112756, 0.9999999761112756, 0.9999999761112756, 0, 0, 0, 0.9999999965520695, 0.999999998605432, 0.999999998605432, 0.999999987559372, 0.9999999925393814, 0, 0, 0], Average: 0.5333333268130342
+Triuris_sp_2_SRR19179851:Xerophyta_humilis_SRR8334914: [0, 0.9999999761112756, 0.9999999761112756, 0.9999999761112756, 0, 0, 0, 0.9999999965520695, 0.999999998605432, 0.999999998605432, 0.999999987559372, 0.9999999925393814, 0, 0, 0], Average: 0.5333333268130342
+Triuris_sp_2_SRR19179851:Talbotia_elegans_SRR19179852: [0, 0.9999999761112756, 0.9999999761112756, 0.9999999761112756, 0, 0, 0, 0.9999999965520695, 0.999999998605432, 0.999999998605432, 0.999999987559372, 0.9999999925393814, 0, 0, 0], Average: 0.5333333268130342
+Triuris_sp_2_SRR19179851:Xerophyta_villosa_ERR2040709: [0, 0.9999999761112756, 0.9999999761112756, 0.9999999761112756, 0, 0, 0, 0.9999999965520695, 0.999999998605432, 0.999999998605432, 0.999999987559372, 0.9999999925393814, 0, 0, 0], Average: 0.5333333268130342
+Triuris_sp_1_SRR19179850:Freycinetia_multiflora_ERR2040706: [0.9999946110799047, 0.9999946110799047, 0.9999946110799047, 0.9999946110799047, 0.9641306318297015, 0, 0, 0, 0, 0, 0], Average: 0.45128264328630185
+Triuris_sp_1_SRR19179850:Pandanus_amaryllifolius_SRR13452149: [0.9999915011423068, 0.9999915011423068, 0.9999915011423068, 0.9999915011423068, 0.9721723232929873, 0, 0, 0, 0, 0, 0], Average: 0.45201257526020133
+Triuris_sp_1_SRR19179850:Pandanus_utilis_SRR6374687: [0.9999953463924796, 0.9999953463924796, 0.9999953463924796, 0.9999953463924796, 0.9673282144571447, 0, 0, 0, 0, 0, 0], Average: 0.4515736000024603
+Triuris_sp_1_SRR19179850:Pandanus_odorifer_SRR5927127: [0.9999902718418856, 0.9999902718418856, 0.9999902718418856, 0.9999902718418856, 0.9626122989837831, 0, 0, 0, 0, 0, 0], Average: 0.45114303512284776
+Triuris_sp_1_SRR19179850:Pandanus_tectorius_SRR19179847: [0.9999880688950687, 0.9999880688950687, 0.9999880688950687, 0.9999880688950687, 0.964201921273849, 0, 0, 0, 0, 0, 0], Average: 0.4512867451685567
+Triuris_sp_1_SRR19179850:Acanthochlamys_bracteata_GCA_019914995: [0, 0.9999999761112756, 0.9999999761112756, 0.9999999761112756, 0, 0, 0, 0.9999999965520695, 0.999999998605432, 0.999999998605432, 0.999999987559372, 0.9999999925393814, 0, 0, 0], Average: 0.5333333268130342
+Triuris_sp_1_SRR19179850:Xerophyta_humilis_SRR8334914: [0, 0.9999999761112756, 0.9999999761112756, 0.9999999761112756, 0, 0, 0, 0.9999999965520695, 0.999999998605432, 0.999999998605432, 0.999999987559372, 0.9999999925393814, 0, 0, 0], Average: 0.5333333268130342
+Triuris_sp_1_SRR19179850:Talbotia_elegans_SRR19179852: [0, 0.9999999761112756, 0.9999999761112756, 0.9999999761112756, 0, 0, 0, 0.9999999965520695, 0.999999998605432, 0.999999998605432, 0.999999987559372, 0.9999999925393814, 0, 0, 0], Average: 0.5333333268130342
+Triuris_sp_1_SRR19179850:Xerophyta_villosa_ERR2040709: [0, 0.9999999761112756, 0.9999999761112756, 0.9999999761112756, 0, 0, 0, 0.9999999965520695, 0.999999998605432, 0.999999998605432, 0.999999987559372, 0.9999999925393814, 0, 0, 0], Average: 0.5333333268130342
+Lacandonia_schismatica_SRR19179849:Freycinetia_multiflora_ERR2040706: [0.9999946110799047, 0.9999946110799047, 0.9999946110799047, 0.9999946110799047, 0.9641306318297015, 0, 0, 0, 0, 0, 0], Average: 0.45128264328630185
+Lacandonia_schismatica_SRR19179849:Pandanus_amaryllifolius_SRR13452149: [0.9999915011423068, 0.9999915011423068, 0.9999915011423068, 0.9999915011423068, 0.9721723232929873, 0, 0, 0, 0, 0, 0], Average: 0.45201257526020133
+Lacandonia_schismatica_SRR19179849:Pandanus_utilis_SRR6374687: [0.9999953463924796, 0.9999953463924796, 0.9999953463924796, 0.9999953463924796, 0.9673282144571447, 0, 0, 0, 0, 0, 0], Average: 0.4515736000024603
+Lacandonia_schismatica_SRR19179849:Pandanus_odorifer_SRR5927127: [0.9999902718418856, 0.9999902718418856, 0.9999902718418856, 0.9999902718418856, 0.9626122989837831, 0, 0, 0, 0, 0, 0], Average: 0.45114303512284776
+Lacandonia_schismatica_SRR19179849:Pandanus_tectorius_SRR19179847: [0.9999880688950687, 0.9999880688950687, 0.9999880688950687, 0.9999880688950687, 0.964201921273849, 0, 0, 0, 0, 0, 0], Average: 0.4512867451685567
+Lacandonia_schismatica_SRR19179849:Acanthochlamys_bracteata_GCA_019914995: [0, 0.9999999761112756, 0.9999999761112756, 0.9999999761112756, 0, 0, 0, 0.9999999965520695, 0.999999998605432, 0.999999998605432, 0.999999987559372, 0.9999999925393814, 0, 0, 0], Average: 0.5333333268130342
+Lacandonia_schismatica_SRR19179849:Xerophyta_humilis_SRR8334914: [0, 0.9999999761112756, 0.9999999761112756, 0.9999999761112756, 0, 0, 0, 0.9999999965520695, 0.999999998605432, 0.999999998605432, 0.999999987559372, 0.9999999925393814, 0, 0, 0], Average: 0.5333333268130342
+Lacandonia_schismatica_SRR19179849:Talbotia_elegans_SRR19179852: [0, 0.9999999761112756, 0.9999999761112756, 0.9999999761112756, 0, 0, 0, 0.9999999965520695, 0.999999998605432, 0.999999998605432, 0.999999987559372, 0.9999999925393814, 0, 0, 0], Average: 0.5333333268130342
+Lacandonia_schismatica_SRR19179849:Xerophyta_villosa_ERR2040709: [0, 0.9999999761112756, 0.9999999761112756, 0.9999999761112756, 0, 0, 0, 0.9999999965520695, 0.999999998605432, 0.999999998605432, 0.999999987559372, 0.9999999925393814, 0, 0, 0], Average: 0.5333333268130342
+Freycinetia_multiflora_ERR2040706:Acanthochlamys_bracteata_GCA_019914995: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Freycinetia_multiflora_ERR2040706:Xerophyta_humilis_SRR8334914: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Freycinetia_multiflora_ERR2040706:Talbotia_elegans_SRR19179852: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Freycinetia_multiflora_ERR2040706:Xerophyta_villosa_ERR2040709: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_amaryllifolius_SRR13452149:Acanthochlamys_bracteata_GCA_019914995: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_amaryllifolius_SRR13452149:Xerophyta_humilis_SRR8334914: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_amaryllifolius_SRR13452149:Talbotia_elegans_SRR19179852: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_amaryllifolius_SRR13452149:Xerophyta_villosa_ERR2040709: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_utilis_SRR6374687:Acanthochlamys_bracteata_GCA_019914995: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_utilis_SRR6374687:Xerophyta_humilis_SRR8334914: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_utilis_SRR6374687:Talbotia_elegans_SRR19179852: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_utilis_SRR6374687:Xerophyta_villosa_ERR2040709: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_odorifer_SRR5927127:Acanthochlamys_bracteata_GCA_019914995: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_odorifer_SRR5927127:Xerophyta_humilis_SRR8334914: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_odorifer_SRR5927127:Talbotia_elegans_SRR19179852: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_odorifer_SRR5927127:Xerophyta_villosa_ERR2040709: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_tectorius_SRR19179847:Acanthochlamys_bracteata_GCA_019914995: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_tectorius_SRR19179847:Xerophyta_humilis_SRR8334914: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_tectorius_SRR19179847:Talbotia_elegans_SRR19179852: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Pandanus_tectorius_SRR19179847:Xerophyta_villosa_ERR2040709: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], Average: 0.0
+Croomia_heterosepala_SRR6220063:Croomia_pauciflora_SRR8298337: [0], Average: 0.0
+Croomia_japonica_SRR6219921:Croomia_pauciflora_SRR8298337: [0], Average: 0.0
+Sphaeradenia_woodsonii_ERR3487374:Pandanus_amaryllifolius_SRR13452149: [0, 0, 0, 0], Average: 0.0
+Sphaeradenia_woodsonii_ERR3487374:Freycinetia_multiflora_ERR2040706: [0, 0, 0, 0], Average: 0.0
+Sphaeradenia_woodsonii_ERR3487374:Pandanus_utilis_SRR6374687: [0, 0, 0, 0], Average: 0.0
+Sphaeradenia_woodsonii_ERR3487374:Pandanus_odorifer_SRR5927127: [0, 0, 0, 0], Average: 0.0
+Sphaeradenia_woodsonii_ERR3487374:Pandanus_tectorius_SRR19179847: [0, 0, 0, 0], Average: 0.0
+Triuris_sp_1_SRR19179850:Lacandonia_schismatica_SRR19179849: [0], Average: 0.0
+Triuris_sp_2_SRR19179851:Lacandonia_schismatica_SRR19179849: [0], Average: 0.0
+Freycinetia_multiflora_ERR2040706:Pandanus_utilis_SRR6374687: [0, 0, 0], Average: 0.0
+Freycinetia_multiflora_ERR2040706:Pandanus_amaryllifolius_SRR13452149: [0, 0, 0], Average: 0.0
+Freycinetia_multiflora_ERR2040706:Pandanus_odorifer_SRR5927127: [0, 0, 0], Average: 0.0
+Freycinetia_multiflora_ERR2040706:Pandanus_tectorius_SRR19179847: [0, 0, 0], Average: 0.0
+Pandanus_amaryllifolius_SRR13452149:Pandanus_odorifer_SRR5927127: [0.04764923266910445, 0], Average: 0.023824616334552226
+Pandanus_amaryllifolius_SRR13452149:Pandanus_utilis_SRR6374687: [0.056176302004395634, 0.03722937799867867], Average: 0.046702840001537155
+Pandanus_amaryllifolius_SRR13452149:Pandanus_tectorius_SRR19179847: [0.011235955056185996, 0], Average: 0.005617977528092998
+Pandanus_utilis_SRR6374687:Pandanus_tectorius_SRR19179847: [0.15789351519207406], Average: 0.15789351519207406
+Pandanus_utilis_SRR6374687:Pandanus_odorifer_SRR5927127: [0], Average: 0.0
+Acanthochlamys_bracteata_GCA_019914995:Talbotia_elegans_SRR19179852: [0, 0], Average: 0.0
+Acanthochlamys_bracteata_GCA_019914995:Xerophyta_humilis_SRR8334914: [0, 0], Average: 0.0
+Acanthochlamys_bracteata_GCA_019914995:Xerophyta_villosa_ERR2040709: [0, 0], Average: 0.0
+Talbotia_elegans_SRR19179852:Xerophyta_villosa_ERR2040709: [0], Average: 0.0
+Xerophyta_humilis_SRR8334914:Xerophyta_villosa_ERR2040709: [0], Average: 0.0
