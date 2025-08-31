@@ -35,7 +35,7 @@ def parse_raxml_info(log_file_path):
         if match:
             rates[name] = float(match.group(1))
         else:
-            raise ValueError(f"Could not find rate parameter 'rate {name}' in the log file.")
+            raise ValueError("Could not find rate parameter 'rate {}' in the log file.".format(name))
     params['rates'] = [
         rates["A <-> C"], rates["A <-> G"], rates["A <-> T"],
         rates["C <-> G"], rates["C <-> T"], rates["G <-> T"]
@@ -49,7 +49,7 @@ def parse_raxml_info(log_file_path):
             base = name[3]
             freqs[base] = float(match.group(1))
         else:
-            raise ValueError(f"Could not find frequency parameter 'freq {name}' in the log file.")
+            raise ValueError("Could not find frequency parameter 'freq {}' in the log file.".format(name))
 
     if len(freqs) == 4:
         params['freqs'] = [freqs['A'], freqs['C'], freqs['G'], freqs['T']]
@@ -72,7 +72,7 @@ def generate_param_template(template_filename):
     }
     with open(template_filename, 'w', encoding='utf-8') as f:
         json.dump(template_data, f, indent=4)
-    print(f"\n[!] Parameter template file generated: '{template_filename}'")
+    print("\n[!] Parameter template file generated: '{}'".format(template_filename))
     print("[!] Please edit the parameters in this file manually and then rerun the script using the -p option.")
 
 def parse_json_params(json_file_path):
@@ -107,13 +107,13 @@ def concatenate_fasta_files(file_list, output_file):
         try:
             records = list(SeqIO.parse(f, "fasta"))
             if not records:
-                print(f"    [!] Warning: File '{f}' is empty and will be skipped.")
+                print("    [!] Warning: File '{}' is empty and will be skipped.".format(f))
                 continue
             file_lengths[f] = len(records[0].seq)
             for record in records:
                 all_taxa.add(record.id)
         except FileNotFoundError:
-            print(f"    [!] Warning: Temporary file '{f}' not found. It might have failed during simulation.")
+            print("    [!] Warning: Temporary file '{}' not found. It might have failed during simulation.".format(f))
 
 
     for taxon in sorted(list(all_taxa)):
@@ -136,8 +136,9 @@ def concatenate_fasta_files(file_list, output_file):
         master_sequences[taxon] = Seq(concatenated_seq)
 
     final_records = [SeqRecord(seq, id=name, description="") for name, seq in master_sequences.items()]
-    SeqIO.write(final_records, output_file, "fasta")
-    print(f"    [+] Concatenation complete. Supermatrix saved to: {output_file}")
+    # **[MODIFIED]** Changed "fasta" to "fasta-2line" to ensure each sequence is on a single line.
+    SeqIO.write(final_records, output_file, "fasta-2line")
+    print("    [+] Concatenation complete. Supermatrix saved to: {}".format(output_file))
 
 def run_simulation_worker(task_info):
     """
@@ -151,14 +152,14 @@ def run_simulation_worker(task_info):
         partition = pyvolve.Partition(models=model, **partition_config)
         evolver = pyvolve.Evolver(partitions=partition, tree=tree)
         
-        output_filename = f"{temp_base_name}_{replicate_num}.fasta"
+        output_filename = "{}_{}.fasta".format(temp_base_name, replicate_num)
         evolver(seqfile=output_filename, seqformat='fasta')
         
         # Be quiet in subprocesses, just return the filename
         return output_filename
     except Exception as e:
         # Catch any possible error and report it
-        return f"ERROR: Replicate {replicate_num} failed with error: {e}"
+        return "ERROR: Replicate {} failed with error: {}".format(replicate_num, e)
 
 
 def main():
@@ -182,7 +183,7 @@ def main():
 
     tree_file = args.tree
     if not os.path.exists(tree_file):
-        print(f"\nError: Tree file '{tree_file}' not found.")
+        print("\nError: Tree file '{}' not found.".format(tree_file))
         sys.exit(1)
 
     print("--- Sequence Simulation Script Initializing ---")
@@ -191,34 +192,34 @@ def main():
     if args.info:
         log_file = args.info
         if not os.path.exists(log_file):
-            print(f"\nError: Log file '{log_file}' not found.")
+            print("\nError: Log file '{}' not found.".format(log_file))
             sys.exit(1)
-        print(f"[*] Mode: Automatic (using log file: {log_file})")
-        print(f"[*] Using tree file: {tree_file}")
+        print("[*] Mode: Automatic (using log file: {})".format(log_file))
+        print("[*] Using tree file: {}".format(tree_file))
         
         try:
             print("\n[*] Parsing GTR+GAMMA model parameters from log file...")
             model_params = parse_raxml_info(log_file)
             print("[+] Parameters parsed successfully!")
         except ValueError as e:
-            print(f"\n[!] Parameter parsing failed: {e}")
+            print("\n[!] Parameter parsing failed: {}".format(e))
             generate_param_template('params_template.json')
             sys.exit(1)
 
     elif args.params:
         param_file = args.params
         if not os.path.exists(param_file):
-            print(f"\nError: Parameter file '{param_file}' not found.")
+            print("\nError: Parameter file '{}' not found.".format(param_file))
             sys.exit(1)
-        print(f"[*] Mode: Manual (using parameter file: {param_file})")
-        print(f"[*] Using tree file: {tree_file}")
+        print("[*] Mode: Manual (using parameter file: {})".format(param_file))
+        print("[*] Using tree file: {}".format(tree_file))
 
         try:
             print("\n[*] Reading parameters from JSON file...")
             model_params = parse_json_params(param_file)
             print("[+] Parameters read successfully!")
         except (ValueError, json.JSONDecodeError) as e:
-            print(f"\n[!] Failed to read custom parameter file: {e}")
+            print("\n[!] Failed to read custom parameter file: {}".format(e))
             sys.exit(1)
 
     r = model_params['rates']
@@ -232,13 +233,13 @@ def main():
 
     print("\n[*] Preparing for chunk-based simulation...")
     total_len = args.replicates * args.chunk_size
-    print(f"[*] Will perform {args.replicates} simulation(s), each {args.chunk_size} bp long.")
-    print(f"[*] Total final sequence length will be approximately: {total_len} bp.")
+    print("[*] Will perform {} simulation(s), each {} bp long.".format(args.replicates, args.chunk_size))
+    print("[*] Total final sequence length will be approximately: {} bp.".format(total_len))
 
     with open(tree_file, 'r', encoding='utf-8') as f:
         tree_str = f.read().strip()
     if not tree_str:
-        print(f"Error: Tree file '{tree_file}' is empty or could not be read.")
+        print("Error: Tree file '{}' is empty or could not be read.".format(tree_file))
         sys.exit(1)
     
     partition_config = {
@@ -252,8 +253,9 @@ def main():
         for i in range(args.replicates)
     ]
 
-    print(f"[*] Starting simulation with {args.jobs} parallel process(es)...")
+    print("[*] Starting simulation with {} parallel process(es)...".format(args.jobs))
     
+    # Use context manager for Pool
     with multiprocessing.Pool(processes=args.jobs) as pool:
         results = pool.map(run_simulation_worker, tasks)
 
@@ -264,14 +266,14 @@ def main():
     if errors:
         print("\n[!] The following errors occurred during simulation:")
         for err in errors:
-            print(f"    - {err}")
+            print("    - {}".format(err))
     
     if not temp_files:
         print("\n[!] No simulation files were generated successfully. Exiting.")
         sys.exit(1)
 
     base_name = os.path.splitext(os.path.basename(tree_file))[0]
-    output_filename = f'simulated_supermatrix_from_{base_name}.fasta'
+    output_filename = 'simulated_supermatrix_from_{}.fasta'.format(base_name)
     
     concatenate_fasta_files(temp_files, output_filename)
 
