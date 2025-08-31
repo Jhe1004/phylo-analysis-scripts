@@ -1,0 +1,121 @@
+
+
+Using BFGS method to optimize GTR rate parameters, to disable this specify "--no-bfgs" 
+
+
+
+This is RAxML version 8.2.12 released by Alexandros Stamatakis on May 2018.
+
+With greatly appreciated code contributions by:
+Andre Aberer      (HITS)
+Simon Berger      (HITS)
+Alexey Kozlov     (HITS)
+Kassian Kobert    (HITS)
+David Dao         (KIT and HITS)
+Sarah Lutteropp   (KIT and HITS)
+Nick Pattengale   (Sandia)
+Wayne Pfeiffer    (SDSC)
+Akifumi S. Tanabe (NRIFS)
+Charlie Taylor    (UF)
+
+
+Alignment has 11165 distinct alignment patterns
+
+Proportion of gaps and completely undetermined characters in this alignment: 7.22%
+
+RAxML rapid bootstrapping and subsequent ML search
+
+Using 1 distinct models/data partitions with joint branch length optimization
+
+
+
+Executing 5 rapid bootstrap inferences and thereafter a thorough ML search 
+
+All free model parameters will be estimated by RAxML
+GAMMA model of rate heterogeneity, ML estimate of alpha-parameter
+
+GAMMA Model parameters will be estimated up to an accuracy of 0.1000000000 Log Likelihood units
+
+Partition: 0
+Alignment Patterns: 11165
+Name: No Name Provided
+DataType: DNA
+Substitution Matrix: GTR
+
+
+
+
+RAxML was called as follows:
+
+raxmlHPC-PTHREADS -T 15 -n result -s result.fasta -m GTRGAMMA -p 12345 -f a -N 5 -x 12345 
+
+
+
+Time for BS model parameter optimization 0.197428
+Bootstrap[0]: Time 0.407155 seconds, bootstrap likelihood -2486070.567591, best rearrangement setting 13
+Bootstrap[1]: Time 0.180403 seconds, bootstrap likelihood -2488069.380886, best rearrangement setting 13
+Bootstrap[2]: Time 0.150043 seconds, bootstrap likelihood -2487121.488455, best rearrangement setting 12
+Bootstrap[3]: Time 0.154374 seconds, bootstrap likelihood -2489427.838017, best rearrangement setting 15
+Bootstrap[4]: Time 0.172203 seconds, bootstrap likelihood -2490488.659161, best rearrangement setting 10
+
+
+Overall Time for 5 Rapid Bootstraps 2.248056 seconds
+Average Time per Rapid Bootstrap 0.449611 seconds
+
+Starting ML Search ...
+
+Fast ML optimization finished
+
+Fast ML search Time: 0.948667 seconds
+
+Slow ML Search 0 Likelihood: -2489197.736197
+Slow ML optimization finished
+
+Slow ML search Time: 0.863487 seconds
+Thorough ML search Time: 0.857834 seconds
+
+Final ML Optimization Likelihood: -2489197.736194
+
+Model Information:
+
+Model Parameters of Partition 0, Name: No Name Provided, Type of Data: DNA
+alpha: 0.020000
+Tree-Length: 0.109686
+rate A <-> C: 1.273297
+rate A <-> G: 3.115159
+rate A <-> T: 1.141313
+rate C <-> G: 1.254120
+rate C <-> T: 4.711006
+rate G <-> T: 1.000000
+
+freq pi(A): 0.283297
+freq pi(C): 0.203543
+freq pi(G): 0.244275
+freq pi(T): 0.268885
+
+
+ML search took 2.712328 secs or 0.000753 hours
+
+Combined Bootstrap and ML search took 4.962399 secs or 0.001378 hours
+
+Drawing Bootstrap Support Values on best-scoring ML tree ...
+
+
+
+Found 1 tree in File /mnt/f/software/raxml/RAxML_bestTree.result
+
+
+
+Found 1 tree in File /mnt/f/software/raxml/RAxML_bestTree.result
+
+Program execution info written to /mnt/f/software/raxml/RAxML_info.result
+All 5 bootstrapped trees written to: /mnt/f/software/raxml/RAxML_bootstrap.result
+
+Best-scoring ML tree written to: /mnt/f/software/raxml/RAxML_bestTree.result
+
+Best-scoring ML tree with support values written to: /mnt/f/software/raxml/RAxML_bipartitions.result
+
+Best-scoring ML tree with support values as branch labels written to: /mnt/f/software/raxml/RAxML_bipartitionsBranchLabels.result
+
+Overall execution time for full ML analysis: 4.986740 secs or 0.001385 hours or 0.000058 days
+
