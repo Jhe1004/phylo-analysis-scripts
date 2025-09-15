@@ -52,21 +52,29 @@
 使用Trimmomatic对原始双端测序数据进行质量控制和修剪的脚本。
 
 - `trimmomatic_pe.py`: 处理双端FASTQ文件的主脚本。
-  - 根据后缀自动检测配对文件
+  - 自动检测当前目录下符合命名规范的成对 `.fq` 或 `.fastq` 文件
   - 运行Trimmomatic进行质量修剪
   - 清理未配对的reads并重命名输出文件
-  - 在运行前配置后缀和Trimmomatic参数
   - 使用方法：将配对的FASTQ文件放在目录中，然后运行 `python trimmomatic_pe.py`
+  - 配置参数包括：正向/反向读取文件后缀、Trimmomatic JAR文件路径、线程数、质量编码和修剪参数
+- `gunzip.py`: 自动化解压缩当前目录中的 `.gz` 文件
+  - 支持配置目标文件扩展名和搜索目录
+  - 使用方法：将脚本放置在包含要解压缩的 `.gz` 文件的目录中，然后运行 `python gunzip.py`
 
 ### 1_trinity
 
 使用Trinity进行转录组组装的脚本。
 
 - `trinity_pe.py`: 在双端reads上运行Trinity组装器。
+  - 自动查找当前目录下符合命名规范的成对 `.fq` 或 `.fastq` 文件
   - 使用Singularity容器执行Trinity
-  - 处理目录中的所有配对FASTQ文件
-  - 直接在脚本中配置Trinity参数
-  - 使用方法：将配对的FASTQ文件放在目录中，然后运行 `python trinity_pe.py`
+  - 为每个样本生成并执行相应的 Trinity 命令
+  - 使用方法：将配对的FASTQ文件放在目录中，确保 `trinityrnaseq.v2.15.1.simg` 镜像文件也在当前目录下，然后运行 `python trinity_pe.py`
+  - 配置参数包括：输入序列类型、最大内存使用量、CPU核心数等
+- `get_longest_isoform_seq_per_trinity_gene.py`: 从 Trinity 组装结果中提取每个基因的最长转录本序列
+  - 处理指定目录下的所有 `.fasta` 文件
+  - 为每个输入文件生成一个对应的包含最长转录本序列的 `.fas` 文件
+  - 使用方法：运行 `python get_longest_isoform_seq_per_trinity_gene.py <input_directory>`
 
 ### 2_cdhit
 
