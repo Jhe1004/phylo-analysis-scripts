@@ -1,18 +1,24 @@
+# -*- coding: utf-8 -*-
+
 '''
 绘制云图（DensiTree），云图中的半透明细线为基因树集，
-实线为物种树。此脚本解决了绘图时叶尖末端不齐的问题。
+实线为物种树。此脚本解决了绘图时叶尖末端不齐的问题，
+并且允许用户通过外部文件指定叶节点的显示顺序。
 '''
 import toytree
 import toyplot
 import toyplot.svg
+import sys # 导入sys模块以便在出错时退出
 
 # --- 用户配置 ---
 # 包含多个基因树的文件 (例如treePL的输出合并文件或BEAST/MrBayes的.trees文件)
-GENE_TREES_FILE = "genetree2.trees"
+GENE_TREES_FILE = "genetree.trees"
 # 单个物种树文件 (例如MCMCTree或ASTRAL的输出)
-SPECIES_TREE_FILE = "dna.tree"
+SPECIES_TREE_FILE = "dated_rotated.tree"
+# 用于指定叶节点顺序的文本文件 (每行一个叶节点名称)
+TIP_ORDER_FILE = "dated_rotated.tree.txt"
 # 输出的图片文件名
-OUTPUT_SVG_FILE = "densi_tree_plot.svg"
+OUTPUT_SVG_FILE = "densi_tree_plot_correct_order.svg"
 # -----------------
 
 # --- 核心修正函数 ---
@@ -41,15 +47,28 @@ def scale_tree_to_height(tree, target_height=1.0):
     return tree
 
 # 1. 加载物种树和基因树
-print(f"正在加载物种树: {SPECIES_TREE_FILE}")
+print("正在加载物种树: {}".format(SPECIES_TREE_FILE))
 species_tree = toytree.tree(SPECIES_TREE_FILE)
-print(f"正在加载基因树集: {GENE_TREES_FILE}")
+print("正在加载基因树集: {}".format(GENE_TREES_FILE))
 gene_trees = toytree.mtree(GENE_TREES_FILE)
 
-# 2. 确定叶节点的统一顺序
-# 使用物种树的叶节点顺序作为标准，确保所有树的Y轴顺序一致
-tip_order = species_tree.get_tip_labels()
-print(f"已确定统一的叶节点顺序，共 {len(tip_order)} 个物种。")
+# 2. 从外部文件加载叶节点的统一顺序
+print("正在从文件加载指定的叶节点顺序: {}".format(TIP_ORDER_FILE))
+try:
+    with open(TIP_ORDER_FILE, 'r') as f:
+        # 读取文件中的每一行，去除首尾空白字符，并过滤掉空行
+        tip_order_from_file = [line.strip() for line in f if line.strip()]
+    
+    # 【关键修改】反转列表顺序
+    # toytree绘图时，列表第一个元素在底部，最后一个在顶部。
+    # 为了让文件第一行显示在图的顶部，需要将整个列表反转。
+    tip_order = tip_order_from_file[::-1]
+    
+    print("已加载并反转指定的叶节点顺序，共 {} 个物种。".format(len(tip_order)))
+
+except FileNotFoundError:
+    print("错误: 找不到指定的顺序文件 '{}'。请检查文件名和路径。".format(TIP_ORDER_FILE))
+    sys.exit(1) # 退出脚本
 
 # 3. (关键步骤) 归一化所有树的深度
 # 使用我们自己编写的函数来归一化树高
@@ -68,7 +87,7 @@ axes = canvas.cartesian(xlabel="Relative time (root to tip)")
 print("正在绘制基因树云图...")
 gene_trees.draw_cloud_tree(
     axes=axes,
-    fixed_order=tip_order,
+    fixed_order=tip_order, # 使用从文件加载并反转后的顺序
     edge_style={
         "stroke": toytree.colors[1],  # 使用柔和的颜色
         "stroke-opacity": 0.1,       # 设置透明度
@@ -80,8 +99,8 @@ gene_trees.draw_cloud_tree(
 print("正在叠加绘制物种树...")
 species_tree.draw(
     axes=axes,
-    fixed_order=tip_order,
-    edge_type='c',      # 'c' for squared edges
+    fixed_order=tip_order, # 同样使用从文件加载并反转后的顺序
+    edge_type='c',         # 'c' for squared edges
     edge_style={
         "stroke": "black", # 物种树使用醒目的黑色
         "stroke-width": 1.0,
@@ -90,6 +109,6 @@ species_tree.draw(
 );
 
 # 6. 保存图像
-print(f"正在保存图像到: {OUTPUT_SVG_FILE}")
+print("正在保存图像到: {}".format(OUTPUT_SVG_FILE))
 toyplot.svg.render(canvas, OUTPUT_SVG_FILE)
 print("完成！")

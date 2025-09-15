@@ -1,8 +1,0 @@
-out.fasta.transdecoder.pep	Outgroup
-Clematis_songorica_aleotai.fasta.transdecoder.pep	Clematis_songorica_aleotai.fasta.transdecoder.pep
-Clematis_otophora.fasta.transdecoder.pep	Clematis_otophora.fasta.transdecoder.pep
-Clematis_glauca_liancheng.fasta.transdecoder.pep	Clematis_glauca_liancheng.fasta.transdecoder.pep
-Clematis_intricata_weijing.fasta.transdecoder.pep	Clematis_intricata_weijing.fasta.transdecoder.pep
-Clematis_tenuifolia.fasta.transdecoder.pep	Clematis_tenuifolia.fasta.transdecoder.pep
-Clematis_tangutica_maerkang.fasta.transdecoder.pep	Clematis_tangutica_maerkang.fasta.transdecoder.pep
-Clematis_akebioides_ganzi.fasta.transdecoder.pep	Clematis_akebioides_ganzi.fasta.transdecoder.pep
