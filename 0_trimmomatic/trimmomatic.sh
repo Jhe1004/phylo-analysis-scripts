@@ -1,1 +1,0 @@
-java -jar trimmomatic-0.39.jar PE -phred33 SRR341997_1.fq SRR341997_2.fq SRR341997_1_paired.fq SRR341997_1_unpaired.fq SRR341997_2_paired.fq SRR341997_2_unpaired.fq LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 HEADCROP:8 MINLEN:36

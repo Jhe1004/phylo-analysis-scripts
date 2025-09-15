@@ -1,62 +1,90 @@
-from multiprocessing import Pool
-import os, time, random
+import os
+import sys
+import time
 
-'''
-首先定义需要的进程数th
-'''
-th = 39
+# --- 脚本配置 ---
+# 1. 请在此处设置您想处理的文件后缀名
+TARGET_EXTENSION = ".gz"
 
-
-'''
-函数 get_file_list: 获取当前文件夹中符合目标扩展名的文件
-输入 无，将本脚本放置在目标文件夹中即可
-输出 file_name：所有文件的名称列表
-'''
-def get_file_list():      
-    file_name = []       
-    for each in os.listdir(os.getcwd()):        
-        if ".gz" in each:
-            file_name.append(each)
-    return file_name
-
-'''
-函数 get_th_list: 将所有文件平均的分给各个进程
-输入 file_name: 所有文件的名称列表
-输出 th_list： 一个列表，列表中的各个元素为各个进程所应该处理的文件
-'''
-def get_th_list(file_name):
-    th_list = []
-    for each_num in range(th):
-        th_list.append([])
-    print("本程序共使用 " + str(len(th_list)) + " 个进程")
-    n = 0
-    for each_file in file_name:       
-        th_list[n].append(each_file)
-        if n == th - 1:
-            n = 0
-        else:
-            n = n + 1
-    return th_list
+# 2. 请设置目标文件夹路径，使用 "." 代表当前脚本所在的文件夹
+TARGET_DIRECTORY = "."
+# --- 配置结束 ---
 
 
-def main_software(each_file_name_list):
-    print(each_file_name_list)
-    for each in each_file_name_list:
-        os.system("gunzip "+ each)
+def find_files(directory: str, extension: str) -> list:
+    """
+    在指定目录中查找具有特定后缀名的文件。
+
+    Args:
+        directory (str): 要搜索的文件夹路径。
+        extension (str): 目标文件的后缀名 (例如: ".gz")。
+
+    Returns:
+        list: 包含所有符合条件的文件名的列表。
+    """
+    print(f"[*] 正在 '{directory}' 文件夹中搜索 *{extension} 文件...")
+    
+    try:
+        # 使用列表推导式，代码更简洁高效
+        files = [f for f in os.listdir(directory) if f.endswith(extension)]
+        return files
+    except FileNotFoundError:
+        print(f"[!] 错误：找不到文件夹 '{directory}'。请检查路径是否正确。")
+        return []
+
+def decompress_files(file_list: list, directory: str):
+    """
+    按顺序解压文件列表中的每一个文件。
+
+    Args:
+        file_list (list): 包含待解压文件名的列表。
+        directory (str): 文件所在的目录路径。
+    """
+    total_files = len(file_list)
+    if total_files == 0:
+        print("[*] 没有找到需要处理的文件。")
+        return
+
+    print(f"[*] 共找到 {total_files} 个文件。准备开始解压...")
+    
+    start_time = time.time()
+
+    # 使用 enumerate 来同时获取索引和文件名，方便打印进度
+    for i, filename in enumerate(file_list):
+        # 使用 os.path.join 来构建跨平台兼容的文件路径
+        full_path = os.path.join(directory, filename)
+        
+        # 打印进度，\r 让光标回到行首，实现单行刷新效果
+        # sys.stdout.flush() 用于确保立即输出
+        progress_message = f"--> 正在处理: [{i + 1}/{total_files}] {filename}"
+        sys.stdout.write('\r' + ' ' * 80) # 清除旧行
+        sys.stdout.write('\r' + progress_message)
+        sys.stdout.flush()
+
+        # 执行解压命令
+        os.system(f"gunzip {full_path}")
+
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    
+    # 全部处理完后换行，避免覆盖最后一条进度
+    print("\n") 
+    print("=" * 30)
+    print(f"[✓] 所有文件处理完毕！")
+    print(f"[*] 总计用时: {elapsed_time:.2f} 秒。")
+    print("=" * 30)
 
 
+def main():
+    """
+    主执行函数
+    """
+    files_to_process = find_files(TARGET_DIRECTORY, TARGET_EXTENSION)
+    decompress_files(files_to_process, TARGET_DIRECTORY)
 
-file_name = get_file_list()
-th_list = get_th_list(file_name)
 
-p = Pool(th)
-for i in range(th):
-    p.apply_async(main_software,(th_list[i],))
-
-print("----start----")
-p.close()  # 关闭进程池，关闭后po不再接收新的请求
-p.join()  # 等待po中所有子进程执行完成，再执行下面的代码,可以设置超时时间join(timeout=)
-print("-----end-----") 
-  
-		
-           
+# 推荐的Python脚本入口点
+# 当这个.py文件被直接运行时，__name__ 的值是 '__main__'
+# 如果它被其他脚本作为模块导入，则 __name__ 的值是模块名
+if __name__ == "__main__":
+    main()

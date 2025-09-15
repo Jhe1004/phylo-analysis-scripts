@@ -18,7 +18,7 @@ final_f_suffix = "_1.fq"
 final_r_suffix = "_2.fq"
 
 # Trimmomatic settings
-trimmomatic_jar = "trimmomatic-0.39.jar" # Path to your Trimmomatic JAR file
+trimmomatic_jar = "trimmomatic-0.40.jar" # Path to your Trimmomatic JAR file
 threads = "30"
 phred = "-phred33" # or "-phred64"
 trim_options = "LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 HEADCROP:8 MINLEN:36"
