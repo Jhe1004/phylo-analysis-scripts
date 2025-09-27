@@ -1,0 +1,17 @@
+library(phybase)
+
+
+args<-commandArgs(T)
+a2 <- as.numeric(args[2])
+con <- file(args[1], "r")
+line=readLines(con,n=1)
+mptree1 = line
+spname <- species.name(mptree1)
+nodematrix <- read.tree.nodes(str=mptree1, name=spname)$nodes
+nodematrix[,5]<-2
+
+a3 <- as.numeric(args[3])
+genetrees=1:a3
+for(i in 1:a3)
+genetrees[i]<-sim.coaltree.sp(rootnode=nrow(nodematrix), nodematrix=nodematrix, nspecies=a2, seq=rep(1,a2), name=spname)$gt
+write(genetrees,"simulate.trees")

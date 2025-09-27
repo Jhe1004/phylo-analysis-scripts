@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-extract_orthologs.py (Python 3.6+ Compatible, with CDS extraction, XML fix)
+extract_orthologs.py (Python 3.6+ Compatible, with CDS extraction, XML fix, Filename Sanitize, Auto-Reference)
 
 该脚本用于从多个GenBank格式的植物叶绿体基因组文件中提取直系同源基因。
 
@@ -9,9 +9,11 @@ extract_orthologs.py (Python 3.6+ Compatible, with CDS extraction, XML fix)
 - 如果是蛋白质编码基因，则优先提取其编码序列 (CDS, 即拼接后的外显子)。
 - 如果是非编码基因 (如 tRNA, rRNA) 或没有CDS注释，则提取基因全长。
 - 修复了因提前中断XML解析而产生的ExpatError警告。
+- 新增：自动清理样本文件名，将空格、点等特殊字符替换为下划线，以增加健壮性。
+- 新增：如果未指定参考基因组，则自动选择输入目录中的第一个 GenBank 文件作为参考。
 
 工作原理：
-1. 指定一个样本作为参考基因组。
+1. 指定一个样本作为参考基因组（若不指定则自动选择）。
 2. 脚本为当前文件夹中所有的 .gb 文件创建本地 BLAST 数据库。
 3. 遍历参考基因组中的每一个基因，并判断是否提取CDS或基因全长。
 4. 将该序列作为 query，使用 blastn 在其他所有样本的数据库中搜索同源序列。
@@ -24,6 +26,7 @@ import sys
 import argparse
 import subprocess
 import shutil
+import re
 from pathlib import Path
 
 try:
@@ -42,12 +45,12 @@ def check_blast_installed():
         subprocess.run(
             ['makeblastdb', '-version'], 
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, 
-            check=True, text=True
+            check=True, universal_newlines=True
         )
         subprocess.run(
             ['blastn', '-version'], 
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, 
-            check=True, text=True
+            check=True, universal_newlines=True
         )
         return True
     except (subprocess.CalledProcessError, FileNotFoundError):
@@ -57,22 +60,40 @@ def check_blast_installed():
         return False
 
 def sanitize_filename(name):
-    """清理字符串，使其成为一个合法的文件名。"""
+    """清理字符串，使其成为一个合法的基因文件名。"""
     return "".join(c for c in name if c.isalnum() or c in ('_', '-')).rstrip()
+
+def sanitize_sample_name(name):
+    """
+    清理样本名，将不安全的字符替换为下划线。
+    - 替换所有非字母数字、非下划线、非连字符的字符为 '_'
+    - 将多个连续的 '_' 合并为一个
+    - 移除开头和结尾的 '_'
+    """
+    name = re.sub(r'[^a-zA-Z0-9_-]', '_', name)
+    name = re.sub(r'__+', '_', name)
+    name = name.strip('_')
+    return name
 
 def create_blast_db(gb_files, temp_dir):
     """为所有 GenBank 文件创建 BLAST 数据库。"""
     db_paths = {}
     print("\n--- 步骤 1: 为所有 GenBank 文件创建 BLAST 数据库 ---")
+    print("注意：文件名中的特殊字符 (如空格, 点) 将被替换为下划线 '_'。")
     for gb_file in gb_files:
-        sample_name = Path(gb_file).stem
+        original_stem = Path(gb_file).stem
+        sample_name = sanitize_sample_name(original_stem)
+        
+        if original_stem != sample_name:
+            print(f"  - 文件名清理: '{original_stem}' -> '{sample_name}'")
+
         fasta_path = temp_dir / f"{sample_name}.fasta"
         db_path = temp_dir / sample_name
 
         try:
             SeqIO.convert(gb_file, 'genbank', fasta_path, 'fasta')
             cmd = ['makeblastdb', '-in', str(fasta_path), '-dbtype', 'nucl', '-out', str(db_path)]
-            subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
             db_paths[sample_name] = str(db_path)
             print(f"  [成功] 为 {sample_name} 创建了数据库。")
         except subprocess.CalledProcessError as e:
@@ -92,23 +113,32 @@ def main(args):
 
     input_dir = Path(args.input_dir)
     output_dir = Path(args.output_dir)
-    reference_file = Path(args.reference)
     evalue_threshold = float(args.evalue)
 
     if not input_dir.is_dir():
         print(f"错误：输入目录 '{input_dir}' 不存在。")
         sys.exit(1)
-    if not reference_file.is_file():
-        full_ref_path = input_dir / reference_file
-        if not full_ref_path.is_file():
-            print(f"错误：参考文件 '{reference_file}' 在 '{input_dir}' 中不存在。")
-            sys.exit(1)
-        reference_file = full_ref_path
 
-    gb_files = list(input_dir.glob('*.gb')) + list(input_dir.glob('*.gbk'))
+    gb_files = sorted(list(input_dir.glob('*.gb'))) + sorted(list(input_dir.glob('*.gbk')))
     if not gb_files:
         print(f"错误：在目录 '{input_dir}' 中没有找到 .gb 或 .gbk 文件。")
         sys.exit(1)
+
+    # --- 修改: 自动选择参考文件的逻辑 ---
+    reference_file_path = None
+    if args.reference:
+        # 如果用户指定了参考文件
+        reference_file_path = Path(args.reference)
+        if not reference_file_path.is_file():
+            reference_file_path = input_dir / reference_file_path
+            if not reference_file_path.is_file():
+                print(f"错误：指定的参考文件 '{args.reference}' 不存在。")
+                sys.exit(1)
+    else:
+        # 如果用户未指定，自动选择第一个文件
+        reference_file_path = gb_files[0]
+        print(f"\n提示：未指定参考基因组，已自动选择 '{reference_file_path.name}' 作为参考。")
+    # --- 修改结束 ---
 
     output_dir.mkdir(exist_ok=True)
     temp_dir = input_dir / "temp_blast_db"
@@ -123,7 +153,8 @@ def main(args):
     print("\n--- 步骤 2: 读取所有 GenBank 文件记录 ---")
     all_records = {}
     for gb_file in gb_files:
-        sample_name = Path(gb_file).stem
+        original_stem = Path(gb_file).stem
+        sample_name = sanitize_sample_name(original_stem)
         try:
             record = SeqIO.read(gb_file, "genbank")
             all_records[sample_name] = record
@@ -134,13 +165,15 @@ def main(args):
                 del db_paths[sample_name]
 
     print("\n--- 步骤 3: 开始提取直系同源基因 (优先提取CDS) ---")
-    reference_name = Path(reference_file).stem
+    original_ref_stem = Path(reference_file_path).stem
+    reference_name = sanitize_sample_name(original_ref_stem)
     reference_record = all_records.get(reference_name)
 
     if not reference_record:
-         print(f"错误：无法从 all_records 字典中找到参考记录 '{reference_name}'。")
-         shutil.rmtree(temp_dir)
-         sys.exit(1)
+        print(f"错误：无法从 all_records 字典中找到参考记录 '{reference_name}'。")
+        print(f"原始文件名: '{original_ref_stem}'")
+        shutil.rmtree(temp_dir)
+        sys.exit(1)
     
     gene_map = {}
     cds_map = {}
@@ -152,7 +185,7 @@ def main(args):
             elif feature.type == 'CDS':
                 cds_map[gene_name] = feature
 
-    print(f"在参考文件 '{reference_file.name}' 中找到 {len(gene_map)} 个基因。")
+    print(f"在参考文件 '{reference_file_path.name}' (使用名: {reference_name}) 中找到 {len(gene_map)} 个基因。")
 
     for gene_name_raw, gene_feature in sorted(gene_map.items()):
         
@@ -202,13 +235,9 @@ def main(args):
             try:
                 best_hit_seq = None
                 with open(blast_result_xml) as result_handle:
-                    # ======================================================================== #
-                    # =====================   唯一的修改在这里   =============================== #
-                    # 使用 NCBIXML.read() 代替 .parse()，因为它更适合单个查询结果的场景，能避免解析器报错。
                     blast_record = NCBIXML.read(result_handle)
-                    # ======================================================================== #
 
-                    if blast_record.alignments: # 检查是否有比对结果
+                    if blast_record.alignments:
                         alignment = blast_record.alignments[0]
                         hsp = alignment.hsps[0]
 
@@ -234,12 +263,11 @@ def main(args):
                     print(f"  - 警告: 在 {sample_name} 中未找到满足条件的同源基因。")
 
             except ValueError:
-                # NCBIXML.read() 在文件为空或没有比对结果时会触发 ValueError
                 print(f"  - 在 {sample_name} 中未找到任何 BLAST 匹配项。")
             except Exception as e:
                 print(f"  - 错误: 解析 {sample_name} 的 BLAST 结果时出错: {e}")
 
-        if len(orthologs) > 1: # 只在找到至少一个同源基因时才创建文件
+        if len(orthologs) > 1:
             output_fasta_path = output_dir / f"{gene_name}.fasta"
             with open(output_fasta_path, "w") as output_handle:
                 SeqIO.write(orthologs, output_handle, "fasta")
@@ -264,10 +292,17 @@ if __name__ == '__main__':
         formatter_class=argparse.RawTextHelpFormatter,
         epilog="""
 使用示例:
-  python extract_orthologs.py --reference My_reference.gb --input_dir . --output_dir ./ortholog_results
+  # 自动选择参考文件
+  python extract_orthologs.py -i ./input_genomes -o ./ortholog_results
+
+  # 手动指定参考文件
+  python extract_orthologs.py -i ./input_genomes -o ./ortholog_results -r my_favorite_genome.gb
 """
     )
-    parser.add_argument('-r', '--reference', type=str, required=True, help='参考基因组的 GenBank 文件名(从你的GenBank目录中选择一个gb文件即可)。')
+    # --- 修改: reference 参数不再是必须的 ---
+    parser.add_argument('-r', '--reference', type=str, required=False, 
+                        help='参考基因组的 GenBank 文件名。如果省略，将自动选择输入目录中的第一个文件作为参考。')
+    # --- 修改结束 ---
     parser.add_argument('-i', '--input_dir', type=str, required=True, help='包含所有 GenBank 文件的输入目录。')
     parser.add_argument('-o', '--output_dir', type=str, required=True, help='存放输出 FASTA 文件的目录。')
     parser.add_argument('-e', '--evalue', type=str, default='1e-10', help='BLASTn 搜索的 E-value 阈值 (默认: 1e-10)。')

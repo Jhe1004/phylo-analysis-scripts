@@ -8,7 +8,7 @@ import os
 from ete3 import Tree
 
 
-outgroup_species = "Aletris_farinosa_SRR19179843.fasta.transdecoder.pep"
+outgroup_species = "60CD.fasta.transdecoder.pep"
 
 
 #设置外类群

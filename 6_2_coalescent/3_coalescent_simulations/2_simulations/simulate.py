@@ -1,9 +1,9 @@
 import os
 
 
-simulate_times  = 1000  #模拟多少次
-species_num = 20 #物种树中的样品数目
-species_tree = "coalescent_units_tree.newick"
+simulate_times  = 10000  #模拟多少次
+species_num = 27 #物种树中的样品数目
+species_tree = "astral.tre.regular.tre"
 
     
 #使用R脚本进行模拟
