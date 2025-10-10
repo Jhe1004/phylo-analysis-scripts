@@ -49,7 +49,7 @@ def prepare_paml_inputs_final_final():
     """
     aligned_cds_dir = "aligned_cds"
     paml_input_dir = "paml_input"
-    tree_file = "species_tree.nwk" # 這是您原始的、不帶表頭的標準 Newick 檔案
+    tree_file = "RAxML_bipartitions.result.newick" # 這是您原始的、不帶表頭的標準 Newick 檔案
 
     if not os.path.isdir(aligned_cds_dir) or not os.path.exists(tree_file):
         print(f"錯誤：找不到輸入文件夾 '{aligned_cds_dir}' 或樹檔案 '{tree_file}'。")
