@@ -5,7 +5,6 @@ import os
 def index(reference):
     os.system("bwa index -a bwtsw " + reference)
     os.system("samtools faidx " + reference)
-    os.system("./gatk CreateSequenceDictionary -R " + reference)
 
 def main():
     #解析参数
