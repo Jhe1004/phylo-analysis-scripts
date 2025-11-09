@@ -1,0 +1,1 @@
+mpirun -np 40 ./exabayes -f cp-its.phy -q partitions.txt -n combine -s $RANDOM -c config.nex

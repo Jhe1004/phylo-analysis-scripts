@@ -1,0 +1,15 @@
+#NEXUS
+
+begin params; 
+  [ This data has only one partition: 0 ] 
+
+  stateFreq = (0) 
+  brlens = (0)
+  ratehet = (0)
+
+end;  
+
+begin run;
+    numGens 2000000
+    numRuns 2
+end;
