@@ -13,20 +13,22 @@ normal_site_list = ["A","a","T","t","C","c","G","g"]
 '''
 解析参数
 '''
-parser = argparse.ArgumentParser(description="Options for cp_alignment.py",
-                                 add_help=True)
-additional = parser.add_argument_group("additional arguments")    
+parser = argparse.ArgumentParser(description="Options for cp_alignment.py", add_help=True)
+additional = parser.add_argument_group("additional arguments")
+
+# 设置 proportion 参数为非必要参数，带有默认值
 additional.add_argument('-p', '--proportion', action="store", type=float, 
-                        default=0.2, metavar='\b', help='''The proportion of 
-                        missing data allowed in each site, default = 0.2''')
-additional.add_argument('-n', '--num_cpu', action="store", type=int, default=40,
-                        metavar='\b', help='''The maximum number of CPUs that 
-                        this script can be used (Two usable CPUs means that the
-                        script will analyze two matrices at the same time), 
-                        default = 12''')
+                        default=0.2, metavar='\b', required=False, 
+                        help='The proportion of missing data allowed in each site, default = 0.5')
+
+# 设置 num_cpu 参数为非必要参数，带有默认值
+additional.add_argument('-n', '--num_cpu', action="store", type=int, 
+                        default=2, metavar='\b', required=False,
+                        help='The maximum number of CPUs that this script can use (analyzes two matrices at the same time with two CPUs), default = 12')
+
 args = parser.parse_args()
 proportion = args.proportion
-th         = args.num_cpu
+th = args.num_cpu
 
 if proportion == 0: #该参数会作为被除数使用，故不能为零
     proportion = 0.0001
@@ -75,70 +77,50 @@ def if80to1(fasta_name):
     '''
     函数if80to1: 
         如果fasta序列是80列换行的话则修改成不换行
-        同时，删除所有序列都是“-”“?”或“N”的样本
     输入：
         待处理的fasta文件名称
     输出：
-        如果原始fasta中的序列是80行换行的则将所有序列集中至一行，并写出一个新的
-        后缀为“.fa”格式的文件
+        如果原始fasta中的序列是80行换行的则将所有序列集中至一行。并写出一个新的
+    后缀为“.fa”格式的文件
         如果序列的长度超过“alignment_len”中设定的长度，则返回一个真值，准备开始分割这个文件
     '''
     tmp_len_list = []
-    valid_records = []  # 存储有效样本的记录
     for each_record in SeqIO.parse(fasta_name, "fasta"):
-        seq_str = str(each_record.seq)
-        # 检查序列是否完全由“-”、“?”或“N”组成
-        if not all(c in "-?N" for c in seq_str):
-            valid_records.append(each_record)
-            tmp_len_list.append(len(seq_str))
-    
-    # 如果没有有效样本，删除原文件并返回 False
-    if not valid_records:
-        print(f"Warning: {fasta_name} has no valid samples after filtering.")
-        os.remove(fasta_name)
-        return False
-    
-    # 计算最大序列长度
+        tmp_len_list.append(len(str(each_record.seq)))
     tmp_len_list.sort()
-    max_len = tmp_len_list[-1]
-    
-    # 写入新的 FASTA 文件（后缀为 .fa）
-    new_fasta_name = fasta_name[:-6] + ".fa"  # 假设输入文件后缀是 .fasta
-    with open(new_fasta_name, "w") as write_file:
-        for each_record in valid_records:
-            seq_str = str(each_record.seq)
-            # 如果序列长度小于最大长度，用“-”补齐
-            if len(seq_str) < max_len:
-                gap = "-" * (max_len - len(seq_str))
+    with open(fasta_name[:-3], "a") as write_file:
+        for each_record in SeqIO.parse(fasta_name, "fasta"):
+            if len(str(each_record.seq)) != tmp_len_list[-1]:
+                gap = "-"*(tmp_len_list[-1] - len(str(each_record.seq)))
                 each_record.seq = each_record.seq + gap
-            write_file.write(">" + str(each_record.id) + "\n")
-            write_file.write(str(each_record.seq) + "\n")
-    
-    
-    # 检查是否需要分割文件
-    if max_len >= alignment_len:
+                write_file.write(">" + str(each_record.id) + "\n")
+                write_file.write(str(each_record.seq) + "\n")    
+            else:
+                write_file.write(">" + str(each_record.id) + "\n")
+                write_file.write(str(each_record.seq) + "\n")
+    if tmp_len_list[0] >= alignment_len:
         return True
     else:
-        return False                         
+        return False                             
              
 def split_fasta(fasta_name):
     '''
     函数split_fasta: 
-        将排序文件每隔alignment_len bp分割一次
+        将排序文件每隔2000bp分割一次
     输入：
-        待处理的fasta文件名称（后缀为 .fa）
+        待处理的fasta文件名称
     输出：
         后缀为“.fa”，并且文件名中带有“.split.”字样的文件
     '''
-    with open(fasta_name, "r") as read_file:
+    with open(fasta_name[:-3], "r") as read_file:
         sequences = read_file.readlines()
         length = len(sequences[1]) - 1
         left = 0
         right = alignment_len
         while True:
-            new_name = (fasta_name[:-3] + ".split." + str(left) + ".fa")
+            new_name = (fasta_name[:-6] + ".split." + str(left) + ".fa")
             if right <= length:  
-                with open(new_name, "w") as write_file:
+                with open(new_name, "a") as write_file:
                     for each_line in sequences:
                         if each_line[0] == ">":
                             write_file.write(each_line)
@@ -147,7 +129,7 @@ def split_fasta(fasta_name):
                 left = left + alignment_len
                 right = right + alignment_len
             else:
-                with open(new_name, "w") as write_file:
+                with open(new_name, "a") as write_file:
                     for each_line in sequences:
                         if each_line[0] == ">":
                             write_file.write(each_line)
@@ -252,19 +234,17 @@ def main_get_homo(file_name):
 def preprocessing(file_name):
     '''
     函数preprocessing: 
-        1：如果是80行换行的fasta，则转化为不换行
+        1：如果是80行换行的fasta，则转化为不换行的
         2：如果矩阵的长度超过"alignment_len"bp，则将矩阵分割成最长为"alignment_len"bp的小矩阵
-        3：删除所有序列都是“-”“?”或“N”的样本
     输入：
         自动输入文件夹中“.fasta”格式文件
     输出：
-        “.fa”格式的中间文件，最终生成“.fas”格式的结果文件
+        “.fas”格式的结果文件
     '''  
     for fasta_name in file_name:
         if if80to1(fasta_name):
-            new_fasta_name = fasta_name[:-6] + ".fa"
-            split_fasta(new_fasta_name)
-            os.remove(new_fasta_name)
+            split_fasta(fasta_name)
+            os.remove(fasta_name[:-3])
 
 
 def fasta2dict(fasta_file):
@@ -349,7 +329,7 @@ if __name__=="__main__":
     gene_name_list = []
     for each_file_name in os.listdir(os.getcwd()): 
         if ".split." in each_file_name:
-            gene_name = each_file_name.split(".split")[0]
+            gene_name = each_file_name.split(".")[0]
             if gene_name not in gene_name_list:
                 gene_name_list.append(gene_name)
     th_list = get_th_list(gene_name_list)

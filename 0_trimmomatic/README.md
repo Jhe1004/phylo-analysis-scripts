@@ -1,78 +1,73 @@
-# Trimmomatic 脚本
+# Trimmomatic 批量质控与文件整理脚本
 
-此目录包含用于自动化处理 Trimmomatic 预处理测序数据常见任务的 Python 脚本。
+## 1. 工具简介
+这是一个用于批量处理二代测序（NGS）双端数据（Paired-End Data）的自动化 Python 脚本。
 
-## 脚本
+它的主要功能是：
+1.  **自动识别**：在指定目录下自动寻找成对的 FASTQ 测序文件（如 `R1` 和 `R2`）。
+2.  **批量质控**：调用 **Trimmomatic** 工具对每个样本进行去接头（Adapter）、去低质量碱基等操作。
+3.  **自动清洗**：程序运行结束后，会自动**删除**不需要的非配对（Unpaired）中间文件，只保留高质量的配对文件。
+4.  **规范命名**：将输出文件重命名为简洁的格式（如 `sample_1.fq`），方便后续分析软件调用。
 
-### 1. `gunzip.py`
+---
 
-此脚本自动化解压缩当前目录中的 `.gz` 文件。
+## 2. 环境依赖
 
-#### 依赖
+运行此脚本需要满足以下环境要求：
 
-- `gunzip` 工具（大多数类 Unix 系统的一部分）
-  - 注意：在 Windows 上，您可能需要安装额外的工具，如 Git Bash 或 WSL 才能使用 `gunzip`。
+* **操作系统**：Linux, macOS, 或 Windows (需配置好 Java 环境)。
+* **Python 版本**：**Python 3.6** 及以上版本。
+    * 本脚本仅使用 Python 标准库（`os`, `sys`, `subprocess`），**无需安装** `pandas` 或 `biopython` 等第三方库。
+* **外部软件**：
+    * **Java Runtime Environment (JRE)**: 用于运行 Trimmomatic。
+    * **Trimmomatic**: 必须拥有 `trimmomatic-0.40.jar` (或类似版本) 文件。
 
-#### 配置
+---
 
-在运行脚本之前，您可能需要修改脚本中的以下参数：
+## 3. 输入/输出数据格式
 
-- `TARGET_EXTENSION`：要查找的文件扩展名（默认为 `.gz`）。
-- `TARGET_DIRECTORY`：搜索文件的目录（默认为当前目录 `.`）。
+### 输入数据 (Input)
+脚本默认在**当前目录**下查找文件。文件必须是**双端测序数据**，且文件名后缀需要统一。
 
-#### 使用方法
+**示例文件结构**：
+RawData/
+├── SampleA_1.fq.gz   (正向序列)
+├── SampleA_2.fq.gz   (反向序列)
+├── SampleB_1.fq.gz
+├── SampleB_2.fq.gz
+└── trimmomatic_script.py (本脚本)
 
-1. 将脚本放置在包含要解压缩的 `.gz` 文件的目录中。
-2. 运行脚本：
-   ```bash
-   python gunzip.py
-   ```
+*在配置中，我们将后缀分别设置为 `1.fq.gz` 和 `2.fq.gz`。*
 
-#### 输入文件
+### 输出数据 (Output)
+程序运行完毕后，目录中将生成质控后的文件。
 
-- 目标目录中具有指定 `TARGET_EXTENSION` 的任何文件。
+**输出示例**：
+RawData/
+├── SampleA_1.fq      (质控后的 R1，已重命名)
+├── SampleA_2.fq      (质控后的 R2，已重命名)
+├── SampleB_1.fq
+└── SampleB_2.fq
 
-#### 输出文件
+*注：生成的 `_unpaired.fq` 文件会被脚本自动删除。*
 
-- 脚本将就地解压缩 `.gz` 文件，删除原始压缩文件并创建未压缩的版本。
+---
 
-### 2. `trimmomatic_pe.py`
+## 4. 使用方法
 
-此脚本自动化在双端 FASTQ 文件上运行 Trimmomatic 的过程。
+### 第一步：修改配置 (Configuration)
+**无需在命令行输入任何参数**。请使用文本编辑器（如 VS Code, Notepad++, Sublime Text）打开脚本文件 `trimmomatic_script.py`。
 
-#### 依赖
+在脚本顶部的 `### CONFIGURATION (配置区域) ###` 修改以下变量：
 
-- Java（用于运行 Trimmomatic）
-- Trimmomatic JAR 文件（`trimmomatic-0.40.jar` 应该在同一个目录中）
+1.  `INPUT_DIRECTORY`: 数据的存放路径 (默认是当前路径)。
+2.  `TRIMMOMATIC_JAR_PATH`: 你的 `trimmomatic-0.40.jar` 文件的实际路径。
+3.  `INPUT_FORWARD_SUFFIX` / `INPUT_REVERSE_SUFFIX`: 你的原始文件后缀 (例如 `_R1.fastq.gz`)。
+4.  `TRIM_STEPS`: 根据你的实验需求调整质控参数 (如 `SLIDINGWINDOW`, `MINLEN`)。
 
-#### 配置
+### 第二步：运行脚本
+打开终端 (Terminal) 或命令行，进入脚本所在目录，输入以下命令：
 
-在运行脚本之前，您可能需要修改脚本中的以下参数：
+python trimmomatic_script.py
 
-- `forward_suffix`：正向读取文件的后缀（默认为 `1.fq.gz`）。
-- `reverse_suffix`：反向读取文件的后缀（默认为 `2.fq.gz`）。
-- `trimmomatic_jar`：Trimmomatic JAR 文件的路径（默认为 `trimmomatic-0.40.jar`）。
-- `threads`：要使用的线程数（默认为 `30`）。
-- `phred`：质量编码（`-phred33` 或 `-phred64`，默认为 `-phred33`）。
-- `trim_options`：修剪参数（默认为 `LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 HEADCROP:8 MINLEN:36`）。
-
-#### 使用方法
-
-1. 将您的双端 FASTQ 文件放置在目录中。
-2. 确保 `trimmomatic-0.40.jar` 在同一个目录中。
-3. 如果需要，修改脚本中的配置参数。
-4. 运行脚本：
-   ```bash
-   python trimmomatic_pe.py
-   ```
-
-#### 输入文件
-
-- 具有指定 `forward_suffix` 和 `reverse_suffix` 的双端 FASTQ 文件。
-- 适配器文件（如果在修剪中使用）应该在 `adapters/` 目录中。
-
-#### 输出文件
-
-- `<sample>_1_paired.fq` 和 `<sample>_2_paired.fq`：通过质量过滤的配对读取。
-- `<sample>_1_unpaired.fq` 和 `<sample>_2_unpaired.fq`：通过质量过滤的未配对读取。
-- 处理后，未配对的文件将被删除，配对的文件将重命名为 `<sample>_1.fq` 和 `<sample>_2.fq`。
+脚本将自动开始处理，并在屏幕上打印进度日志。如果遇到错误（如找不到 Java），脚本会报错并提示原因。

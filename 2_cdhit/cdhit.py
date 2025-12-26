@@ -5,6 +5,11 @@ from multiprocessing import Pool, cpu_count
 import logging
 import sys
 
+# --- 配置参数 ---
+SIF_FILENAME = "cdhit.sif"  # 镜像文件名
+CDHIT_CMD = "cd-hit-est"    # 容器内要调用的命令 (如果是蛋白序列请改为 cd-hit)
+IDENTITY_THRESHOLD = "0.95" # 相似度阈值 (-c 参数)
+# ----------------
 
 def setup_logging():
     """
@@ -19,32 +24,36 @@ def setup_logging():
         ]
     )
 
-def find_cdhit_executable():
+def find_sif_image():
     """
-    查找 cd-hit-est 可执行文件的路径。
+    查找 cdhit.sif 镜像文件的路径。
     """
-    # 首先检查命令行参数是否指定了路径
     if len(sys.argv) > 1:
-        cdhit_path = sys.argv[1]
-        if os.path.isfile(cdhit_path) and os.access(cdhit_path, os.X_OK):
-            return cdhit_path
-        else:
-            logging.error(f"指定的 cd-hit-est 路径无效或不可执行: {cdhit_path}")
-            return None
+        sif_path = sys.argv[1]
+        if os.path.isfile(sif_path) and sif_path.endswith(".sif"):
+            return os.path.abspath(sif_path)
+
+    current_dir_sif = os.path.join(os.getcwd(), SIF_FILENAME)
+    if os.path.isfile(current_dir_sif):
+        return current_dir_sif
     
-    # 检查系统路径中是否有 cd-hit-est
-    cdhit_path = shutil.which("cd-hit-est")
-    if cdhit_path is not None:
-        return cdhit_path
-    
-    # 检查当前目录是否有 cd-hit-est
-    if os.path.isfile("./cd-hit-est") and os.access("./cd-hit-est", os.X_OK):
-        return "./cd-hit-est"
-    
-    logging.error("cd-hit-est 未安装或不在系统路径中。")
-    logging.error("请先安装 cd-hit 软件包，或确保 cd-hit-est 可执行文件在系统路径中。")
-    logging.error("或者作为参数提供 cd-hit-est 的完整路径，例如: python cdhit.py /path/to/cd-hit-est")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    script_dir_sif = os.path.join(script_dir, SIF_FILENAME)
+    if os.path.isfile(script_dir_sif):
+        return script_dir_sif
+
+    logging.error(f"未找到镜像文件: {SIF_FILENAME}")
+    logging.error(f"请确保 {SIF_FILENAME} 在当前目录，或者通过参数指定完整路径。")
     return None
+
+def check_apptainer_installed():
+    """
+    检查系统是否安装了 apptainer。
+    """
+    if shutil.which("apptainer") is None:
+        logging.error("未找到 'apptainer' 命令。请先安装 Apptainer/Singularity。")
+        return False
+    return True
 
 def get_file_list():
     """
@@ -57,27 +66,36 @@ def get_file_list():
 
 def process_fasta(args):
     """
-    对单个 .fas 文件执行 cd-hit-est 命令。
+    使用 Apptainer 镜像对单个 .fas 文件执行 cd-hit 命令。
     """
-    fasta_name, cdhit_path = args
+    fasta_name, sif_path = args
     try:
         input_file = fasta_name
-        # 构建输出文件名，避免在文件名中出现多余的空格
-        output_file = f"{fasta_name}ta"
+        # 构建输出文件名
+        output_file = f"{fasta_name}ta" 
 
-        # 构建命令
-        cmd = [cdhit_path, "-i", input_file, "-o", output_file]
+        # --- 构建 Apptainer 命令 ---
+        cmd = [
+            "apptainer", "exec", 
+            sif_path, 
+            CDHIT_CMD, 
+            "-i", input_file, 
+            "-o", output_file, 
+            "-c", IDENTITY_THRESHOLD
+        ]
 
-        logging.info(f"Starting cd-hit-est for {input_file} -> {output_file}")
+        logging.info(f"Starting: {' '.join(cmd)}")
 
         # 执行命令
-        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        # 修正点：将 text=True 改为 universal_newlines=True 以兼容 Python 3.6
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
 
-        # 检查命令是否成功
         if result.returncode == 0:
             logging.info(f"Successfully processed {input_file}")
         else:
-            logging.error(f"Error processing {input_file}: {result.stderr}")
+            logging.error(f"Error processing {input_file}:")
+            logging.error(f"STDOUT: {result.stdout}")
+            logging.error(f"STDERR: {result.stderr}")
 
     except Exception as e:
         logging.error(f"Exception processing {fasta_name}: {e}")
@@ -85,12 +103,14 @@ def process_fasta(args):
 def main():
     setup_logging()
 
-    # 查找 cd-hit-est 可执行文件
-    cdhit_path = find_cdhit_executable()
-    if cdhit_path is None:
+    if not check_apptainer_installed():
         return
 
-    # 获取所有 .fas 文件
+    sif_path = find_sif_image()
+    if sif_path is None:
+        return
+    logging.info(f"Using Apptainer image: {sif_path}")
+
     file_names = get_file_list()
     if not file_names:
         logging.warning("No .fas files found in the current directory.")
@@ -98,14 +118,11 @@ def main():
 
     logging.info(f"Found {len(file_names)} .fas files to process.")
 
-    # 设置进程池的大小（默认为 CPU 核心数）
     pool_size = cpu_count()
     logging.info(f"Starting processing with {pool_size} parallel processes...")
 
-    # 创建参数列表，包含文件名和 cd-hit-est 路径
-    args_list = [(file_name, cdhit_path) for file_name in file_names]
+    args_list = [(file_name, sif_path) for file_name in file_names]
 
-    # 创建进程池并并行处理文件
     with Pool(pool_size) as pool:
         pool.map(process_fasta, args_list)
 

@@ -17,6 +17,7 @@ import subprocess
 import random
 import sys
 import os # 导入 os 模块来检查文件是否存在
+import glob # 【新】导入 glob 模块用于处理通配符
 
 # --- 脚本配置 ---
 # ExaBayes 命令将使用的文件名
@@ -176,15 +177,25 @@ try:
     print(f"\n--- 步骤 2: 开始生成一致性树 (consense) ---")
     
     # 【已修正】
-    # 根据您的截图，通配符必须是 "ExaBayes_topologies.run-*.{OUTPUT_PREFIX}" 格式
-    topology_files_glob = f"ExaBayes_topologies.run-*.{OUTPUT_PREFIX}"
+    # 1. 定义通配符模式
+    topology_files_pattern = f"ExaBayes_topologies.run-*.{OUTPUT_PREFIX}"
     
-    consense_command_list = [
-        "consense",
-        "-f", topology_files_glob,
-        "-n", CONSENSUS_OUTPUT_NAME
-    ]
+    # 2. 使用 glob 模块查找所有匹配的文件
+    topology_files_list = glob.glob(topology_files_pattern)
     
+    # 3. 检查是否找到了文件
+    if not topology_files_list:
+        print(f"\n[错误] 'consense' 失败：未找到任何拓扑文件。")
+        print(f"    (搜索模式: '{topology_files_pattern}')")
+        sys.exit(1)
+        
+    print(f"    > 找到了 {len(topology_files_list)} 个拓扑文件用于合并。")
+
+    # 4. 构建 consense 命令列表
+    #    格式: ["consense", "-f", "file1.txt", "file2.txt", ..., "-n", "myCons"]
+    consense_command_list = ["consense", "-f"] + topology_files_list + ["-n", CONSENSUS_OUTPUT_NAME]
+    
+    # 打印一个人类可读的命令（注意：这只是为了显示，真正的命令是列表）
     print(f"Running: {' '.join(consense_command_list)}")
     result_consense = subprocess.run(consense_command_list, check=True, text=True)
 
@@ -207,8 +218,7 @@ except subprocess.CalledProcessError as e:
     if failed_command == "consense":
         print(f"\n[错误] 'consense' 命令执行失败，退出码: {e.returncode}")
         print(f"MCMC 分析可能已成功，但无法生成一致性树。")
-        # 【已修正】更新了错误消息中的通配符
-        print(f"请检查 MCMC 输出文件 ('{topology_files_glob}') 是否存在且不为空。")
+        print(f"请检查 consense 的输出日志。")
     else:
         print(f"\n[错误] 'mpirun' (ExaBayes) 命令执行失败，退出码: {e.returncode}")
         print("请检查 ExaBayes 的输出日志或错误信息。")
