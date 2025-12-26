@@ -1,133 +1,52 @@
-# CD-HIT 并行处理脚本
+# 2. CD-HIT 并行去冗余工具 ✂️
 
-这是一个用于并行处理 FASTA 文件的 Python 脚本，使用 CD-HIT-EST 工具对转录组序列进行聚类分析。
+本目录提供了一个高效的并行处理脚本，用于利用 **CD-HIT-EST** 工具对组装好的转录组序列进行去冗余处理。
 
-## 功能描述
+## 🌟 核心功能
+- **Singularity 容器化**: 无需在本地安装 CD-HIT 环境，直接调用镜像运行。
+- **全自动并行**: 自动检测 CPU 核心数，同时对目录下所有 `.fas` 文件进行批量处理。
+- **高兼容性**: 专为大规模转录组分析设计，能够处理海量序列数据。
 
-- **批量处理**: 自动扫描当前目录下所有 `.fas` 文件
-- **并行处理**: 使用多进程并行处理多个文件，提高效率
-- **自动检测**: 自动检测系统中安装的 CD-HIT-EST 可执行文件
-- **日志记录**: 详细的日志记录，包括处理进度和错误信息
+---
 
-## 系统要求
+## 🚀 快速开始
 
-- Python 3.x
-- CD-HIT 软件包 (cd-hit-est 可执行文件)
+### 1. 下载必要的镜像文件 (Singularity Image)
+由于镜像文件较大，请从 Hugging Face 下载：
+- **下载地址**: [Hugging Face - phylo-scripts-images](https://huggingface.co/datasets/Jhe1004/phylo-scripts-images/resolve/main/cdhit.sif)
+- **存放位置**: 下载后请将 `cdhit.sif` 放在本目录下。
 
-## 安装 CD-HIT
+### 2. 环境要求
+- **Python**: 3.x
+- **容器软件**: 系统需安装 [Singularity](https://sylabs.io/guides/3.0/user-guide/installation.html) 或 Apptainer。
 
-### Ubuntu/Debian
-```bash
-sudo apt-get install cd-hit
-```
+---
 
-### CentOS/RHEL
-```bash
-sudo yum install cd-hit
-```
+## 📖 使用指南
 
-### 源码编译
-```bash
-# 从官网下载源码
-wget https://github.com/weizhongli/cdhit/releases/download/V4.8.1/cd-hit-v4.8.1-2019-0228.tar.gz
+### 运行程序
+1. 将需要处理的 `.fas` 文件（如上一步得到的最长转录本）放入本目录，或在 `cdhit.py` 脚本中指定路径。
+2. 执行脚本：
+   ```bash
+   python cdhit.py
+   ```
 
-# 解压并编译
-tar -xzf cd-hit-v4.8.1-2019-0228.tar.gz
-cd cd-hit-v4.8.1-2019-0228
-make
+### 参数说明
+脚本默认使用以下 CD-HIT 参数：
+- `identity = 0.98` (序列相似度阈值)
+- `coverage = 0.9` (序列覆盖度阈值)
+- 更多详细参数可进入 `cdhit.py` 内部简单修改。
 
-# 将可执行文件添加到 PATH
-sudo cp cd-hit-est /usr/local/bin/
-```
+---
 
-## 使用方法
+## 📂 输出文件说明
+处理完成后，每个输入文件 `sample.fas` 会对应产生：
+1. `sampleta`: (默认输出名后缀) 聚类去冗余后的非冗余序列文件。
+2. `sampleta.clstr`: 聚类详细信息记录，包含哪些序列归为了同一类。
+3. `processing.log`: 记录运行过程中的并行详细日志。
 
-### 基本用法
-```bash
-python cdhit.py
-```
+---
 
-### 指定 CD-HIT-EST 路径
-如果 CD-HIT-EST 不在系统路径中，可以指定完整路径：
-```bash
-python cdhit.py /path/to/cd-hit-est
-```
-
-## 输入文件要求
-
-- 文件格式: `.fas` 后缀的 FASTA 文件
-- 文件位置: 脚本所在目录
-- 序列类型: 转录组序列 (EST)
-
-## 输出文件
-
-- 每个输入文件会生成对应的输出文件，命名格式为 `原文件名ta`
-- 处理日志保存在 `processing.log` 文件中
-
-## 输出文件说明
-
-CD-HIT-EST 会生成以下文件：
-- `*.clstr`: 聚类结果文件，包含序列聚类信息
-- 主输出文件: 去冗余后的序列文件
-
-## 并行处理
-
-脚本会自动检测 CPU 核心数，并使用所有可用核心并行处理文件。
-
-## 日志信息
-
-脚本会输出详细的处理信息，包括：
-- 找到的 `.fas` 文件数量
-- 并行进程数量
-- 每个文件的处理状态
-- 错误信息（如果有）
-
-## 示例
-
-假设当前目录有以下文件：
-```
-sample1.fas
-sample2.fas
-sample3.fas
-```
-
-运行脚本：
-```bash
-python cdhit.py
-```
-
-输出：
-```
-2024-01-01 12:00:00 [INFO] Found 3 .fas files to process.
-2024-01-01 12:00:00 [INFO] Starting processing with 8 parallel processes...
-2024-01-01 12:00:00 [INFO] Starting cd-hit-est for sample1.fas -> sample1.fasta
-2024-01-01 12:00:00 [INFO] Starting cd-hit-est for sample2.fas -> sample2.fasta
-2024-01-01 12:00:00 [INFO] Starting cd-hit-est for sample3.fas -> sample3.fasta
-2024-01-01 12:00:05 [INFO] Successfully processed sample1.fas
-2024-01-01 12:00:06 [INFO] Successfully processed sample2.fas
-2024-01-01 12:00:07 [INFO] Successfully processed sample3.fas
-2024-01-01 12:00:07 [INFO] All files have been processed.
-```
-
-## 故障排除
-
-### CD-HIT-EST 未找到
-如果出现 "cd-hit-est 未安装或不在系统路径中" 错误：
-1. 确保 CD-HIT 已正确安装
-2. 或者使用完整路径运行脚本：`python cdhit.py /path/to/cd-hit-est`
-
-### 没有找到 .fas 文件
-确保当前目录包含 `.fas` 后缀的 FASTA 文件。
-
-### 权限问题
-确保 CD-HIT-EST 可执行文件具有执行权限：
-```bash
-chmod +x /path/to/cd-hit-est
-```
-
-## 注意事项
-
-- 脚本会处理当前目录下的所有 `.fas` 文件
-- 输出文件会覆盖同名的现有文件
-- 建议在处理前备份重要数据
-- 处理大型文件时可能需要较长时间和较多内存
+## 🛠 故障排除
+- **镜像丢失**: 如果报错 `Image not found`，请确认 `cdhit.sif` 已经放置在当前脚本目录下。
+- **权限问题**: 如果 Singularity 运行失败，请尝试赋予镜像执行权限：`chmod +x cdhit.sif`。
