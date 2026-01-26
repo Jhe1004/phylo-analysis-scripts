@@ -1,0 +1,11 @@
+out_max_6_conf.ne.txt,-26440.138108441155
+out_max_3_conf.ne.txt,-26388.119126135254
+out_max_0_conf.ne.txt,-27113.155379600274
+out_max_9_conf.ne.txt,-26188.631437220618
+out_max_5_conf.ne.txt,-26469.40093676043
+out_max_2_conf.ne.txt,-26389.022976220247
+out_max_10_conf.ne.txt,-26313.43180351943
+out_max_7_conf.ne.txt,-26414.088285253503
+out_max_4_conf.ne.txt,-26517.39706970149
+out_max_8_conf.ne.txt,-26288.581421154166
+out_max_1_conf.ne.txt,-26517.65244375138

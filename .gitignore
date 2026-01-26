@@ -1,0 +1,8 @@
+*.simg
+*.sif
+*.tar.gz
+*.gz
+*.zip
+.DS_Store
+__pycache__/
+*.pyc

@@ -1,0 +1,21 @@
+data consists of 614 gene trees and 715 4-taxon subsets
+
+ same taxa in gene trees and quartets: ["Anemone_flaccida_17.fasta.transdecoder.pep", "Aquilegia_formosa_9_2.fasta.transdecoder.pep", "Asteropyrum_peltatum_44.fasta.transdecoder.pep", "Callianthemum_alatavicum_42.fasta.transdecoder.pep", "Caltha_scaposa_41.fasta.transdecoder.pep", "Coptis_chinensis_4_2.fasta.transdecoder.pep", "Delphinium_anthriscifolium_40.fasta.transdecoder.pep", "Helleborus_thibetanus_45.fasta.transdecoder.pep", "Hydrastis_canadensis_2.fasta.transdecoder.pep", "Nigella_sativa_31.fasta.transdecoder.pep", "Ranunculus_sceleratus_28.fasta.transdecoder.pep", "Souliea_vaginata_34.fasta.transdecoder.pep", "Trollius_ranunculoides_16.fasta.transdecoder.pep"]
+Taxon Anemone_flaccida_17.fasta.transdecoder.pep appears in 614 input trees (100.0 %)
+Taxon Aquilegia_formosa_9_2.fasta.transdecoder.pep appears in 614 input trees (100.0 %)
+Taxon Asteropyrum_peltatum_44.fasta.transdecoder.pep appears in 614 input trees (100.0 %)
+Taxon Callianthemum_alatavicum_42.fasta.transdecoder.pep appears in 614 input trees (100.0 %)
+Taxon Caltha_scaposa_41.fasta.transdecoder.pep appears in 614 input trees (100.0 %)
+Taxon Coptis_chinensis_4_2.fasta.transdecoder.pep appears in 614 input trees (100.0 %)
+Taxon Delphinium_anthriscifolium_40.fasta.transdecoder.pep appears in 614 input trees (100.0 %)
+Taxon Helleborus_thibetanus_45.fasta.transdecoder.pep appears in 614 input trees (100.0 %)
+Taxon Hydrastis_canadensis_2.fasta.transdecoder.pep appears in 614 input trees (100.0 %)
+Taxon Nigella_sativa_31.fasta.transdecoder.pep appears in 614 input trees (100.0 %)
+Taxon Ranunculus_sceleratus_28.fasta.transdecoder.pep appears in 614 input trees (100.0 %)
+Taxon Souliea_vaginata_34.fasta.transdecoder.pep appears in 614 input trees (100.0 %)
+Taxon Trollius_ranunculoides_16.fasta.transdecoder.pep appears in 614 input trees (100.0 %)
+----------------------------
+
+will print below only the 4-taxon subsets with data from <= 70.0% genes
+----------------------------
+

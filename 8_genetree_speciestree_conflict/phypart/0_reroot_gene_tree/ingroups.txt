@@ -1,0 +1,16 @@
+Ranunculus_brotherusii_29.fasta.transdecoder.pep
+Ranunculus_bungei_30.fasta.transdecoder.pep
+Ranunculus_sceleratus_28.fasta.transdecoder.pep
+Halerpestes_cymbalaria_22.fasta.transdecoder.pep
+Oxygraphis_glacialis_25.fasta.transdecoder.pep
+Oxygraphis_glacialis_24.fasta.transdecoder.pep
+Anemone_flaccida_17.fasta.transdecoder.pep
+Hepatica_henryi_23.fasta.transdecoder.pep
+Anemone_hupehensis_18.fasta.transdecoder.pep
+Pulsatilla_patens_27.fasta.transdecoder.pep
+Pulsatilla_chinensis_26.fasta.transdecoder.pep
+Anemoclema_glauciifolium_19.fasta.transdecoder.pep
+Clematis_tangutica_maerkang.fasta.transdecoder.pep
+Clematis_montana.fasta.transdecoder.pep
+Clematis_leschenaultiana2.fasta.transdecoder.pep
+Clematis_leschenaultiana.fasta.transdecoder.pep

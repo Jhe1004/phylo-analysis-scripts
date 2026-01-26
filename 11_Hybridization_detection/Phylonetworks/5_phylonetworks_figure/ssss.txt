@@ -1,0 +1,1 @@
+(Clematis_repens.fasta.transdecoder.pep,(Clematis_intricata_2019052001.fasta.transdecoder.pep,((Clematis_songorica_kashi.fasta.transdecoder.pep,(Anemoclema_glauciifolium_19.fasta.transdecoder.pep)#H6):0.13661723667631231,Clematis_viridis_jiangda.fasta.transdecoder.pep):0.4017063483729608):1.0353295804742533,#H6);
