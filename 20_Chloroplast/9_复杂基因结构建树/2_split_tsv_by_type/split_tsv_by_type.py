@@ -1,17 +1,15 @@
-import os
-import sys
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-# --- 脚本配置 ---
+from pathlib import Path
 
-# 1. Proteinortho的TSV输入文件
+
+INPUT_DIRECTORY = "input"
+OUTPUT_DIRECTORY = "output"
 INPUT_TSV = "myproject.proteinortho.tsv"
-
-# 2. 输出文件名 (修改为三类)
 OUTPUT_CDS = "proteinortho_cds.tsv"
-OUTPUT_RNA = "proteinortho_rna.tsv"  # <-- 新的合并类别
+OUTPUT_RNA = "proteinortho_rna.tsv"
 OUTPUT_IGS = "proteinortho_igs.tsv"
-
-# --- 辅助函数 ---
 
 def get_fragment_type(fragment_id):
     """
@@ -39,16 +37,19 @@ def get_fragment_type(fragment_id):
 
 # --- 主函数 ---
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+INPUT_PATH = SCRIPT_DIR / INPUT_DIRECTORY / INPUT_TSV
+OUTPUT_DIR = SCRIPT_DIR / OUTPUT_DIRECTORY
+
+
 def split_tsv():
     """
     主函数：读取TSV文件，将其拆分为 CDS, RNA (rRNA+tRNA), 和 IGS 三个文件。
     """
-    print(f"开始处理: {INPUT_TSV}...")
-    
-    if not os.path.exists(INPUT_TSV):
-        print(f"错误: 未找到输入文件 '{INPUT_TSV}'。")
-        print("请确保 'myproject.proteinortho.tsv' 文件在当前目录中。")
-        sys.exit(1)
+    print(f"开始处理: {INPUT_PATH}...")
+    if not INPUT_PATH.exists():
+        raise FileNotFoundError(f"未找到输入文件: {INPUT_PATH}")
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
         
     # 存储标题行
     header_lines = []
@@ -63,7 +64,7 @@ def split_tsv():
     
     try:
         # --- 步骤 1: 读取和分类所有行 ---
-        with open(INPUT_TSV, 'r') as f_in:
+        with INPUT_PATH.open('r', encoding='utf-8') as f_in:
             for line in f_in:
                 # 1. 存储注释/标题行
                 if line.startswith('#'):
@@ -92,17 +93,17 @@ def split_tsv():
         # --- 步骤 2: 将分类后的行写入各自的文件 ---
         
         # 写入 CDS 文件
-        with open(OUTPUT_CDS, 'w') as f_out:
+        with (OUTPUT_DIR / OUTPUT_CDS).open('w', encoding='utf-8') as f_out:
             f_out.writelines(header_lines) # 写入表头
             f_out.writelines(lines_data["cds"]) # 写入数据
             
         # 写入 RNA 文件
-        with open(OUTPUT_RNA, 'w') as f_out:
+        with (OUTPUT_DIR / OUTPUT_RNA).open('w', encoding='utf-8') as f_out:
             f_out.writelines(header_lines)
             f_out.writelines(lines_data["rna"])
 
         # 写入 IGS 文件
-        with open(OUTPUT_IGS, 'w') as f_out:
+        with (OUTPUT_DIR / OUTPUT_IGS).open('w', encoding='utf-8') as f_out:
             f_out.writelines(header_lines)
             f_out.writelines(lines_data["igs"])
 

@@ -1,3 +1,0 @@
-Burmannia_biflora_SRR19179841.fasta.transdecoder.fasta.transdecoder.pep
-Aletris_farinosa_SRR19179843.fasta.transdecoder.fasta.transdecoder.pep
-Dioscorea_oppositifolia_SRR25002067.fasta.transdecoder.fasta.transdecoder.pep

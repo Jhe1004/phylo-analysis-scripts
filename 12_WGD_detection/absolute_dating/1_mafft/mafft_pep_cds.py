@@ -1,138 +1,143 @@
-'''
-该脚本需要两个输入文件，分别是proteinortho输出的pep(蛋白质)文件以及proteinortho同时输出的cds(碱基)文件。脚本会先排序蛋白质文件，之后根据蛋白质文件再排序碱基文件。
-脚本会同时输出蛋白质文件和碱基文件。
-'''
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-from multiprocessing import Pool
-import os, time, random
-from Bio import SeqIO, Seq
-import argparse
-import sys
+from __future__ import annotations
 
+from concurrent.futures import ProcessPoolExecutor
+from pathlib import Path
+import os
+import shutil
+import subprocess
 
-#解析参数
-
-parser = argparse.ArgumentParser(description="Options for mafft_pep_cds.py",
-                                            add_help=True)
-additional = parser.add_argument_group("additional arguments")    
-additional.add_argument('-n', '--num_cpu', action="store", type=int, default=6,
-                        metavar='\b', help="The maximum number of CPUs that this script can be used (Two usable CPUs means that the\
-                             script will analyze two matrices at the same time), default = 1")
-additional.add_argument('-t', '--thread', action="store", type=int, default=1,
-                        metavar='\b', help="Number of threads for each analysis of matrices, default = 1, (If only a single or a\
-                             small number of matrices are analyzed, the setting of the '-n' parameter will not increase the computational efficiency,\
-                              then you can choose specify this parameter to increase the computational efficiency. but if you need to align a\
-                             large number of short gene files (such like preparing data for ASTRAL analysis), it is highly recommended to\
-                                  set this parameter to 1 and set the '-n' to the maximum allowable number of CPUs\
-                             for your computer")
-additional.add_argument('-j', '--just2mafft', action="store_true",
-                        help="just run mafft for each fasta")  
-
-args = parser.parse_args()
-num_cpu    = args.num_cpu
-thread     = args.thread
-just2mafft     = args.just2mafft
+from Bio import SeqIO
 
 
+SCRIPT_DIR = Path(__file__).resolve().parent
 
-#定义需要的进程数th
+# ==============================
+# 配置区：请直接修改这里
+# ==============================
+INPUT_DIRECTORY = "input"
+OUTPUT_DIRECTORY = "output"
 
-th = num_cpu
+CONDA_ENV_NAME = "trinity_env"
+MAFFT_EXECUTABLE_NAME = "mafft"
 
-
-
-#函数 get_file_list: 获取当前文件夹中符合目标扩展名的文件
-#输入 无，将本脚本放置在目标文件夹中即可
-#输出 file_name：所有文件的名称列表
-
-def get_file_list():      
-    file_name = []       
-    for each in os.listdir(os.getcwd()):        
-        if "pep.fas" in each:
-            file_name.append(each)
-    return file_name
+PROCESS_COUNT = max(1, min(8, os.cpu_count() or 1))
+THREADS_PER_PROCESS = 1
+JUST_ALIGN_CDS_DIRECTLY = False
+# ==============================
 
 
-#函数 get_th_list: 将所有文件平均的分给各个进程
-#输入 file_name: 所有文件的名称列表
-#输出 th_list： 一个列表，列表中的各个元素为各个进程所应该处理的文件
-
-def get_th_list(file_name):
-    th_list = []
-    for each_num in range(th):
-        th_list.append([])
-    print("本程序共使用 " + str(len(th_list)) + " 个进程")
-    n = 0
-    for each_file in file_name:       
-        th_list[n].append(each_file)
-        if n == th - 1:
-            n = 0
-        else:
-            n = n + 1
-    return th_list
+def resolve_path(relative_path: str) -> Path:
+    return (SCRIPT_DIR / relative_path).resolve()
 
 
+def ensure_directory(path: Path) -> None:
+    path.mkdir(parents=True, exist_ok=True)
 
 
-#函数 aa2nt_aln: mafft蛋白文件之后，根据蛋白质文件来排序碱基文件
-#输入 aa_aln: 排序好的蛋白质文件；nt_fasta：未排序的碱基文件；outfile：输出文件名称
-#输出 无
+def find_executable(executable_name: str) -> Path:
+    local_candidate = SCRIPT_DIR / "dependencies" / "bin" / executable_name
+    if local_candidate.exists():
+        return local_candidate.resolve()
+    conda_candidate = Path.home() / "miniconda3" / "envs" / CONDA_ENV_NAME / "bin" / executable_name
+    if conda_candidate.exists():
+        return conda_candidate.resolve()
+    system_candidate = shutil.which(executable_name)
+    if system_candidate:
+        return Path(system_candidate).resolve()
+    raise FileNotFoundError(f"未找到可执行文件 {executable_name}")
 
-def aa2nt_aln(aa_aln,nt_fasta,outfile):
-    # store the nucleotide sequences in a dictionary
-    nt_file = open(nt_fasta,"r")
-    nt_dict = SeqIO.to_dict(SeqIO.parse(nt_file, "fasta"))
-    nt_file.close()
-    # store the nucleotide sequences in a dictionary
-    aa_file = open(aa_aln,"r")
-    aa_dict = SeqIO.to_dict(SeqIO.parse(aa_file, "fasta"))
-    aa_file.close()
-    outfile = open(outfile,"a")
-    # read through an aa sequence one site at a time
-    # if the site is not a gap insert the corresponding codon into a new nt sequence
-    # if it is a gap, insert three gap characters
-    for seq in aa_dict:
-        new_seq=""
-        counter=0
-        for character in aa_dict[seq]:
-            if character != '-':
-                if character != '*':
-                    new_seq = new_seq+nt_dict[seq].seq[counter:counter+3]
-                    counter = counter+3
+
+def aa_to_nt_alignment(aa_alignment_file: Path, cds_fasta_file: Path, output_file: Path) -> None:
+    nt_dict = SeqIO.to_dict(SeqIO.parse(str(cds_fasta_file), "fasta"))
+    aa_dict = SeqIO.to_dict(SeqIO.parse(str(aa_alignment_file), "fasta"))
+    with open(output_file, "w", encoding="utf-8") as handle:
+        for seq_id, aa_record in aa_dict.items():
+            if seq_id not in nt_dict:
+                raise KeyError(f"在 CDS 文件中找不到对应序列 ID: {seq_id}")
+            nt_seq = str(nt_dict[seq_id].seq)
+            if len(nt_seq) % 3 != 0:
+                raise ValueError(f"CDS 长度不是 3 的倍数: {seq_id}")
+            new_seq = []
+            cursor = 0
+            for aa_char in str(aa_record.seq):
+                if aa_char == "-":
+                    new_seq.append("---")
+                elif aa_char == "*":
+                    new_seq.append("---")
+                    cursor += 3
                 else:
-                    new_seq = new_seq+"---"
-                    counter = counter+3					
-            else:
-                new_seq = new_seq+"---"
-        outfile.write(">" + str(seq) + "\n")
-        outfile.write(str(new_seq) + "\n") 
+                    new_seq.append(nt_seq[cursor : cursor + 3])
+                    cursor += 3
+            handle.write(f">{seq_id}\n{''.join(new_seq)}\n")
 
 
+def run_command(cmd: list[str], output_file: Path) -> None:
+    result = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    if result.returncode != 0:
+        raise RuntimeError(f"命令运行失败: {' '.join(cmd)}\n{result.stderr.strip()}")
+    output_file.write_text(result.stdout, encoding="utf-8")
 
 
-def main_software(each_file_name_list):
-    print(each_file_name_list)
-    for each in each_file_name_list:
-        #print("mafft --thread " + str(thread) + " " + os.getcwd() + os.sep + each + " > " + os.getcwd() + os.sep + each[:-4] + "_maffted.fasta")
-        os.system("mafft --thread " + str(thread) + " " + os.getcwd() + os.sep + each + " > " + os.getcwd() + os.sep + each[:-6] + "_maffted.fasta")
-        #print(each[:-6] + "_maffted.fasta", each[:-9] + "cds.fasta", each[:-2])
-        
-        if not just2mafft:
-            aa2nt_aln(each[:-6] + "_maffted.fasta", each[:-9] + "cds.fasta", each[:-9] + "cds_maffted.fasta")
-        else:
-            os.system("mafft --thread " + str(thread) + " " + os.getcwd() + os.sep + each[:-9] + "cds.fasta" + " > " + os.getcwd() + os.sep + each[:-9] + "cds_maffted.fasta")
+def process_family(task: tuple[Path, Path, Path, Path, bool, int]) -> str:
+    pep_file, cds_file, pep_output, cds_output, just_align_cds, threads_per_process = task
+    mafft_executable = find_executable(MAFFT_EXECUTABLE_NAME)
+    run_command([str(mafft_executable), "--thread", str(threads_per_process), str(pep_file)], pep_output)
+    if just_align_cds:
+        run_command([str(mafft_executable), "--thread", str(threads_per_process), str(cds_file)], cds_output)
+    else:
+        aa_to_nt_alignment(pep_output, cds_file, cds_output)
+    return pep_file.stem.replace("_pep", "")
 
-file_name = get_file_list()
-th_list = get_th_list(file_name)
 
-p = Pool(th)
-for i in range(th):
-    p.apply_async(main_software,(th_list[i],))
+def main() -> None:
+    input_dir = resolve_path(INPUT_DIRECTORY)
+    output_dir = resolve_path(OUTPUT_DIRECTORY)
+    pep_output_dir = output_dir / "pep_alignments"
+    cds_output_dir = output_dir / "cds_alignments"
+    ensure_directory(pep_output_dir)
+    ensure_directory(cds_output_dir)
 
-print("----start----")
-p.close()  # 关闭进程池，关闭后po不再接收新的请求
-p.join()  # 等待po中所有子进程执行完成，再执行下面的代码,可以设置超时时间join(timeout=)
-print("-----end-----") 
-  
-		
-           
+    pep_files = sorted(input_dir.glob("*_pep.fasta")) + sorted(input_dir.glob("*_pep.fas"))
+    if not pep_files:
+        raise FileNotFoundError(f"未在 {input_dir} 中找到 *_pep.fasta 文件")
+
+    tasks = []
+    for pep_file in pep_files:
+        family_prefix = pep_file.name.rsplit("_pep", 1)[0]
+        cds_file = input_dir / f"{family_prefix}_cds.fasta"
+        if not cds_file.exists():
+            cds_file = input_dir / f"{family_prefix}_cds.fas"
+        if not cds_file.exists():
+            raise FileNotFoundError(f"找不到与 {pep_file.name} 配套的 CDS 文件")
+        tasks.append(
+            (
+                pep_file,
+                cds_file,
+                pep_output_dir / f"{family_prefix}_pep_maffted.fasta",
+                cds_output_dir / f"{family_prefix}_cds_maffted.fasta",
+                JUST_ALIGN_CDS_DIRECTLY,
+                THREADS_PER_PROCESS,
+            )
+        )
+
+    if PROCESS_COUNT > 1 and len(tasks) > 1:
+        with ProcessPoolExecutor(max_workers=PROCESS_COUNT) as executor:
+            results = list(executor.map(process_family, tasks))
+    else:
+        results = [process_family(task) for task in tasks]
+
+    summary_file = output_dir / "mafft_summary.tsv"
+    with open(summary_file, "w", encoding="utf-8") as handle:
+        handle.write("family\tstatus\n")
+        for family_name in results:
+            handle.write(f"{family_name}\tsuccess\n")
+
+    print(f"完成比对家族数: {len(results)}")
+    print(f"输出目录: {output_dir}")
+
+
+if __name__ == "__main__":
+    main()

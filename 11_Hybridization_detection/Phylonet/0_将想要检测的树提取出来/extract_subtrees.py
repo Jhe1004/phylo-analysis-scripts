@@ -1,36 +1,68 @@
-'''
-每棵基因树都提取出一棵特定的subtree， 这棵树必须包含所有预先给出的物种。提取之后对这些树进行重新置根
-输入：RaxML输出的树文件，每个树文件中包含一棵基因树，所有树文件均放置在与本脚本相同的文件夹中。
-.txt文件，其中每一行代表一个需要提取的物种名称，必须和基因树中的严格对应以及需要
-指定一个外类群名称，这里为了方便只能选择一个物种作为外类群。
-输出：subtree.trees，包含所有处理好的文件
-'''
-import os
+from pathlib import Path
+
 from ete3 import Tree
-now_dir = os.getcwd()    
-
-input_tree_file = "result.tree"
-output_tree_file = "out.trees"
-subtree_species_file = "list.txt"
-outgroup_species = "Gossypium_hirsutum_SRR8156069.fasta.transdecoder.pep"
 
 
-def main():
-    subtree_species_list = []
-    with open(subtree_species_file, "r") as read_file:
-        for each_line in read_file:
-            if len(each_line) > 2:
-                subtree_species_list.append(each_line.replace("\n", "").replace(" ", ""))
+# ==================== 配置区（直接修改这里）====================
+INPUT_DIRECTORY = "input"
+OUTPUT_DIRECTORY = "output"
 
-    with open(output_tree_file, "a") as write_file:
-        with open(input_tree_file, "r") as read_file:
-            for each_tree in read_file:
-                tree1 = Tree(each_tree)
-                try:
-                    tree1.prune(subtree_species_list)
-                    tree1.set_outgroup(outgroup_species)
-                    write_file.write(tree1.write() + "\n")
-                except :
-                    continue
+INPUT_TREE_FILE = "result.tree"
+SUBTREE_SPECIES_FILE = "list.txt"
+OUTPUT_TREE_FILE = "out.trees"
 
-main()
+OUTGROUP_SPECIES = "Gossypium_hirsutum_SRR8156069.fasta.transdecoder.pep"
+TREE_FORMAT = 0
+# ============================================================
+
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+INPUT_DIR = SCRIPT_DIR / INPUT_DIRECTORY
+OUTPUT_DIR = SCRIPT_DIR / OUTPUT_DIRECTORY
+
+
+def read_species_list(species_file: Path) -> list[str]:
+    return [line.strip() for line in species_file.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def main() -> None:
+    input_tree_path = INPUT_DIR / INPUT_TREE_FILE
+    species_file_path = INPUT_DIR / SUBTREE_SPECIES_FILE
+    output_tree_path = OUTPUT_DIR / OUTPUT_TREE_FILE
+
+    if not input_tree_path.exists():
+        raise FileNotFoundError(f"未找到输入树文件: {input_tree_path}")
+    if not species_file_path.exists():
+        raise FileNotFoundError(f"未找到待保留物种列表文件: {species_file_path}")
+
+    subtree_species_list = read_species_list(species_file_path)
+    if OUTGROUP_SPECIES not in subtree_species_list:
+        raise ValueError("OUTGROUP_SPECIES 必须包含在待提取物种列表中。")
+
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    kept_trees = []
+    skipped_count = 0
+    for raw_tree in input_tree_path.read_text(encoding="utf-8").splitlines():
+        raw_tree = raw_tree.strip()
+        if not raw_tree:
+            continue
+        try:
+            tree = Tree(raw_tree, format=TREE_FORMAT)
+            tree.prune(subtree_species_list, preserve_branch_length=True)
+            tree.set_outgroup(OUTGROUP_SPECIES)
+            kept_trees.append(tree.write(format=0).strip())
+        except Exception:
+            skipped_count += 1
+
+    output_tree_path.write_text(
+        "\n".join(kept_trees) + ("\n" if kept_trees else ""),
+        encoding="utf-8",
+    )
+
+    print(f"提取完成，共保留 {len(kept_trees)} 棵子树，跳过 {skipped_count} 棵无法处理的树。")
+    print(f"输出文件: {output_tree_path}")
+
+
+if __name__ == "__main__":
+    main()

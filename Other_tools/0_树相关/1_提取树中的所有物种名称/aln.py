@@ -1,24 +1,34 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from pathlib import Path
+
 from ete3 import Tree
-import os
-import glob
 
-# 获取当前目录
-now_dir = os.getcwd()
 
-def main():
-    # 获取当前目录下所有后缀为.tree的文件
-    tree_files = glob.glob(os.path.join(now_dir, "*.tree"))
+INPUT_DIRECTORY = "input"
+OUTPUT_DIRECTORY = "output"
+TREE_EXTENSIONS = [".tree", ".nwk", ".newick"]
 
-    # 遍历每个.tree文件
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+INPUT_DIR = SCRIPT_DIR / INPUT_DIRECTORY
+OUTPUT_DIR = SCRIPT_DIR / OUTPUT_DIRECTORY
+
+
+def main() -> None:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    tree_files = []
+    for ext in TREE_EXTENSIONS:
+        tree_files.extend(sorted(INPUT_DIR.glob(f"*{ext}")))
+    if not tree_files:
+        raise FileNotFoundError(f"未在 {INPUT_DIR} 中找到树文件。")
     for input_tree in tree_files:
-        # 读取树文件
-        t = Tree(input_tree)
-        
-        # 为每个树文件生成对应的.txt文件
-        output_txt = input_tree + ".txt"
-        with open(output_txt, "w") as write_file:
-            for each_line in t.get_leaf_names():
-                write_file.write(each_line + "\n")
+        t = Tree(str(input_tree))
+        output_txt = OUTPUT_DIR / f"{input_tree.name}.txt"
+        output_txt.write_text("\n".join(t.get_leaf_names()) + "\n", encoding="utf-8")
+    print("树中物种名称提取完成。")
+
 
 if __name__ == "__main__":
     main()

@@ -1,83 +1,54 @@
-import sys
-from Bio import AlignIO
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from collections import Counter
+from pathlib import Path
 
-def calculate_alignment_stats(file_path):
-    """
-    计算FASTA比对文件的统计信息，包括总长度、变异位点和简约信息位点。
+from Bio import AlignIO
 
-    参数:
-    file_path (str): FASTA格式比对文件的路径。
 
-    返回:
-    dict: 包含统计信息的字典。
-    """
-    try:
-        # 读取比对文件
-        alignment = AlignIO.read(file_path, "fasta")
-    except FileNotFoundError:
-        print(f"错误：找不到文件 '{file_path}'")
-        return None
-    except Exception as e:
-        print(f"读取文件时发生错误: {e}")
-        return None
+INPUT_DIRECTORY = "input"
+OUTPUT_DIRECTORY = "output"
+INPUT_FASTA_FILE = "alignment.fasta"
 
-    # 获取比对长度（所有序列的长度应该是一样的）
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+INPUT_DIR = SCRIPT_DIR / INPUT_DIRECTORY
+OUTPUT_DIR = SCRIPT_DIR / OUTPUT_DIRECTORY
+
+
+def calculate_alignment_stats(file_path: Path) -> dict[str, int]:
+    alignment = AlignIO.read(str(file_path), "fasta")
     alignment_length = alignment.get_alignment_length()
-
-    # 初始化计数器
     variable_sites = 0
     parsimony_informative_sites = 0
-
-    # 逐个位点（列）进行分析
     for i in range(alignment_length):
-        # 获取当前位置的所有字符
-        column = alignment[:, i]
-        
-        # 移除gap '-' 和未知字符 'N' or '?' 等，只统计ATCG
-        # 如果您想将gap也视为一种变异，可以注释掉下面这行
-        column = ''.join([base for base in column.upper() if base in 'ATCG'])
-
+        column = "".join(base for base in alignment[:, i].upper() if base in "ATCG")
         if not column:
-            continue # 如果该列只有gap或未知字符，则跳过
-
-        # 计算该位点的字符频率
+            continue
         counts = Counter(column)
-        unique_bases = [base for base in counts if base in 'ATCG']
-
-        # 检查是否是变异位点
-        # 如果存在至少两种不同的碱基，则为变异位点
+        unique_bases = [base for base in counts if base in "ATCG"]
         if len(unique_bases) > 1:
             variable_sites += 1
-
-            # 检查是否是简约信息位点 (Parsimony-Informative Site)
-            # 条件：至少有两种字符，且每种字符至少出现两次
-            if len(unique_bases) >= 2:
-                count_of_bases_appearing_at_least_twice = 0
-                for base in unique_bases:
-                    if counts[base] >= 2:
-                        count_of_bases_appearing_at_least_twice += 1
-                
-                if count_of_bases_appearing_at_least_twice >= 2:
-                    parsimony_informative_sites += 1
-
+            if sum(1 for base in unique_bases if counts[base] >= 2) >= 2:
+                parsimony_informative_sites += 1
     return {
         "characters": alignment_length,
         "variable_sites": variable_sites,
-        "parsimony_informative_sites": parsimony_informative_sites
+        "parsimony_informative_sites": parsimony_informative_sites,
     }
 
+
+def main() -> None:
+    input_file = INPUT_DIR / INPUT_FASTA_FILE
+    if not input_file.exists():
+        raise FileNotFoundError(f"未找到比对文件: {input_file}")
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    stats = calculate_alignment_stats(input_file)
+    lines = [f"{key}\t{value}" for key, value in stats.items()]
+    (OUTPUT_DIR / "alignment_stats.tsv").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print("比对统计完成。")
+
+
 if __name__ == "__main__":
-    # 检查命令行是否提供了文件名
-    if len(sys.argv) != 2:
-        print("使用方法: python alignment_stats.py <fasta_file>")
-        sys.exit(1)
-
-    fasta_file = sys.argv[1]
-    stats = calculate_alignment_stats(fasta_file)
-
-    if stats:
-        print("比对文件统计结果:")
-        print(f"  总长度 (Characters): {stats['characters']}")
-        print(f"  变异位点 (Variable sites): {stats['variable_sites']}")
-        print(f"  简约信息位点 (Parsimony-informative sites): {stats['parsimony_informative_sites']}")
+    main()

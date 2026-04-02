@@ -1,38 +1,40 @@
-import os
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from pathlib import Path
+
 from ete3 import Tree
-now_dir = os.getcwd()    
-#inpurt_tree = "RAxML_bestTree.result"
-ingroups_file = "renamed.tree.txt"
-
-def get_file_list():
-    file_temp = os.listdir()
-    file_list = []
-    for each in file_temp:       
-        if "RAx" in each:
-            file_list.append(each)
-    return file_list
 
 
-def main(inpurt_tree):
-    ingroups_list = []
-    with open(ingroups_file, "r") as read_file:
-        for each_line in read_file:
-            ingroups_list.append(each_line.replace("\n", ""))
-    t = Tree(inpurt_tree)
-    name_list_in_genetree = t.get_leaf_names()
-    name_list_in_genetree_new = []
-    for each_name in name_list_in_genetree:
-        if each_name in ingroups_list:
-            name_list_in_genetree_new.append(each_name)
-        else:
-            pass
-    t.prune(name_list_in_genetree_new)
-    t.write(format=1, outfile=inpurt_tree + "_new.tree")
-    for each_name in ingroups_list:
-        if each_name not in name_list_in_genetree_new:
-            print(each_name + "not in the subtree")
+INPUT_DIRECTORY = "input"
+OUTPUT_DIRECTORY = "output"
+INGROUPS_FILE = "renamed.tree.txt"
+TREE_NAME_PATTERN = "RAx"
+
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+INPUT_DIR = SCRIPT_DIR / INPUT_DIRECTORY
+OUTPUT_DIR = SCRIPT_DIR / OUTPUT_DIRECTORY
+
+
+def main() -> None:
+    ingroups_file = INPUT_DIR / INGROUPS_FILE
+    if not ingroups_file.exists():
+        raise FileNotFoundError(f"未找到保留名单文件: {ingroups_file}")
+    ingroups_list = [line.strip() for line in ingroups_file.read_text(encoding="utf-8").splitlines() if line.strip()]
+    tree_files = sorted([p for p in INPUT_DIR.iterdir() if p.is_file() and TREE_NAME_PATTERN in p.name])
+    if not tree_files:
+        raise FileNotFoundError(f"未在 {INPUT_DIR} 中找到包含 {TREE_NAME_PATTERN} 的树文件。")
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    for tree_file in tree_files:
+        t = Tree(str(tree_file))
+        keep_names = [name for name in t.get_leaf_names() if name in ingroups_list]
+        if not keep_names:
+            continue
+        t.prune(keep_names)
+        t.write(format=1, outfile=str(OUTPUT_DIR / f"{tree_file.name}_new.tree"))
+    print("保留类群子树提取完成。")
 
 
 if __name__ == "__main__":
-    for each_tree_file in get_file_list():
-        main(each_tree_file)
+    main()

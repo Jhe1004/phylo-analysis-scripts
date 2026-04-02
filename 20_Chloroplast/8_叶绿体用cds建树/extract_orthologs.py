@@ -1,314 +1,284 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-extract_orthologs.py (Python 3.6+ Compatible, Final Robust Version)
 
-该脚本用于从多个GenBank格式的植物叶绿体基因组文件中提取直系同源基因。
+from __future__ import annotations
 
-最终修复与功能:
-- 智能判断基因类型，优先级: CDS > rRNA > tRNA > gene。
-- [最终修复] 采用全新的、更稳健的序列提取逻辑：
-  - 1. 使用 BLAST 进行初步定位，找到同源基因的大致区域。
-  - 2. 在目标 GenBank 注释中精确查找所有与BLAST命中区域重叠的、同名的基因特征。
-  - 3. 从候选特征中，严格排除所有假基因(pseudogene)。
-  - 4. 按照特征类型优先级和序列长度(最长优先)进行双重排序，选择唯一最佳特征进行提取。
-  - 此方法可完美处理含内含子(join)、反向链(complement)、以及ycf1/ndh等具有多个或模糊注释的复杂情况，贯彻“宁缺毋滥”原则。
-- 文件名清理函数保留小数点（如 rrn4.5）。
-- 自动选择参考基因组（如果未指定），兼容 .gb 和 .gbk 文件。
-"""
-import os
-import sys
-import argparse
-import subprocess
 import shutil
-import re
+import subprocess
+import sys
+import tempfile
 from pathlib import Path
+from typing import Iterable
 
-try:
-    from Bio import SeqIO
-    from Bio.SeqRecord import SeqRecord
-    from Bio.Blast.Applications import NcbiblastnCommandline
-    from Bio.Blast import NCBIXML
-except ImportError:
-    print("错误：Biopython 库未安装。请使用 'pip install biopython' 命令进行安装。")
-    sys.exit(1)
+from Bio import SeqIO
+from Bio.Blast import NCBIXML
+from Bio.Blast.Applications import NcbiblastnCommandline
+from Bio.SeqRecord import SeqRecord
 
 
-def check_blast_installed():
-    """检查 NCBI BLAST+ 是否已安装并可用。"""
-    try:
-        subprocess.run(['makeblastdb', '-version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True, universal_newlines=True)
-        subprocess.run(['blastn', '-version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True, universal_newlines=True)
-        return True
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        print("错误：找不到 NCBI BLAST+ 命令 ('makeblastdb' 或 'blastn')。")
-        print("请确保您已经成功安装了 NCBI BLAST+，并将其添加到了系统的 PATH 环境变量中。")
-        return False
+# =========================
+# 用户配置区
+# =========================
+INPUT_DIRECTORY = "input"
+OUTPUT_DIRECTORY = "output"
+CONDA_ENV_NAME = "trinity_env"
 
-def sanitize_filename(name):
-    """清理字符串，使其成为一个合法的基因文件名（保留点）。"""
-    return "".join(c for c in name if c.isalnum() or c in ('_', '-', '.')).rstrip()
+GENBANK_SUBDIRECTORY = "gb_files"
+REFERENCE_FILENAME = ""
+E_VALUE_THRESHOLD = 1e-10
+MIN_OUTPUT_SEQUENCES = 2
+KEEP_TEMPORARY_FILES = False
 
-def sanitize_sample_name(name):
-    """清理样本名，将不安全的字符替换为下划线。"""
-    name = re.sub(r'[^a-zA-Z0-9_-]', '_', name)
-    name = re.sub(r'__+', '_', name)
-    name = name.strip('_')
-    return name
 
-def create_blast_db(gb_files, temp_dir):
-    """为所有 GenBank 文件创建 BLAST 数据库。"""
-    db_paths = {}
-    print("\n--- 步骤 1: 为所有 GenBank 文件创建 BLAST 数据库 ---")
-    for gb_file in gb_files:
-        original_stem = Path(gb_file).stem
-        sample_name = sanitize_sample_name(original_stem)
-        if original_stem != sample_name:
-            print(f"  - 文件名清理: '{original_stem}' -> '{sample_name}'")
-        fasta_path = temp_dir / f"{sample_name}.fasta"
-        db_path = temp_dir / sample_name
-        try:
-            SeqIO.convert(gb_file, 'genbank', fasta_path, 'fasta')
-            cmd = ['makeblastdb', '-in', str(fasta_path), '-dbtype', 'nucl', '-out', str(db_path)]
-            subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
-            db_paths[sample_name] = str(db_path)
-            print(f"  [成功] 为 {sample_name} 创建了数据库。")
-        except Exception as e:
-            print(f"  [失败] 为 {sample_name} 创建数据库时出错: {e}")
-    return db_paths
+SCRIPT_PATH = Path(__file__).resolve()
+SCRIPT_DIR = SCRIPT_PATH.parent
+INPUT_DIR = SCRIPT_DIR / INPUT_DIRECTORY
+OUTPUT_DIR = SCRIPT_DIR / OUTPUT_DIRECTORY
+DEPENDENCIES_DIR = SCRIPT_DIR / "dependencies"
 
-def get_best_feature(record, gene_name, candidates=None):
-    """
-    [最终版逻辑] 从记录或候选列表中为给定基因名选择最佳特征。
-    1. 过滤掉所有伪基因。
-    2. 按类型优先级 (CDS > rRNA > tRNA > gene) 和长度 (最长优先) 排序。
-    3. 返回最优选。
-    """
-    if candidates is None:
-        candidates = [f for f in record.features if 'gene' in f.qualifiers and f.qualifiers['gene'][0] == gene_name]
-    
-    # 1. 严格排除伪基因
-    valid_candidates = [
-        f for f in candidates 
-        if 'pseudo' not in f.qualifiers and 'pseudogene' not in f.qualifiers
+
+def resolve_user_path(path_text: str) -> Path:
+    return SCRIPT_DIR / path_text
+
+
+def resolve_conda_executable(env_name: str, executable_name: str) -> Path | None:
+    candidate_dirs: list[Path] = []
+    conda_prefix = Path.home() / "miniconda3" / "envs" / env_name / "bin"
+    mamba_prefix = Path.home() / "mambaforge" / "envs" / env_name / "bin"
+    anaconda_prefix = Path.home() / "anaconda3" / "envs" / env_name / "bin"
+    candidate_dirs.extend([conda_prefix, mamba_prefix, anaconda_prefix])
+    for directory in candidate_dirs:
+        candidate = directory / executable_name
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def find_executable(executable_name: str) -> Path:
+    local_candidate = DEPENDENCIES_DIR / "bin" / executable_name
+    if local_candidate.exists():
+        return local_candidate
+    conda_candidate = resolve_conda_executable(CONDA_ENV_NAME, executable_name)
+    if conda_candidate is not None:
+        return conda_candidate
+    system_candidate = shutil.which(executable_name)
+    if system_candidate:
+        return Path(system_candidate)
+    raise FileNotFoundError(
+        f"未找到可执行文件 '{executable_name}'。查找顺序: dependencies/bin -> conda 环境 '{CONDA_ENV_NAME}' -> PATH"
+    )
+
+
+def sanitize_filename(name: str) -> str:
+    return "".join(c for c in name if c.isalnum() or c in ("_", "-", ".")).rstrip()
+
+
+def sanitize_sample_name(name: str) -> str:
+    safe = "".join(c if c.isalnum() or c in ("_", "-") else "_" for c in name)
+    while "__" in safe:
+        safe = safe.replace("__", "_")
+    return safe.strip("_")
+
+
+def load_genbank_files(input_dir: Path) -> list[Path]:
+    gb_dir = input_dir / GENBANK_SUBDIRECTORY
+    gb_files = sorted(gb_dir.glob("*.gb")) + sorted(gb_dir.glob("*.gbk"))
+    if not gb_files:
+        raise FileNotFoundError(
+            f"未在 {gb_dir} 中找到 .gb 或 .gbk 文件。请把 GenBank 文件放到 {INPUT_DIRECTORY}/{GENBANK_SUBDIRECTORY}/"
+        )
+    return gb_files
+
+
+def choose_reference(gb_files: list[Path]) -> Path:
+    if REFERENCE_FILENAME:
+        reference_path = INPUT_DIR / GENBANK_SUBDIRECTORY / REFERENCE_FILENAME
+        if not reference_path.exists():
+            raise FileNotFoundError(f"指定的参考文件不存在: {reference_path}")
+        return reference_path
+    return gb_files[0]
+
+
+def create_blast_database(genbank_file: Path, fasta_path: Path, db_prefix: Path, makeblastdb: Path) -> None:
+    SeqIO.convert(str(genbank_file), "genbank", str(fasta_path), "fasta")
+    command = [
+        str(makeblastdb),
+        "-in",
+        str(fasta_path),
+        "-dbtype",
+        "nucl",
+        "-out",
+        str(db_prefix),
     ]
+    subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-    if not valid_candidates:
-        return None, None # 宁缺毋滥
 
-    # 2. 按优先级和长度排序
-    priority_order = ['CDS', 'rRNA', 'tRNA', 'gene']
-    
+def get_best_feature(record, gene_name: str, candidates: Iterable | None = None):
+    if candidates is None:
+        candidates = [
+            feature
+            for feature in record.features
+            if "gene" in feature.qualifiers and feature.qualifiers["gene"][0] == gene_name
+        ]
+    valid = [
+        feature
+        for feature in candidates
+        if "pseudo" not in feature.qualifiers and "pseudogene" not in feature.qualifiers
+    ]
+    if not valid:
+        return None, None
+    priority_order = ["CDS", "rRNA", "tRNA", "gene"]
+
     def sort_key(feature):
         try:
-            type_priority = priority_order.index(feature.type)
+            priority = priority_order.index(feature.type)
         except ValueError:
-            type_priority = len(priority_order) # 未知类型优先级最低
-        
-        # 长度作为第二排序标准，越长越优先
-        length = len(feature)
-        return (type_priority, -length) # 负号表示降序
+            priority = len(priority_order)
+        return (priority, -len(feature))
 
-    valid_candidates.sort(key=sort_key)
-    
-    best_feature = valid_candidates[0]
-    extraction_type = best_feature.type
-    
-    return best_feature, extraction_type
+    valid = sorted(valid, key=sort_key)
+    best = valid[0]
+    return best, best.type
 
-def find_ortholog_feature_in_blast_hit(target_record, gene_name_raw, hit_start, hit_end):
-    """在BLAST命中区域内查找并提取最合适的基因特征。"""
+
+def find_ortholog_feature_in_hit(target_record, gene_name: str, hit_start: int, hit_end: int):
     hit_location = set(range(hit_start, hit_end + 1))
-    
-    overlapping_candidates = []
+    candidates = []
     for feature in target_record.features:
-        if 'gene' in feature.qualifiers and feature.qualifiers['gene'][0] == gene_name_raw:
-            feature_location = set(range(int(feature.location.start), int(feature.location.end)))
-            if hit_location.intersection(feature_location):
-                overlapping_candidates.append(feature)
-
-    if not overlapping_candidates:
-        return None
-        
-    best_feature, _ = get_best_feature(target_record, gene_name_raw, candidates=overlapping_candidates)
-    
-    if best_feature:
-        return best_feature.extract(target_record.seq)
-    else:
-        return None
-
-def main(args):
-    """主执行函数"""
-    if not check_blast_installed():
-        sys.exit(1)
-
-    input_dir = Path(args.input_dir)
-    output_dir = Path(args.output_dir)
-    evalue_threshold = float(args.evalue)
-
-    if not input_dir.is_dir():
-        print(f"错误：输入目录 '{input_dir}' 不存在。")
-        sys.exit(1)
-
-    gb_files = sorted(list(input_dir.glob('*.gb'))) + sorted(list(input_dir.glob('*.gbk')))
-    if not gb_files:
-        print(f"错误：在目录 '{input_dir}' 中没有找到 .gb 或 .gbk 文件。")
-        sys.exit(1)
-
-    reference_file_path = None
-    if args.reference:
-        reference_file_path = Path(args.reference)
-        if not reference_file_path.is_file():
-            reference_file_path = input_dir / reference_file_path
-            if not reference_file_path.is_file():
-                print(f"错误：指定的参考文件 '{args.reference}' 不存在。")
-                sys.exit(1)
-    else:
-        reference_file_path = gb_files[0]
-        print(f"\n提示：未指定参考基因组，已自动选择 '{reference_file_path.name}' 作为参考。")
-
-    output_dir.mkdir(exist_ok=True)
-    temp_dir = output_dir / "temp_blast_db"
-    if temp_dir.exists(): shutil.rmtree(temp_dir)
-    temp_dir.mkdir(exist_ok=True)
-
-    db_paths = create_blast_db(gb_files, temp_dir)
-    if not db_paths:
-        shutil.rmtree(temp_dir)
-        sys.exit("错误：未能成功创建任何 BLAST 数据库，脚本终止。")
-
-    print("\n--- 步骤 2: 读取所有 GenBank 文件记录 ---")
-    all_records = {}
-    for gb_file in gb_files:
-        original_stem = Path(gb_file).stem
-        sample_name = sanitize_sample_name(original_stem)
-        try:
-            record = SeqIO.read(gb_file, "genbank")
-            all_records[sample_name] = record
-            print(f"  [成功] 已读取 {sample_name} 的序列记录。")
-        except Exception as e:
-            print(f"  [失败] 读取文件 {gb_file} 时出错: {e}")
-            if sample_name in db_paths:
-                del db_paths[sample_name]
-
-    print("\n--- 步骤 3: 开始提取直系同源基因 ---")
-    original_ref_stem = Path(reference_file_path).stem
-    reference_name = sanitize_sample_name(original_ref_stem)
-    reference_record = all_records.get(reference_name)
-
-    if not reference_record:
-        shutil.rmtree(temp_dir)
-        sys.exit(f"错误：无法从 all_records 字典中找到参考记录 '{reference_name}'。")
-    
-    all_gene_names = sorted(list(set(f.qualifiers['gene'][0] for f in reference_record.features if 'gene' in f.qualifiers)))
-    
-    print(f"在参考文件 '{reference_file_path.name}' 中找到 {len(all_gene_names)} 个唯一的基因进行提取。")
-
-    for gene_name_raw in all_gene_names:
-        
-        feature_to_extract, extraction_type = get_best_feature(reference_record, gene_name_raw)
-
-        if not feature_to_extract:
-            print(f"\n正在处理基因: {gene_name_raw}")
-            print(f"  - 警告: 在参考基因组中未找到 '{gene_name_raw}' 的有效特征(非伪基因)，已跳过。")
+        if "gene" not in feature.qualifiers:
             continue
-        
-        gene_name = sanitize_filename(gene_name_raw)
-        if not gene_name:
-            print(f"  - 警告: 基因名 '{gene_name_raw}' 清理后为空，已跳过。")
+        if feature.qualifiers["gene"][0] != gene_name:
             continue
-        
-        print(f"\n正在处理基因: {gene_name_raw} (提取类型: {extraction_type})")
+        feature_location = set(range(int(feature.location.start), int(feature.location.end)))
+        if hit_location.intersection(feature_location):
+            candidates.append(feature)
+    if not candidates:
+        return None
+    best_feature, _ = get_best_feature(target_record, gene_name, candidates=candidates)
+    if best_feature is None:
+        return None
+    return best_feature.extract(target_record.seq)
 
-        ref_gene_seq = feature_to_extract.extract(reference_record.seq)
-        
-        query_fasta = temp_dir / f"query_{gene_name}.fasta"
-        with open(query_fasta, "w") as f:
-            f.write(f">{gene_name}_ref\n{ref_gene_seq}\n")
 
-        orthologs = [SeqRecord(ref_gene_seq, id=reference_name, description=f"gene={gene_name_raw} type={extraction_type}")]
+def main() -> None:
+    makeblastdb = find_executable("makeblastdb")
+    blastn = find_executable("blastn")
+    print(f"使用 makeblastdb: {makeblastdb}")
+    print(f"使用 blastn: {blastn}")
 
-        for sample_name, db_path in db_paths.items():
-            if sample_name == reference_name:
+    gb_files = load_genbank_files(INPUT_DIR)
+    reference_file = choose_reference(gb_files)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    ortholog_dir = OUTPUT_DIR / "ortholog_fastas"
+    ortholog_dir.mkdir(parents=True, exist_ok=True)
+
+    with tempfile.TemporaryDirectory(dir=str(OUTPUT_DIR), prefix="tmp_blast_") as temp_name:
+        temp_dir = Path(temp_name)
+        db_paths: dict[str, Path] = {}
+        all_records = {}
+
+        print("开始创建 BLAST 数据库并读取 GenBank 记录...")
+        for gb_file in gb_files:
+            sample_name = sanitize_sample_name(gb_file.stem)
+            fasta_path = temp_dir / f"{sample_name}.fasta"
+            db_prefix = temp_dir / sample_name
+            create_blast_database(gb_file, fasta_path, db_prefix, makeblastdb)
+            db_paths[sample_name] = db_prefix
+            all_records[sample_name] = SeqIO.read(str(gb_file), "genbank")
+
+        reference_name = sanitize_sample_name(reference_file.stem)
+        reference_record = all_records[reference_name]
+        all_gene_names = sorted(
+            {
+                feature.qualifiers["gene"][0]
+                for feature in reference_record.features
+                if "gene" in feature.qualifiers
+            }
+        )
+
+        summary_lines = [
+            f"输入目录: {INPUT_DIR / GENBANK_SUBDIRECTORY}",
+            f"输出目录: {ortholog_dir}",
+            f"参考文件: {reference_file.name}",
+            f"E-value 阈值: {E_VALUE_THRESHOLD}",
+            "",
+        ]
+
+        for gene_name_raw in all_gene_names:
+            best_feature, extraction_type = get_best_feature(reference_record, gene_name_raw)
+            if best_feature is None:
                 continue
 
-            target_record = all_records.get(sample_name)
-            if not target_record:
-                print(f"  - 警告: 找不到样本 {sample_name} 的序列记录，跳过。")
+            gene_name = sanitize_filename(gene_name_raw)
+            if not gene_name:
                 continue
 
-            blast_result_xml = temp_dir / f"result_{sample_name}.xml"
-            blastn_cline = NcbiblastnCommandline(query=str(query_fasta), db=db_path,
-                                                 evalue=evalue_threshold,
-                                                 outfmt=5, out=str(blast_result_xml))
-            
-            stdout, stderr = blastn_cline()
+            ref_gene_seq = best_feature.extract(reference_record.seq)
+            query_fasta = temp_dir / f"query_{gene_name}.fasta"
+            with query_fasta.open("w", encoding="utf-8") as handle:
+                handle.write(f">{gene_name}_ref\n{ref_gene_seq}\n")
 
-            try:
-                best_hit_seq = None
-                with open(blast_result_xml) as result_handle:
-                    blast_records = NCBIXML.parse(result_handle)
-                    blast_record = next(blast_records, None)
+            orthologs = [
+                SeqRecord(
+                    ref_gene_seq,
+                    id=reference_name,
+                    description=f"gene={gene_name_raw} type={extraction_type}",
+                )
+            ]
 
-                    if blast_record and blast_record.alignments:
-                        hsp = blast_record.alignments[0].hsps[0]
+            for sample_name, db_prefix in db_paths.items():
+                if sample_name == reference_name:
+                    continue
+                target_record = all_records[sample_name]
+                blast_xml = temp_dir / f"{gene_name}_{sample_name}.xml"
+                blastn_cline = NcbiblastnCommandline(
+                    cmd=str(blastn),
+                    query=str(query_fasta),
+                    db=str(db_prefix),
+                    evalue=E_VALUE_THRESHOLD,
+                    outfmt=5,
+                    out=str(blast_xml),
+                )
+                blastn_cline()
 
-                        if hsp.expect <= evalue_threshold:
-                            start, end = min(hsp.sbjct_start, hsp.sbjct_end), max(hsp.sbjct_start, hsp.sbjct_end)
-                            extracted_seq = find_ortholog_feature_in_blast_hit(target_record, gene_name_raw, start, end)
-                            
-                            if extracted_seq:
-                                best_hit_seq = extracted_seq
-                            else:
-                                print(f"  - 在 {sample_name} 中未找到对应的有效基因特征。")
-                        else:
-                             print(f"  - {sample_name}: 最佳匹配的 E-value ({hsp.expect:.2e}) 高于阈值，跳过。")
-                
-                if best_hit_seq:
-                    ortholog_record = SeqRecord(best_hit_seq, id=sample_name, description=f"ortholog_of={gene_name_raw}")
-                    orthologs.append(ortholog_record)
-                    print(f"  - 在 {sample_name} 中找到并提取了完整的同源基因。")
-                # else: # 不再打印 "未找到满足条件的" 警告，因为上面已经打印了更具体的信息
-                #     pass
+                try:
+                    with blast_xml.open() as result_handle:
+                        blast_record = next(NCBIXML.parse(result_handle), None)
+                    if not blast_record or not blast_record.alignments:
+                        continue
+                    hsp = blast_record.alignments[0].hsps[0]
+                    if hsp.expect > E_VALUE_THRESHOLD:
+                        continue
+                    start = min(hsp.sbjct_start, hsp.sbjct_end)
+                    end = max(hsp.sbjct_start, hsp.sbjct_end)
+                    extracted = find_ortholog_feature_in_hit(target_record, gene_name_raw, start, end)
+                    if extracted is None:
+                        continue
+                    orthologs.append(
+                        SeqRecord(
+                            extracted,
+                            id=sample_name,
+                            description=f"ortholog_of={gene_name_raw}",
+                        )
+                    )
+                except Exception:
+                    continue
 
-            except (ValueError, StopIteration):
-                print(f"  - 在 {sample_name} 中未找到任何 BLAST 匹配项。")
-            except Exception as e:
-                print(f"  - 错误: 解析 {sample_name} 的 BLAST 结果时出错: {e}")
+            if len(orthologs) >= MIN_OUTPUT_SEQUENCES:
+                output_fasta = ortholog_dir / f"{gene_name}.fasta"
+                SeqIO.write(orthologs, str(output_fasta), "fasta")
+                summary_lines.append(f"{gene_name}\t{len(orthologs)}")
 
-        if len(orthologs) > 1:
-            output_fasta_path = output_dir / f"{gene_name}.fasta"
-            SeqIO.write(orthologs, output_fasta_path, "fasta")
-            print(f"  [完成] {len(orthologs)} 个同源序列已保存到 {output_fasta_path}")
-        else:
-            print(f"  [跳过] 未能为基因 {gene_name_raw} 找到任何其他同源序列。")
+        (OUTPUT_DIR / "ortholog_summary.tsv").write_text("\n".join(summary_lines) + "\n", encoding="utf-8")
 
-    print("\n--- 步骤 4: 清理临时文件和数据库 ---")
-    try:
-        shutil.rmtree(temp_dir)
-        print("  临时文件已成功删除。")
-    except OSError as e:
-        print(f"  错误: 删除临时目录 {temp_dir} 失败: {e}")
+        if KEEP_TEMPORARY_FILES:
+            kept_dir = OUTPUT_DIR / "kept_temp_blast"
+            if kept_dir.exists():
+                shutil.rmtree(kept_dir)
+            shutil.copytree(temp_dir, kept_dir)
 
-    print("\n脚本执行完毕！")
+    print("直系同源基因提取完成。")
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description="从多个 GenBank 文件中提取直系同源基因 (Python 3.6+ 兼容, 优先提取CDS)。",
-        formatter_class=argparse.RawTextHelpFormatter,
-        epilog="""
-使用示例:
-  # 自动选择参考文件
-  python extract_orthologs.py -i ./input_data -o ./output
 
-  # 手动指定参考文件
-  python extract_orthologs.py -i ./input_data -o ./output -r my_favorite_genome.gb
-"""
-    )
-    parser.add_argument('-r', '--reference', type=str, required=False, 
-                        help='参考基因组的 GenBank 文件名。如果省略，将自动选择输入目录中的第一个文件作为参考。')
-    parser.add_argument('-i', '--input_dir', type=str, required=True, help='包含所有 GenBank 文件的输入目录。')
-    parser.add_argument('-o', '--output_dir', type=str, required=True, help='存放输出 FASTA 文件的目录。')
-    parser.add_argument('-e', '--evalue', type=str, default='1e-10', help='BLASTn 搜索的 E-value 阈值 (默认: 1e-10)。')
-    
-    args = parser.parse_args()
-    main(args)
+if __name__ == "__main__":
+    main()

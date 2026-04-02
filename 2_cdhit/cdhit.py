@@ -1,111 +1,151 @@
-import os
-import sys
-import argparse
 import multiprocessing
+import os
+import shutil
+import subprocess
 import sys
 
-# Dynamic path adjustment to find 'lib' if executed from subdirectory
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
+sys.path.append(PROJECT_ROOT)
 
 try:
     from lib import utils
 except ImportError:
-    print("Error: Could not import 'lib'. Please run this script from the project root or ensure 'lib' is in PYTHONPATH.")
+    print("Error: Could not import 'lib'. Please ensure the project structure is intact.")
     sys.exit(1)
 
-def parse_args():
-    parser = argparse.ArgumentParser(description="Batch CD-HIT Clustering")
-    
-    parser.add_argument("--input", "-i", default=".", help="Input directory containing .fas files (default: current dir)")
-    parser.add_argument("--cdhit-cmd", default="cd-hit-est", help="CD-HIT command (default: cd-hit-est)")
-    parser.add_argument("--threshold", "-c", default="0.95", help="Similarity threshold (default: 0.95)")
-    parser.add_argument("--threads", "-t", type=int, default=multiprocessing.cpu_count(), help="Number of parallel processes (default: all cores)")
-    parser.add_argument("--dry-run", action="store_true", help="Print commands without executing")
 
-    return parser.parse_args()
+# ======================= CONFIGURATION =======================
+INPUT_DIRECTORY = "input"
+OUTPUT_DIRECTORY = "output"
+CONDA_ENV_NAME = "trinity_env"
 
-def process_file(file_info):
-    """
-    Worker function for multiprocessing.
-    file_info is a tuple: (input_path, output_path, cmd_base, dry_run)
-    """
-    input_path, output_path, cmd_base, dry_run = file_info
-    
-    # Re-setup logger inside process or just handle print/exceptions?
-    # For multiprocessing, it's often easier to just rely on return codes or simple prints, 
-    # but let's try to use independent loggers or just let exceptions expand.
-    # To keep it simple and safe with multiprocessing:
-    
-    cmd = cmd_base + ["-i", input_path, "-o", output_path]
-    print(f"Processing: {os.path.basename(input_path)}")
-    
-    if dry_run:
-        print(f"[DRY RUN] {' '.join(cmd)}")
-        return True, "Dry Run"
-    
+CDHIT_EXECUTABLE_NAME = "cd-hit-est"
+INPUT_EXTENSION = ".fas"
+OUTPUT_SUFFIX = ".cdhit"
+
+SEQUENCE_IDENTITY = "0.95"
+THREADS = max(1, multiprocessing.cpu_count())
+
+ADDITIONAL_PARAMETERS = [
+    "-d",
+    "0",
+]
+
+DRY_RUN = False
+# ============================================================
+
+
+def validate_config(input_dir):
+    if not os.path.isdir(input_dir):
+        raise FileNotFoundError(f"Input directory not found: {input_dir}")
+
+
+def find_executable_in_conda_env(executable_name, env_name):
     try:
-        # We don't pass the main logger to avoid pickling issues, use a local simple one or just run_command with a dummy
-        # Creating a temporary logger or just direct subprocess
-        process = utils.subprocess.run(
-            cmd,
-            stdout=utils.subprocess.PIPE,
-            stderr=utils.subprocess.PIPE,
+        result = subprocess.run(
+            ["conda", "run", "-n", env_name, "which", executable_name],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
             universal_newlines=True,
-            check=True
+            check=True,
         )
-        return True, f"Success"
-    except utils.subprocess.CalledProcessError as e:
-        return False, f"Failed: {e.stderr}"
-    except Exception as e:
-        return False, f"Error: {e}"
+    except Exception:
+        return None
+
+    resolved_path = result.stdout.strip().splitlines()
+    if not resolved_path:
+        return None
+
+    candidate = resolved_path[-1].strip()
+    if candidate and os.path.isfile(candidate) and os.access(candidate, os.X_OK):
+        return candidate
+    return None
+
+
+def resolve_executable(executable_name, logger):
+    local_candidate = os.path.join(SCRIPT_DIR, "dependencies", "bin", executable_name)
+    if os.path.isfile(local_candidate) and os.access(local_candidate, os.X_OK):
+        logger.info(f"Using local dependency executable: {local_candidate}")
+        return local_candidate
+
+    conda_candidate = find_executable_in_conda_env(executable_name, CONDA_ENV_NAME)
+    if conda_candidate:
+        logger.info(f"Using executable from conda env '{CONDA_ENV_NAME}': {conda_candidate}")
+        return conda_candidate
+
+    path_candidate = shutil.which(executable_name)
+    if path_candidate:
+        logger.info(f"Using executable from PATH: {path_candidate}")
+        return path_candidate
+
+    raise FileNotFoundError(
+        f"Required executable not found: {executable_name}. "
+        f"Searched in dependencies/bin, conda env '{CONDA_ENV_NAME}', and PATH."
+    )
+
+
+def find_input_files(input_dir):
+    return sorted(
+        file_name
+        for file_name in os.listdir(input_dir)
+        if file_name.endswith(INPUT_EXTENSION)
+    )
+
+
+def build_output_prefix(output_dir, input_file_name):
+    base_name = os.path.splitext(input_file_name)[0]
+    return os.path.join(output_dir, f"{base_name}{OUTPUT_SUFFIX}")
+
 
 def main():
-    args = parse_args()
-    input_dir = os.path.abspath(args.input)
-    logger = utils.setup_logger("CD-HIT", os.path.join(input_dir, "cdhit_batch.log"))
-    
-    logger.info("Starting Batch CD-HIT Workflow")
-    logger.info(f"Input Directory: {input_dir}")
-    
+    input_dir = os.path.join(SCRIPT_DIR, INPUT_DIRECTORY)
+    output_dir = os.path.join(SCRIPT_DIR, OUTPUT_DIRECTORY)
+    os.makedirs(output_dir, exist_ok=True)
+    logger = utils.setup_logger("CD-HIT", os.path.join(output_dir, "cdhit.log"))
+
+    logger.info("Starting CD-HIT workflow")
+    logger.info(f"Input directory: {input_dir}")
+    logger.info(f"Output directory: {output_dir}")
+    logger.info(f"Default conda environment: {CONDA_ENV_NAME}")
+
     try:
-        files = utils.find_files(input_dir, ".fas")
-    except FileNotFoundError:
-        logger.error(f"Directory not found: {input_dir}")
+        validate_config(input_dir)
+        cdhit_executable = resolve_executable(CDHIT_EXECUTABLE_NAME, logger)
+    except FileNotFoundError as exc:
+        logger.error(str(exc))
         sys.exit(1)
-        
-    if not files:
-        logger.warning(f"No .fas files found in {input_dir}")
+
+    input_files = find_input_files(input_dir)
+    if not input_files:
+        logger.warning(f"No input files found with extension {INPUT_EXTENSION}")
         sys.exit(0)
-    
-    logger.info(f"Found {len(files)} files to process.")
-    
-    # Prepare tasks
-    tasks = []
-    base_cmd = [args.cdhit_cmd, "-c", args.threshold]
-    
-    for f in files:
-        input_path = os.path.join(input_dir, f)
-        output_path = os.path.join(input_dir, f"{f}ta") # Original logic was filename + "ta"
-        tasks.append((input_path, output_path, base_cmd, args.dry_run))
-    
-    if args.threads == 1:
-        for task in tasks:
-            success, msg = process_file(task)
-            if success:
-                logger.info(msg)
-            else:
-                logger.error(msg)
-    else:
-        logger.info(f"Using {args.threads} processes.")
-        with multiprocessing.Pool(args.threads) as pool:
-            results = pool.map(process_file, tasks)
-            
-            for i, (success, msg) in enumerate(results):
-                fname = files[i]
-                if success:
-                    logger.info(f"{fname}: {msg}")
-                else:
-                    logger.error(f"{fname}: {msg}")
+
+    logger.info(f"Found {len(input_files)} files to process: {input_files}")
+
+    for input_file_name in input_files:
+        input_path = os.path.join(input_dir, input_file_name)
+        output_prefix = build_output_prefix(output_dir, input_file_name)
+
+        cmd = [
+            cdhit_executable,
+            "-i",
+            input_path,
+            "-o",
+            output_prefix,
+            "-c",
+            SEQUENCE_IDENTITY,
+            "-T",
+            str(THREADS),
+            *ADDITIONAL_PARAMETERS,
+        ]
+
+        try:
+            utils.run_command(cmd, logger, cwd=SCRIPT_DIR, dry_run=DRY_RUN)
+            logger.info(f"Finished processing {input_file_name}")
+        except Exception as exc:
+            logger.error(f"Failed to process {input_file_name}: {exc}")
+
 
 if __name__ == "__main__":
     main()
