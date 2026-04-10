@@ -31,7 +31,7 @@ CDS_SUFFIX = "cds.fasta"
 MAKEBLASTDB_EXECUTABLE_NAME = "makeblastdb"
 BLASTP_EXECUTABLE_NAME = "blastp"
 
-PROCESS_COUNT = multiprocessing.cpu_count()
+PROCESS_COUNT = min(multiprocessing.cpu_count(), 64)
 BLAST_THREADS_PER_PROCESS = 1
 BLAST_TASK = "blastp-short"
 EVALUE = "0.00001"
@@ -219,9 +219,9 @@ def copy_result_files(result, sequence_dir, kept_dir, removed_dir):
     source_cds = os.path.join(sequence_dir, cds_file)
 
     target_root = removed_dir if result["is_contaminated"] else kept_dir
-    shutil.copy2(source_pep, os.path.join(target_root, pep_file))
+    shutil.copyfile(source_pep, os.path.join(target_root, pep_file))
     if os.path.exists(source_cds):
-        shutil.copy2(source_cds, os.path.join(target_root, cds_file))
+        shutil.copyfile(source_cds, os.path.join(target_root, cds_file))
 
 
 def write_summary(results, output_dir):
