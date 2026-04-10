@@ -19,8 +19,7 @@ INPUT_DIRECTORY = "input"
 OUTPUT_DIRECTORY = "output"
 CONDA_ENV_NAME = "trinity_env"
 
-PROTEINORTHO_RESULT_FILE = "proteinortho.tsv"
-SEQUENCE_DIRECTORY = "sequences"
+PROTEINORTHO_RESULT_FILE = "proteinortho_result.proteinortho.tsv"
 HEATMAP_SPECIES_ORDER_FILE = "name_list.txt"
 
 SUMMARY_FILENAME = "selected_orthologs.tsv"
@@ -41,11 +40,9 @@ def resolve_path(*parts):
     return os.path.join(SCRIPT_DIR, *parts)
 
 
-def validate_paths(input_dir, sequence_dir, proteinortho_file):
+def validate_paths(input_dir, proteinortho_file):
     if not os.path.isdir(input_dir):
         raise FileNotFoundError(f"Input directory not found: {input_dir}")
-    if not os.path.isdir(sequence_dir):
-        raise FileNotFoundError(f"Sequence directory not found: {sequence_dir}")
     if not os.path.isfile(proteinortho_file):
         raise FileNotFoundError(f"ProteinOrtho result file not found: {proteinortho_file}")
 
@@ -144,14 +141,22 @@ def build_presence_absence_matrix(summary_df):
     return species_df.applymap(lambda value: 0 if value == "*" else 1).T
 
 
-def sort_species_for_heatmap(matrix_df):
+def get_species_names(df):
+    return list(df.columns[3:])
+
+
+def ensure_species_order_file(species_names):
     order_file = resolve_path(INPUT_DIRECTORY, HEATMAP_SPECIES_ORDER_FILE)
     if not os.path.exists(order_file):
-        species_names = sorted(matrix_df.index.tolist())
         with open(order_file, "w", encoding="utf-8") as handle:
             for species_name in species_names:
                 handle.write(f"{species_name}\n")
+        print(f"未检测到 {HEATMAP_SPECIES_ORDER_FILE}，已根据样品自动创建: {order_file}")
+    return order_file
 
+
+def sort_species_for_heatmap(matrix_df):
+    order_file = ensure_species_order_file(sorted(matrix_df.index.tolist()))
     with open(order_file, "r", encoding="utf-8") as handle:
         species_order = [line.strip() for line in handle if line.strip()]
 
@@ -178,7 +183,7 @@ def main():
     input_dir = resolve_path(INPUT_DIRECTORY)
     output_dir = resolve_path(OUTPUT_DIRECTORY)
     proteinortho_file = os.path.join(input_dir, PROTEINORTHO_RESULT_FILE)
-    sequence_dir = os.path.join(input_dir, SEQUENCE_DIRECTORY)
+    sequence_dir = input_dir
     os.makedirs(output_dir, exist_ok=True)
 
     print(f"输入目录: {input_dir}")
@@ -186,14 +191,15 @@ def main():
     print(f"Conda 环境参数: {CONDA_ENV_NAME}")
 
     try:
-        validate_paths(input_dir, sequence_dir, proteinortho_file)
+        validate_paths(input_dir, proteinortho_file)
     except FileNotFoundError as exc:
         print(f"错误: {exc}")
         sys.exit(1)
 
     try:
-        file_dict = load_sequence_files(sequence_dir)
         df = pd.read_csv(proteinortho_file, sep="\t", header=0)
+        ensure_species_order_file(get_species_names(df))
+        file_dict = load_sequence_files(sequence_dir)
     except Exception as exc:
         print(f"错误: {exc}")
         sys.exit(1)
