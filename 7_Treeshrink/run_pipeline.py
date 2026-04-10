@@ -10,7 +10,7 @@ import sys
 from Bio import SeqIO
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", ".."))
+PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 sys.path.append(PROJECT_ROOT)
 
 try:
@@ -25,7 +25,6 @@ INPUT_DIRECTORY = "input"
 OUTPUT_DIRECTORY = "output"
 CONDA_ENV_NAME = "trinity_env"
 
-ALIGNMENT_INPUT_SUBDIR = "alignments"
 RAXML_OUTPUT_SUBDIR = "raxml_trees"
 TREESHRINK_OUTPUT_SUBDIR = "treeshrink"
 FINAL_ALIGNMENT_SUBDIR = "shrunk_alignments"
@@ -53,10 +52,16 @@ DRY_RUN = False
 
 
 def load_helper_module(module_name, module_path):
+    module_dir = os.path.dirname(module_path)
+    if module_dir not in sys.path:
+        sys.path.insert(0, module_dir)
+
     spec = importlib.util.spec_from_file_location(module_name, module_path)
     if spec is None or spec.loader is None:
         raise ImportError(f"Cannot load helper module: {module_path}")
+
     module = importlib.util.module_from_spec(spec)
+    sys.modules[module_name] = module
     spec.loader.exec_module(module)
     return module
 
@@ -264,7 +269,7 @@ def filter_alignments(alignment_dir, taxa_file, output_dir, logger):
 
 def main():
     input_dir = os.path.join(SCRIPT_DIR, INPUT_DIRECTORY)
-    alignment_input_dir = os.path.join(input_dir, ALIGNMENT_INPUT_SUBDIR)
+    alignment_input_dir = input_dir
     output_dir = os.path.join(SCRIPT_DIR, OUTPUT_DIRECTORY)
     raxml_output_dir = os.path.join(output_dir, RAXML_OUTPUT_SUBDIR)
     treeshrink_output_dir = os.path.join(output_dir, TREESHRINK_OUTPUT_SUBDIR)
