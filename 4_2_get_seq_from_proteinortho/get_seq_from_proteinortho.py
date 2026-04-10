@@ -16,14 +16,14 @@ sys.path.append(PROJECT_ROOT)
 
 # ======================= CONFIGURATION =======================
 INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+OUTPUT_DIRECTORY = "output03"
 CONDA_ENV_NAME = "trinity_env"
 
 PROTEINORTHO_RESULT_FILE = "proteinortho_result.proteinortho.tsv"
 HEATMAP_SPECIES_ORDER_FILE = "name_list.txt"
 
 SUMMARY_FILENAME = "selected_orthologs.tsv"
-MAX_ALLOW_MISSING_SPECIES_PROPORTION = 0.5
+MAX_ALLOW_MISSING_SPECIES_PROPORTION = 0.3
 MAX_ALLOW_LOW_COPY_NUM = 2
 MIN_ALG_CONN = 0.1
 
