@@ -19,7 +19,6 @@ except ImportError:
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
 OUTPUT_DIRECTORY = "output"
 CONDA_ENV_NAME = "trinity_env"
 
@@ -32,26 +31,17 @@ CDS_SUFFIX = "cds.fasta"
 MAKEBLASTDB_EXECUTABLE_NAME = "makeblastdb"
 BLASTP_EXECUTABLE_NAME = "blastp"
 
-PROCESS_COUNT = max(1, multiprocessing.cpu_count() // 2)
+PROCESS_COUNT = multiprocessing.cpu_count()
 BLAST_THREADS_PER_PROCESS = 1
 BLAST_TASK = "blastp-short"
 EVALUE = "0.00001"
 CONTAMINATION_RATIO_THRESHOLD = 0.1
 
-REFERENCE_PROTEIN_FILENAME = "ref.protein"
-REFERENCE_DB_PREFIX = "ref_db"
-KEPT_DIRECTORY_NAME = "kept_sequences"
-REMOVED_DIRECTORY_NAME = "removed_sequences"
-REMOVED_LIST_FILENAME = "removed_files.txt"
-SUMMARY_FILENAME = "summary.tsv"
-
 DRY_RUN = False
 # ============================================================
 
 
-def validate_paths(input_dir, reference_dir, sequence_dir):
-    if not os.path.isdir(input_dir):
-        raise FileNotFoundError(f"Input directory not found: {input_dir}")
+def validate_paths(reference_dir, sequence_dir):
     if not os.path.isdir(reference_dir):
         raise FileNotFoundError(f"Reference genbank directory not found: {reference_dir}")
     if not os.path.isdir(sequence_dir):
@@ -235,7 +225,7 @@ def copy_result_files(result, sequence_dir, kept_dir, removed_dir):
 
 
 def write_summary(results, output_dir):
-    summary_path = os.path.join(output_dir, SUMMARY_FILENAME)
+    summary_path = os.path.join(output_dir, "summary.tsv")
     with open(summary_path, "w", encoding="utf-8") as handle:
         handle.write("pep_file\ttotal_sequences\thit_count\tcontamination_ratio\tis_contaminated\n")
         for result in results:
@@ -244,7 +234,7 @@ def write_summary(results, output_dir):
                 f"{result['contamination_ratio']:.6f}\t{result['is_contaminated']}\n"
             )
 
-    removed_list_path = os.path.join(output_dir, REMOVED_LIST_FILENAME)
+    removed_list_path = os.path.join(output_dir, "removed_files.txt")
     with open(removed_list_path, "w", encoding="utf-8") as handle:
         for result in results:
             if result["is_contaminated"]:
@@ -254,14 +244,13 @@ def write_summary(results, output_dir):
 
 
 def main():
-    input_dir = os.path.join(SCRIPT_DIR, INPUT_DIRECTORY)
     output_dir = os.path.join(SCRIPT_DIR, OUTPUT_DIRECTORY)
-    reference_dir = os.path.join(input_dir, REFERENCE_GENBANK_DIRECTORY)
-    sequence_dir = os.path.join(input_dir, SEQUENCE_DIRECTORY)
+    reference_dir = os.path.join(SCRIPT_DIR, REFERENCE_GENBANK_DIRECTORY)
+    sequence_dir = os.path.join(SCRIPT_DIR, SEQUENCE_DIRECTORY)
     db_dir = os.path.join(output_dir, "reference_db")
     temp_dir = os.path.join(output_dir, "temp")
-    kept_dir = os.path.join(output_dir, KEPT_DIRECTORY_NAME)
-    removed_dir = os.path.join(output_dir, REMOVED_DIRECTORY_NAME)
+    kept_dir = os.path.join(output_dir, "kept_sequences")
+    removed_dir = os.path.join(output_dir, "removed_sequences")
     os.makedirs(output_dir, exist_ok=True)
     os.makedirs(db_dir, exist_ok=True)
     os.makedirs(temp_dir, exist_ok=True)
@@ -270,12 +259,13 @@ def main():
     logger = utils.setup_logger("DelChloroMito", os.path.join(output_dir, "del_chloro_mito.log"))
 
     logger.info("Starting chloroplast/mitochondria filtering workflow")
-    logger.info(f"Input directory: {input_dir}")
+    logger.info(f"Reference genbank directory: {reference_dir}")
+    logger.info(f"Sequence directory: {sequence_dir}")
     logger.info(f"Output directory: {output_dir}")
     logger.info(f"Default conda environment: {CONDA_ENV_NAME}")
 
     try:
-        validate_paths(input_dir, reference_dir, sequence_dir)
+        validate_paths(reference_dir, sequence_dir)
         makeblastdb_executable = resolve_executable(MAKEBLASTDB_EXECUTABLE_NAME, logger)
         blastp_executable = resolve_executable(BLASTP_EXECUTABLE_NAME, logger)
     except FileNotFoundError as exc:
@@ -292,8 +282,8 @@ def main():
         logger.warning(f"No peptide files found with suffix: {PEP_SUFFIX}")
         sys.exit(0)
 
-    reference_protein_path = os.path.join(db_dir, REFERENCE_PROTEIN_FILENAME)
-    db_prefix = os.path.join(db_dir, REFERENCE_DB_PREFIX)
+    reference_protein_path = os.path.join(db_dir, "ref.protein")
+    db_prefix = os.path.join(db_dir, "ref_db")
     extract_reference_proteins(reference_gb_files, reference_protein_path)
     build_blast_db(makeblastdb_executable, reference_protein_path, db_prefix, logger)
 

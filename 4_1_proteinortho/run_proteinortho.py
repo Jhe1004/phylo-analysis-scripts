@@ -27,7 +27,7 @@ DIAMOND_EXECUTABLE_NAME = "diamond"
 BLASTP_EXECUTABLE_NAME = "blastp"
 MAKEBLASTDB_EXECUTABLE_NAME = "makeblastdb"
 
-CPUS = min(os.cpu_count() or 1, 64)
+CPUS = os.cpu_count()
 THREADS_PER_PROCESS = "1"
 PREFER_DIAMOND = True
 
@@ -95,6 +95,22 @@ def list_input_files(input_dir):
     return sorted(file_name for file_name in os.listdir(input_dir) if file_name.endswith(INPUT_EXTENSION))
 
 
+def resolve_input_dir(logger):
+    preferred_input_dir = os.path.join(SCRIPT_DIR, INPUT_DIRECTORY)
+    if os.path.isdir(preferred_input_dir):
+        return preferred_input_dir
+
+    legacy_input_files = list_input_files(SCRIPT_DIR)
+    if legacy_input_files:
+        logger.warning(
+            f"Input directory '{preferred_input_dir}' not found. "
+            f"Falling back to the script directory for backward compatibility: {SCRIPT_DIR}"
+        )
+        return SCRIPT_DIR
+
+    return preferred_input_dir
+
+
 def clean_pep_files(input_dir, output_dir, pep_files, logger):
     cleaned_files = []
 
@@ -116,10 +132,10 @@ def clean_pep_files(input_dir, output_dir, pep_files, logger):
 
 
 def main():
-    input_dir = os.path.join(SCRIPT_DIR, INPUT_DIRECTORY)
     output_dir = os.path.join(SCRIPT_DIR, OUTPUT_DIRECTORY)
     os.makedirs(output_dir, exist_ok=True)
     logger = utils.setup_logger("ProteinOrtho", os.path.join(output_dir, "proteinortho.log"))
+    input_dir = resolve_input_dir(logger)
 
     logger.info("Starting ProteinOrtho workflow")
     logger.info(f"Input directory: {input_dir}")
