@@ -1,29 +1,36 @@
 # 22_re-sequencing/ReSeqPipline
 
 ## 功能概述
-这是重测序主流程总调度脚本。脚本会顺序调用索引参考、比对、变异检测、共识序列生成以及 FASTA 合并等依赖脚本，统一管理整个 resequencing 工作流。
+当前推荐用分步骤脚本运行流程，不再依赖单一主控脚本。
 
-## 正式入口
-- `pipeline_master.py`
+每个步骤都是一个独立的 Python 脚本，文件名前的数字就是流程顺序。每个脚本顶部都有“参数配置区”，直接改脚本里的变量即可，不需要命令行传参。
+
+## 推荐入口
+- `01_index_reference.py`
+- `02_bwa_mapping.py`
+- `03_gatk_call.py`
+- `04_vcf_to_fasta.py`
+- `05_check_non_atcg.py`
+- `06_combine_fasta.py`
 
 ## 输入与输出
 ### 输入
-- `input/` 中的参考基因组和原始测序数据
+- `input/reference/ref.fasta`
+- `input/fastq/`
+
 ### 输出
-- `output/` 中的各步结果、VCF、共识序列和汇总矩阵
+- `output/bam_output/`
+- `output/vcf_output/`
+- `output/consensus_fasta_output/`
+- `output/quality_report.txt`
+- `output/combined_sequences.fasta`
 
 ## 使用方式
+1. 先修改对应步骤脚本顶部的“参数配置区”。
+2. 把输入文件放到 `input/` 下。
+3. 按顺序运行需要的步骤脚本。
+4. 调试时可以只跑某一个步骤。
 
-1. 打开正式脚本，直接修改脚本最前面的配置区。
-2. 把输入文件放入当前目录的 `input/`。
-3. 在当前目录运行对应脚本。
-4. 结果会统一写入 `output/`。
-
-本项目已经统一约定：
-
-- 不通过 CLI 交互式传参
-- 路径尽量写相对路径
-- 外部软件优先从 `dependencies/bin/`、指定 conda 环境、系统 `PATH` 查找
-
-## 备注
-- 底层依赖脚本保存在 `dependencies/scripts/`。
+## 说明
+- `pipeline_utils.py` 是公共工具模块，负责环境变量和路径检查。
+- 当前流程脚本已经全部扁平化，主流程不再依赖 `dependencies/scripts/`。
