@@ -7,8 +7,15 @@ import glob
 import logging
 import os
 from collections import OrderedDict
+from pathlib import Path
 
-from pipeline_utils import SCRIPT_DIR, ensure_exists
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+
+
+def ensure_exists(path: Path, description: str) -> None:
+    if not path.exists():
+        raise FileNotFoundError(f"未找到{description}: {path}")
 
 
 # =============================

@@ -9,12 +9,19 @@ import os
 import sys
 from collections import OrderedDict
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from pathlib import Path
 
-from pipeline_utils import (
-    SCRIPT_DIR,
-    ensure_dir,
-    ensure_exists,
-)
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+
+
+def ensure_exists(path: Path, description: str) -> None:
+    if not path.exists():
+        raise FileNotFoundError(f"未找到{description}: {path}")
+
+
+def ensure_dir(path: Path) -> None:
+    path.mkdir(parents=True, exist_ok=True)
 
 
 # =============================
