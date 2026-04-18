@@ -18,8 +18,6 @@ INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_2_coales
 OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_2_coalescent/1_filter/output"
 CONDA_ENV_NAME = "trinity_env"
 
-FASTA_SUBDIR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_2_coalescent/1_filter/input/alignments"
-TREE_SUBDIR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_2_coalescent/1_filter/input/trees"
 FASTA_GLOB = "ortho*_cds_maffted.fas"
 TREE_GLOB = "RAxML_bipartitions.ortho*_cds_maffted"
 FASTA_NAME_TEMPLATE = "{basename}.fas"
@@ -49,11 +47,9 @@ VALID_BASES = {"A", "T", "C", "G"}
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-WORK_INPUT_DIR = SCRIPT_DIR / INPUT_DIRECTORY
-ALIGNMENT_DIR = WORK_INPUT_DIR / FASTA_SUBDIR
-TREE_DIR = WORK_INPUT_DIR / TREE_SUBDIR
-OUTPUT_ROOT = SCRIPT_DIR / OUTPUT_DIRECTORY
-ASTRAL_INPUT_DIR = (SCRIPT_DIR / ASTRAL_INPUT_RELATIVE_DIR).resolve()
+INPUT_DIR = Path(INPUT_DIRECTORY).resolve()
+OUTPUT_ROOT = Path(OUTPUT_DIRECTORY).resolve()
+ASTRAL_INPUT_DIR = Path(ASTRAL_INPUT_RELATIVE_DIR).resolve()
 
 
 @dataclass
@@ -82,12 +78,12 @@ def ensure_dir(path: Path) -> None:
 
 
 def discover_fasta_files() -> list[Path]:
-    fasta_paths = sorted(Path(p) for p in glob.glob(str(ALIGNMENT_DIR / FASTA_GLOB)))
+    fasta_paths = sorted(Path(p) for p in glob.glob(str(INPUT_DIR / FASTA_GLOB)))
     return [p for p in fasta_paths if p.is_file()]
 
 
 def infer_tree_path(basename: str) -> Path:
-    return TREE_DIR / TREE_NAME_TEMPLATE.format(basename=basename)
+    return INPUT_DIR / TREE_NAME_TEMPLATE.format(basename=basename)
 
 
 def fasta_basename_from_path(fasta_path: Path) -> str:
@@ -164,7 +160,7 @@ def analyze_locus(task_input: tuple[Path, MetricTasks]) -> LocusMetrics | None:
 def collect_metrics() -> list[LocusMetrics]:
     fasta_files = discover_fasta_files()
     if not fasta_files:
-        raise FileNotFoundError(f"没有找到匹配的 fasta 文件。ALIGNMENT_DIR={ALIGNMENT_DIR}, FASTA_GLOB={FASTA_GLOB}")
+        raise FileNotFoundError(f"没有找到匹配的 fasta 文件。INPUT_DIR={INPUT_DIR}, FASTA_GLOB={FASTA_GLOB}")
     tasks = MetricTasks(
         need_bootstrap=RUN_BOOTSTRAP_FILTER,
         need_seq_length=RUN_SEQ_LENGTH_FILTER,
@@ -241,18 +237,15 @@ def prepare_astral_inputs() -> None:
     if not AUTO_PREPARE_ASTRAL_INPUTS:
         return
     ASTRAL_INPUT_DIR.mkdir(parents=True, exist_ok=True)
-    for tree_file in glob.glob(str(TREE_DIR / ASTRAL_TREE_FILE_GLOB)):
+    for tree_file in glob.glob(str(INPUT_DIR / ASTRAL_TREE_FILE_GLOB)):
         source = Path(tree_file)
         target = ASTRAL_INPUT_DIR / source.name
         shutil.copyfile(source, target)
 
 
 def main():
-    if not ALIGNMENT_DIR.exists():
-        print(f"错误: 比对输入目录不存在: {ALIGNMENT_DIR}")
-        sys.exit(1)
-    if not TREE_DIR.exists():
-        print(f"错误: 树输入目录不存在: {TREE_DIR}")
+    if not INPUT_DIR.exists():
+        print(f"错误: 输入目录不存在: {INPUT_DIR}")
         sys.exit(1)
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
     metrics_list = collect_metrics()
