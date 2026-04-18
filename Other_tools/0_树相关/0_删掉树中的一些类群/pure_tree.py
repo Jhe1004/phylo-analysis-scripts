@@ -6,9 +6,9 @@ from pathlib import Path
 from ete3 import Tree
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
-INGROUPS_FILE = "renamed.tree.txt"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/0_删掉树中的一些类群/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/0_删掉树中的一些类群/output"
+INGROUPS_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/0_删掉树中的一些类群/input/renamed.tree.txt"
 TREE_NAME_PATTERN = "RAx"
 
 

@@ -8,13 +8,13 @@ import subprocess
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/21_annotation/Genoma/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/21_annotation/Genoma/output"
 CONDA_ENV_NAME = "gemoma"
 
 TARGET_GENOME_EXTENSION = ".fna"
-REFERENCE_GENOME_FILE = "reference/reference_genome.fasta"
-REFERENCE_ANNOTATION_FILE = "reference/reference_annotation.gff"
+REFERENCE_GENOME_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/21_annotation/Genoma/input/reference/reference_genome.fasta"
+REFERENCE_ANNOTATION_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/21_annotation/Genoma/input/reference/reference_annotation.gff"
 THREADS = 70
 JAVA_MEMORY = "50G"
 GEMOMA_ARGS = [

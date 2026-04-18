@@ -73,9 +73,9 @@ def ensure_tools_available(tools: list[str]) -> None:
 # 参数配置区
 # =============================
 CONDA_ENV_NAME = "reseq"
-REFERENCE_GENOME = "ref.fasta"
-BAM_DIRECTORY = "bam_output"
-OUTPUT_DIRECTORY = "vcf_output"
+REFERENCE_GENOME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/ref.fasta"
+BAM_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/bam_output"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/vcf_output"
 
 PARALLEL_SAMPLES = 20
 GATK_THREADS = 6

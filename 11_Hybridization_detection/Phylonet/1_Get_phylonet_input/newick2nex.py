@@ -2,10 +2,10 @@ from pathlib import Path
 
 
 # ==================== 配置区（直接修改这里）====================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/1_Get_phylonet_input/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/1_Get_phylonet_input/output"
 
-INPUT_TREES_FILE = "out.trees"
+INPUT_TREES_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/1_Get_phylonet_input/input/out.trees"
 COMPUTING_METHOD = "ML"  # 可选：MP、ML、MPL
 MAX_ALLOW_GENE_FLOW_NUM = 5
 PHYLONET_OPTIONS = "-x 10 -pl 20 -di"

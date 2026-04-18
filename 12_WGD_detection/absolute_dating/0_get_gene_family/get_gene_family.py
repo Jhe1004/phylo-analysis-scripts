@@ -14,11 +14,11 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/0_get_gene_family/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/0_get_gene_family/output"
 
-PROTEINORTHO_FILE = "myproject.proteinortho.tsv"
-SEQUENCE_SUBDIRECTORY = "sequences"
+PROTEINORTHO_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/0_get_gene_family/input/myproject.proteinortho.tsv"
+SEQUENCE_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/0_get_gene_family/input/sequences"
 MIN_SPECIES_COUNT = 4
 SKIP_SINGLE_COPY_FAMILIES = False
 # ==============================

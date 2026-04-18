@@ -5,9 +5,9 @@ import csv
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
-INPUT_FASTA_FILE = "combined_sequences.fas"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/1_统计各种数字/4_alignment各序列gap信息统计/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/1_统计各种数字/4_alignment各序列gap信息统计/output"
+INPUT_FASTA_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/1_统计各种数字/4_alignment各序列gap信息统计/input/combined_sequences.fas"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

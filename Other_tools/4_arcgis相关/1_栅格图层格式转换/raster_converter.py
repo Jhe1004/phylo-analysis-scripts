@@ -6,8 +6,8 @@ from pathlib import Path
 import rasterio
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/4_arcgis相关/1_栅格图层格式转换/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/4_arcgis相关/1_栅格图层格式转换/output"
 INPUT_EXTENSIONS = [".tif"]
 OUTPUT_FORMAT_KEY = "ASC"
 

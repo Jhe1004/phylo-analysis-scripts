@@ -9,8 +9,8 @@ import sys
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/4_mafft/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/4_mafft/output"
 CONDA_ENV_NAME = "trinity_env"
 PROCESS_COUNT = 8
 THREADS_PER_PROCESS = 1

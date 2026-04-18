@@ -15,8 +15,8 @@ except ImportError:
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/0_trimmomatic/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/0_trimmomatic/output"
 CONDA_ENV_NAME = "trinity_env"
 
 TRIMMOMATIC_JAR = os.path.join(SCRIPT_DIR, "dependencies", "trimmomatic-0.40.jar")

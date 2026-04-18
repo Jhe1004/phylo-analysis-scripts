@@ -16,8 +16,8 @@ except ImportError:
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/2_cdhit/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/2_cdhit/output"
 CONDA_ENV_NAME = "trinity_env"
 
 CDHIT_EXECUTABLE_NAME = "cd-hit-est"

@@ -6,8 +6,8 @@ import subprocess
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/4_将一个大的fastq文件分割开/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/4_将一个大的fastq文件分割开/output"
 CONDA_ENV_NAME = "trinity_env"
 SUFFIX1 = "_1.clean.fq.gz"
 SUFFIX2 = "_2.clean.fq.gz"

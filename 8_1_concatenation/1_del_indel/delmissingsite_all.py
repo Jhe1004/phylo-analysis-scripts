@@ -9,8 +9,8 @@ from Bio import SeqIO
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/1_del_indel/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/1_del_indel/output"
 CONDA_ENV_NAME = "trinity_env"
 
 INPUT_EXTENSION = ".fasta"
@@ -21,7 +21,7 @@ MISSING_SITE_PROPORTION = 0.5
 PROCESS_COUNT = max(1, multiprocessing.cpu_count() // 2)
 
 NORMAL_SITE_LIST = ["A", "a", "T", "t", "C", "c", "G", "g"]
-TEMP_DIRECTORY_NAME = "temp"
+TEMP_DIRECTORY_NAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/1_del_indel/output/temp"
 SPLIT_TAG = ".split."
 DRY_RUN = False
 # ============================================================

@@ -14,23 +14,23 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/phypart/6_phypart/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/phypart/6_phypart/output"
 
 CONDA_ENV_NAME = "trinity_env"
 JAVA_EXECUTABLE_NAME = "java"
 MAVEN_EXECUTABLE_NAME = "mvn"
 
-SPECIES_TREE_FILE = "species_tree.newick"
-GENE_TREE_SUBDIRECTORY = "gene_trees"
+SPECIES_TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/phypart/6_phypart/input/species_tree.newick"
+GENE_TREE_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/phypart/6_phypart/input/gene_trees"
 
 ANALYSIS_MODE = 2
 VERBOSE = True
 OUTPUT_PREFIX = "phypart"
 
 AUTO_BUILD_JAR_IF_MISSING = False
-PHYPART_JAR = "dependencies/upstream/target/phyparts-0.0.1-SNAPSHOT-jar-with-dependencies.jar"
-UPSTREAM_SOURCE_DIRECTORY = "dependencies/upstream"
+PHYPART_JAR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/phypart/6_phypart/dependencies/upstream/target/phyparts-0.0.1-SNAPSHOT-jar-with-dependencies.jar"
+UPSTREAM_SOURCE_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/phypart/6_phypart/dependencies/upstream"
 # ==============================
 
 

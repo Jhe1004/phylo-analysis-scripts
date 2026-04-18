@@ -6,11 +6,11 @@ from pathlib import Path
 
 
 # ==================== 配置区（直接修改这里）====================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/QuIBL/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/QuIBL/output"
 CONDA_ENV_NAME = "base"
 
-TREE_FILE = "gene_trees.trees"
+TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/QuIBL/input/gene_trees.trees"
 TOTAL_OUTGROUP = "Symphalangus.fasta.transdecoder.pep"
 NUM_DISTRIBUTIONS = 2
 LIKELIHOOD_THRESHOLD = 0.01
@@ -19,8 +19,8 @@ GRAD_ASCENT_SCALAR = 0.5
 MULTIPROCESS = True
 MAX_CORES = 20
 
-OUTPUT_CSV_FILE = "quibl_results.csv"
-RUNTIME_CONFIG_FILE = "quibl_runtime.ini"
+OUTPUT_CSV_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/QuIBL/output/quibl_results.csv"
+RUNTIME_CONFIG_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/QuIBL/output/quibl_runtime.ini"
 PYTHON_EXECUTABLE_NAME = "python"
 # ============================================================
 

@@ -6,8 +6,8 @@ import sys
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_2_coalescent/0_raxml/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_2_coalescent/0_raxml/output"
 CONDA_ENV_NAME = "trinity_env"
 
 INPUT_EXTENSION = ".fasta"

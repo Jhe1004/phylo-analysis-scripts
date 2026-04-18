@@ -14,12 +14,12 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/3_基因表格生成/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/3_基因表格生成/output"
 
-GENBANK_SUBDIRECTORY = "gb_files"
-OUTPUT_TSV_FILE = "gene_content_report.tsv"
-OUTPUT_SUMMARY_FILE = "gene_summary_report.txt"
+GENBANK_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/3_基因表格生成/input/gb_files"
+OUTPUT_TSV_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/3_基因表格生成/output/gene_content_report.tsv"
+OUTPUT_SUMMARY_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/3_基因表格生成/output/gene_summary_report.txt"
 # ==============================
 
 

@@ -57,9 +57,9 @@ def ensure_dir(path: Path) -> None:
 # 参数配置区
 # =============================
 CONDA_ENV_NAME = "reseq"
-REFERENCE_GENOME = "input/reference/ref.fasta"
-FASTQ_DIRECTORY = "input/fastq"
-OUTPUT_DIRECTORY = "output/bam_output"
+REFERENCE_GENOME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/input/reference/ref.fasta"
+FASTQ_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/input/fastq"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/output/bam_output"
 
 PLUS_TAG = "_1.clean.fq.gz"
 MINUS_TAG = "_2.clean.fq.gz"

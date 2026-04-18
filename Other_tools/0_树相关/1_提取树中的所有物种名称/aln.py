@@ -6,8 +6,8 @@ from pathlib import Path
 from ete3 import Tree
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/1_提取树中的所有物种名称/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/1_提取树中的所有物种名称/output"
 TREE_EXTENSIONS = [".tree", ".nwk", ".newick"]
 
 

@@ -18,12 +18,12 @@ from plot_gmm_helper import run_plot_gmm
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/7_visualize_results/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/7_visualize_results/output"
 
-AGE_SUBDIRECTORY = "ages"
-CLADE_FILE = "clade.md"
-TREE_FILE = "species_tree.newick"
+AGE_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/7_visualize_results/input/ages"
+CLADE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/7_visualize_results/input/clade.md"
+TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/7_visualize_results/input/species_tree.newick"
 NAME_MAPPING_FILE = ""
 
 RUN_GMM_PLOTS = True

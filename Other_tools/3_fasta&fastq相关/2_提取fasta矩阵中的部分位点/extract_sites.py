@@ -5,10 +5,10 @@ import random
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
-INPUT_FASTA_FILE = "result.fasta"
-OUTPUT_FASTA_FILE = "extracted_sites.fasta"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/2_提取fasta矩阵中的部分位点/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/2_提取fasta矩阵中的部分位点/output"
+INPUT_FASTA_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/2_提取fasta矩阵中的部分位点/input/result.fasta"
+OUTPUT_FASTA_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/2_提取fasta矩阵中的部分位点/output/extracted_sites.fasta"
 PERCENTAGE_TO_EXTRACT = 10.0
 
 

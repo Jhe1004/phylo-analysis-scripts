@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
 import io
@@ -10,12 +11,12 @@ def summarize_and_plot_ssrs_with_tree():
     生成報告和帶有發育樹的水平堆疊柱狀圖。
     """
     # --- 輸入與輸出檔案設定 ---
-    input_directory = "output_ssr_results_misa"
-    phylogenetic_tree_file = "species_tree.nwk" # <--- 新增：請將你的樹文件放在這裡
+    input_directory = str((Path.cwd() / "output_ssr_results_misa").resolve())
+    phylogenetic_tree_file = str((Path.cwd() / "species_tree.nwk").resolve()) # <--- 新增：請將你的樹文件放在這裡
     
-    output_data_file = "ssr_summary_data.csv"
-    output_report_file = "ssr_results_report.txt"
-    output_image_file = "ssr_phylo_stacked_barplot_corrected.png" # 使用新文件名以避免覆盖
+    output_data_file = str((Path.cwd() / "ssr_summary_data.csv").resolve())
+    output_report_file = str((Path.cwd() / "ssr_results_report.txt").resolve())
+    output_image_file = str((Path.cwd() / "ssr_phylo_stacked_barplot_corrected.png").resolve()) # 使用新文件名以避免覆盖
 
     # --- 1. 讀取和解析 MISA 檔案 (與原腳本相同) ---
     all_species_data = []

@@ -14,8 +14,8 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/phypart/5_rename/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/phypart/5_rename/output"
 
 INPUT_EXTENSION = ".tree"
 OUTPUT_SUFFIX = "_re.tree"

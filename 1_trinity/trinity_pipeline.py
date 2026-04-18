@@ -16,8 +16,8 @@ except ImportError:
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/1_trinity/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/1_trinity/output"
 CONDA_ENV_NAME = "trinity_env"
 
 TRINITY_EXECUTABLE_NAME = "Trinity"
@@ -39,7 +39,7 @@ INPUT_FORWARD_SUFFIXES = [
     "_1.fasta.gz",
 ]
 
-LONGEST_INPUT_FILE_PATTERN = "*/Trinity.fasta"
+LONGEST_INPUT_FILE_PATTERN = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/1_trinity/output/*/Trinity.fasta"
 LONGEST_OUTPUT_EXTENSION = ".longest.fas"
 GENE_ID_REGEX = r"^(.*)_i\d+$"
 

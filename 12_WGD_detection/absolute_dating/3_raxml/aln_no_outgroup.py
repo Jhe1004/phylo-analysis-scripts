@@ -15,8 +15,8 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/3_raxml/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/3_raxml/output"
 
 CONDA_ENV_NAME = "trinity_env"
 RAXML_EXECUTABLE_NAME = "raxmlHPC-PTHREADS"

@@ -6,8 +6,8 @@ from __future__ import annotations
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/GetGeneFromGFF/3_del_missing/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/GetGeneFromGFF/3_del_missing/output"
 FASTA_EXTENSION = ".fasta"
 MAX_MISSING_RATIO = 0.8
 MIN_SEQUENCE_COUNT = 4

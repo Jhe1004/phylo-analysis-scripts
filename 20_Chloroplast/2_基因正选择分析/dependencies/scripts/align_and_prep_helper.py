@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import subprocess
 import shutil
 from Bio import SeqIO
@@ -42,11 +43,11 @@ def align_and_prepare():
     並生成 ParaAT 所需的輸入檔案。
     【Python 3.6 相容最終版】
     """
-    cds_dir = "output_cds_genes"
-    pep_dir = "output_pep_genes"
-    aligned_cds_dir = "aligned_cds"
-    aligned_pep_dir = "aligned_pep"
-    para_at_input_file = "homologs.txt"
+    cds_dir = str((Path.cwd() / "output_cds_genes").resolve())
+    pep_dir = str((Path.cwd() / "output_pep_genes").resolve())
+    aligned_cds_dir = str((Path.cwd() / "aligned_cds").resolve())
+    aligned_pep_dir = str((Path.cwd() / "aligned_pep").resolve())
+    para_at_input_file = str((Path.cwd() / "homologs.txt").resolve())
 
     if shutil.which("mafft") is None:
         print("錯誤：找不到 'mafft' 命令。")

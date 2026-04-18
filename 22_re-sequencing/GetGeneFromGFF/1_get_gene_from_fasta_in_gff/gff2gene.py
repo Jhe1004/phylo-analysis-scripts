@@ -6,9 +6,9 @@ from __future__ import annotations
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
-INPUT_GFF_FILE = "ref.gff"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/GetGeneFromGFF/1_get_gene_from_fasta_in_gff/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/GetGeneFromGFF/1_get_gene_from_fasta_in_gff/output"
+INPUT_GFF_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/GetGeneFromGFF/1_get_gene_from_fasta_in_gff/input/ref.gff"
 FASTA_EXTENSION = ".fasta"
 OUTPUT_PREFIX = "extracted_"
 MAX_GENE_LENGTH = 10000

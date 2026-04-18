@@ -12,14 +12,14 @@ from Bio.SeqRecord import SeqRecord
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/4_iqtree/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/4_iqtree/output"
 CONDA_ENV_NAME = "trinity_env"
 
 INPUT_FILES = []
 INPUT_EXTENSIONS = [".fasta", ".fas", ".nex"]
-PARTITION_FILE = "joint_fragments.partition"
-CONCATENATED_ALIGNMENT_FILE = "joint_fragments.fasta"
+PARTITION_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/4_iqtree/output/joint_fragments.partition"
+CONCATENATED_ALIGNMENT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/4_iqtree/output/joint_fragments.fasta"
 AUTO_CONCAT_SMALL_MATRICES = False
 
 IQTREE_EXECUTABLE_NAME = "iqtree2"

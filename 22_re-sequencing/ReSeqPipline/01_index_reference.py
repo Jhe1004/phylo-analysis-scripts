@@ -53,7 +53,7 @@ def ensure_exists(path: Path, description: str) -> None:
 # 直接修改这里即可，无需命令行传参
 # =============================
 CONDA_ENV_NAME = "reseq"
-REFERENCE_GENOME = "input/reference/ref.fasta"
+REFERENCE_GENOME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/input/reference/ref.fasta"
 BWA_INDEX_ALGORITHM = "bwtsw"
 
 

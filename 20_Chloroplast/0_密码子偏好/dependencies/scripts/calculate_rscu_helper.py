@@ -1,4 +1,6 @@
 import os
+from pathlib import Path
+
 import pandas as pd
 from Bio import SeqIO
 from collections import defaultdict
@@ -41,8 +43,8 @@ def calculate_rscu_for_sequence(sequence):
 # --- 3. 主分析与报告生成函数 ---
 def analyze_and_generate_report():
     input_directory = "output_cds_fasta"
-    output_csv_file = "rscu_matrix.csv"
-    output_report_file = "codon_usage_report.txt"
+    output_csv_file = str((Path.cwd() / "rscu_matrix.csv").resolve())
+    output_report_file = str((Path.cwd() / "codon_usage_report.txt").resolve())
 
     if not os.path.isdir(input_directory):
         print(f"错误：输入文件夹 '{input_directory}' 不存在。请先运行第一个脚本。")

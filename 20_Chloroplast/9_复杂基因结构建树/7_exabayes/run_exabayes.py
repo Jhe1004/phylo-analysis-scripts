@@ -9,13 +9,13 @@ import subprocess
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/7_exabayes/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/7_exabayes/output"
 CONDA_ENV_NAME = "trinity_env"
 FASTA_ALIGNMENT_FILE = ""
-PHYLIP_ALIGNMENT_FILE = "cds_groups.phy"
-CONFIG_FILE = "config.nex"
-PARTITION_FILE = "partitions.txt"
+PHYLIP_ALIGNMENT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/7_exabayes/input/cds_groups.phy"
+CONFIG_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/7_exabayes/input/config.nex"
+PARTITION_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/7_exabayes/input/partitions.txt"
 USE_PARTITION = False
 MPI_PROCESS_COUNT = 40
 RUN_NAME = "cds"

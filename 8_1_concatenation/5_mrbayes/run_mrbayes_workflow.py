@@ -13,13 +13,13 @@ from Bio.SeqRecord import SeqRecord
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/5_mrbayes/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/5_mrbayes/output"
 CONDA_ENV_NAME = "trinity_env"
 
 INPUT_FILES = []
 INPUT_EXTENSIONS = [".fasta", ".fas", ".nex"]
-PARTITION_FILE = "joint_fragments.nex"
+PARTITION_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/5_mrbayes/output/joint_fragments.nex"
 AUTO_CONCAT_SMALL_MATRICES = False
 
 MODEL_NST = "mixed"

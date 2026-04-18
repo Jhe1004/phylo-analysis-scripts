@@ -5,8 +5,8 @@ import sys
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_2_coalescent/2_0_astral/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_2_coalescent/2_0_astral/output"
 CONDA_ENV_NAME = "trinity_env"
 
 INPUT_EXTENSION = ".trees"

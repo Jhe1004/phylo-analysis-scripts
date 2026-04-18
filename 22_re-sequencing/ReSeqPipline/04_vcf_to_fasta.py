@@ -28,9 +28,9 @@ def ensure_dir(path: Path) -> None:
 # 参数配置区
 # =============================
 CONDA_ENV_NAME = "reseq"
-REFERENCE_GENOME = "input/reference/ref.fasta"
-VCF_DIRECTORY = "output/vcf_output"
-OUTPUT_DIRECTORY = "output/consensus_fasta_output"
+REFERENCE_GENOME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/input/reference/ref.fasta"
+VCF_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/output/vcf_output"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/output/consensus_fasta_output"
 
 PARALLEL_SAMPLES = 10
 MIN_GQ = 20

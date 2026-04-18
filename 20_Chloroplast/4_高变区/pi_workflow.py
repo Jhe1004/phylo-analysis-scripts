@@ -15,14 +15,14 @@ HELPER_DIR = SCRIPT_DIR / "dependencies" / "scripts"
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/4_高变区/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/4_高变区/output"
 
-ALIGNMENT_FILE = "alignment.fasta"
+ALIGNMENT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/4_高变区/input/alignment.fasta"
 WINDOW_SIZE = 600
 STEP_SIZE = 200
-OUTPUT_DATA_FILE = "pi_window.tsv"
-OUTPUT_PLOT_FILE = "pi_distribution.png"
+OUTPUT_DATA_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/4_高变区/output/pi_window.tsv"
+OUTPUT_PLOT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/4_高变区/output/pi_distribution.png"
 PLOT_TITLE = "Sliding Window Analysis of Nucleotide Diversity (π)"
 PLOT_COLOR = "#1f77b4"
 # ==============================

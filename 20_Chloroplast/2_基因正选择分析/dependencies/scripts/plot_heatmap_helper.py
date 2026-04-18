@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -69,9 +70,9 @@ def plot_heatmap_final():
     主函數：【最终版】
     繪製無數字標註的熱圖，並在終端生成結果描述。
     """
-    results_csv_file = "paml_final_results.csv"
+    results_csv_file = str((Path.cwd() / "paml_final_results.csv").resolve())
     output_image_file = "kaks_heatmap_final.png"
-    summary_text_file = "results_summary_english.txt" # 指定結果描述的輸出文件名
+    summary_text_file = str((Path.cwd() / "results_summary_english.txt").resolve()) # 指定結果描述的輸出文件名
 
     print("="*50)
     print("PAML 分析腳本第二部分：生成最終結果圖和英文描述")

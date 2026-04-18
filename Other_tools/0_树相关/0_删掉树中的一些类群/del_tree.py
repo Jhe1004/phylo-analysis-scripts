@@ -7,10 +7,10 @@ from pathlib import Path
 from ete3 import Tree
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/0_删掉树中的一些类群/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/0_删掉树中的一些类群/output"
 TREE_FILE_PREFIX = "dating."
-DELETE_LIST_FILE = "tree.txt"
+DELETE_LIST_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/0_删掉树中的一些类群/input/tree.txt"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

@@ -15,8 +15,8 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/5_extract_time/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/5_extract_time/output"
 
 INPUT_EXTENSION = ".newtree"
 OUTPUT_FILE_SUFFIX = ".pep"

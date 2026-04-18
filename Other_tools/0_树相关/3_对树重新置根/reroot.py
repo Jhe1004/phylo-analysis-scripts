@@ -6,8 +6,8 @@ from pathlib import Path
 from ete3 import Tree
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/3_对树重新置根/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/3_对树重新置根/output"
 TREE_SUFFIX = ".trees"
 OUTGROUP_LIST = ["Clematis_gratopsis.fasta.transdecoder.pep"]
 

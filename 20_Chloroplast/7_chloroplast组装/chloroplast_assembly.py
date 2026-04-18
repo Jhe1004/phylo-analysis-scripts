@@ -16,10 +16,10 @@ HELPER = SCRIPT_DIR / "dependencies" / "scripts" / "run_getorganelle_batch_helpe
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/7_chloroplast组装/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/7_chloroplast组装/output"
 
-READS_SUBDIRECTORY = "reads"
+READS_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/7_chloroplast组装/input/reads"
 ASSEMBLY_TYPE = "plastome"
 FORWARD_SUFFIX = "_1.clean.fq.gz"
 REVERSE_SUFFIX = "_2.clean.fq.gz"

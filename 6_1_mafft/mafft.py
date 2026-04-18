@@ -17,8 +17,8 @@ except ImportError:
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/6_1_mafft/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/6_1_mafft/output"
 CONDA_ENV_NAME = "trinity_env"
 
 INPUT_EXTENSION = ".fasta"

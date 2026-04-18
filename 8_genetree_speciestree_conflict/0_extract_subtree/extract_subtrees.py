@@ -19,11 +19,11 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/0_extract_subtree/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/0_extract_subtree/output"
 
-TREE_SUBDIRECTORY = "trees"
-SUBTREE_SPECIES_FILE = "subtree_species.txt"
+TREE_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/0_extract_subtree/input/trees"
+SUBTREE_SPECIES_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/0_extract_subtree/input/subtree_species.txt"
 
 TREE_FILE_PATTERNS = ["RAxML*"]
 OUTPUT_SUFFIX = ".new"

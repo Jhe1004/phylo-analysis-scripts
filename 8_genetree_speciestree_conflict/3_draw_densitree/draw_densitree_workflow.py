@@ -23,11 +23,11 @@ from draw_species_tree_support_pies_helper import run_draw_species_tree_support_
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/3_draw_densitree/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/3_draw_densitree/output"
 
-GENE_TREES_FILE = "result.trees"
-SPECIES_TREE_FILE = "species_tree.newick"
+GENE_TREES_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/3_draw_densitree/input/result.trees"
+SPECIES_TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/3_draw_densitree/input/species_tree.newick"
 TIP_ORDER_FILE = ""
 NAME_MAPPING_FILE = ""
 
@@ -36,8 +36,8 @@ RUN_SUPPORT_COUNT = True
 RUN_SUPPORT_PIE_PLOT = True
 
 DENSITREE_OUTPUT_FILE = "densi_tree_plot.svg"
-SUPPORT_CSV_FILE = "species_tree_node_support.csv"
-SUPPORT_PIE_OUTPUT_FILE = "species_tree_support_pies.svg"
+SUPPORT_CSV_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/3_draw_densitree/output/species_tree_node_support.csv"
+SUPPORT_PIE_OUTPUT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/3_draw_densitree/output/species_tree_support_pies.svg"
 
 PROCESS_COUNT = 4
 IMAGE_WIDTH = 1000

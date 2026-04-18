@@ -14,19 +14,19 @@ from Bio import SeqIO
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_2_coalescent/1_filter/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_2_coalescent/1_filter/output"
 CONDA_ENV_NAME = "trinity_env"
 
-FASTA_SUBDIR = "alignments"
-TREE_SUBDIR = "trees"
+FASTA_SUBDIR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_2_coalescent/1_filter/input/alignments"
+TREE_SUBDIR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_2_coalescent/1_filter/input/trees"
 FASTA_GLOB = "ortho*_cds_maffted.fas"
 TREE_GLOB = "RAxML_bipartitions.ortho*_cds_maffted"
 FASTA_NAME_TEMPLATE = "{basename}.fas"
 TREE_NAME_TEMPLATE = "RAxML_bipartitions.{basename}"
 
 AUTO_PREPARE_ASTRAL_INPUTS = True
-ASTRAL_INPUT_RELATIVE_DIR = "../2_0_astral/input"
+ASTRAL_INPUT_RELATIVE_DIR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_2_coalescent/2_0_astral/input"
 ASTRAL_TREE_FILE_GLOB = "RAxML_bipartitions.*"
 
 ENABLE_PARALLEL = True

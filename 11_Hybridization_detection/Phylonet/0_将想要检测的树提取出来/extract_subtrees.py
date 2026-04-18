@@ -4,12 +4,12 @@ from ete3 import Tree
 
 
 # ==================== 配置区（直接修改这里）====================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/0_将想要检测的树提取出来/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/0_将想要检测的树提取出来/output"
 
-INPUT_TREE_FILE = "result.tree"
-SUBTREE_SPECIES_FILE = "list.txt"
-OUTPUT_TREE_FILE = "out.trees"
+INPUT_TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/0_将想要检测的树提取出来/input/result.tree"
+SUBTREE_SPECIES_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/0_将想要检测的树提取出来/input/list.txt"
+OUTPUT_TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/0_将想要检测的树提取出来/output/out.trees"
 
 OUTGROUP_SPECIES = "Gossypium_hirsutum_SRR8156069.fasta.transdecoder.pep"
 TREE_FORMAT = 0

@@ -6,8 +6,8 @@ import subprocess
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/1_proteinortho/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/1_proteinortho/output"
 CONDA_ENV_NAME = "trinity_env"
 INPUT_EXTENSION = ".fasta"
 PROJECT_PREFIX = "chloroplast_fragments"

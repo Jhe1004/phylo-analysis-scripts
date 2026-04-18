@@ -16,12 +16,12 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/phypart/4_reroot_gene_family_trees/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/phypart/4_reroot_gene_family_trees/output"
 
-SPECIES_TREE_FILE = "species_tree.newick"
-INGROUP_FILE = "ingroupspecies.txt"
-GENE_TREE_SUBDIRECTORY = "gene_trees"
+SPECIES_TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/phypart/4_reroot_gene_family_trees/input/species_tree.newick"
+INGROUP_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/phypart/4_reroot_gene_family_trees/input/ingroupspecies.txt"
+GENE_TREE_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/phypart/4_reroot_gene_family_trees/input/gene_trees"
 
 GENE_TREE_PREFIX = "RAxML_bipartitions"
 PROCESS_COUNT = max(1, min(8, os.cpu_count() or 1))

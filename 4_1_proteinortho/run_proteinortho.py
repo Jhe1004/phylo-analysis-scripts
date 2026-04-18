@@ -15,8 +15,8 @@ except ImportError:
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/4_1_proteinortho/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/4_1_proteinortho/output"
 CONDA_ENV_NAME = "trinity_env"
 
 INPUT_EXTENSION = ".pep"

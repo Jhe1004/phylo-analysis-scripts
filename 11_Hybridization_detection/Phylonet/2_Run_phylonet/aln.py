@@ -6,16 +6,16 @@ from pathlib import Path
 
 
 # ==================== 配置区（直接修改这里）====================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/2_Run_phylonet/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/2_Run_phylonet/output"
 CONDA_ENV_NAME = "trinity_env"
 
 INPUT_EXTENSIONS = [".nex"]
 PROCESS_COUNT = 8
 
-PHYLONET_JAR = "PhyloNet_3.8.0.jar"
+PHYLONET_JAR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/2_Run_phylonet/PhyloNet_3.8.0.jar"
 JAVA_EXECUTABLE_NAME = "java"
-LOG_FILE = "run_phylonet.log"
+LOG_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/2_Run_phylonet/output/run_phylonet.log"
 # ============================================================
 
 

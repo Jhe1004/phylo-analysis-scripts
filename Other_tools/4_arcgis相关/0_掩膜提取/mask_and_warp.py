@@ -7,9 +7,9 @@ import rasterio
 from rasterio.warp import Resampling, reproject
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
-REF_FILE_NAME = "ref.tif"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/4_arcgis相关/0_掩膜提取/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/4_arcgis相关/0_掩膜提取/output"
+REF_FILE_NAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/4_arcgis相关/0_掩膜提取/input/ref.tif"
 SOURCE_EXTENSIONS = [".asc"]
 
 

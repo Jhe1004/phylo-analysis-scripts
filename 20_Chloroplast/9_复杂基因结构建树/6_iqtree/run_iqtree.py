@@ -8,11 +8,11 @@ import subprocess
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/6_iqtree/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/6_iqtree/output"
 CONDA_ENV_NAME = "trinity_env"
-ALIGNMENT_FILE = "my_alignment.fasta"
-PARTITION_FILE = "partitions.txt"
+ALIGNMENT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/6_iqtree/input/my_alignment.fasta"
+PARTITION_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/6_iqtree/input/partitions.txt"
 IQTREE_EXECUTABLE = "iqtree"
 IQTREE_ARGS = ["-m", "MFP", "-bb", "1000", "-nt", "AUTO"]
 

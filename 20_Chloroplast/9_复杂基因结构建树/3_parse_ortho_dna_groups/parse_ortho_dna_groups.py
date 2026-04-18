@@ -9,10 +9,10 @@ from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/3_parse_ortho_dna_groups/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/3_parse_ortho_dna_groups/output"
 TSV_GLOB_PATTERN = "proteinortho_*.tsv"
-FASTA_SUBDIRECTORY = "source_fastas"
+FASTA_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/3_parse_ortho_dna_groups/input/source_fastas"
 SINGLE_COPY_ONLY = True
 MIN_SPECIES_PER_OG = 30
 

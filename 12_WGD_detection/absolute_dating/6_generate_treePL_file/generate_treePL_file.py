@@ -18,18 +18,18 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/6_generate_treePL_file/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/6_generate_treePL_file/output"
 
 CONDA_ENV_NAME = "trinity_env"
 TREEPL_EXECUTABLE_NAME = "treePL"
 TREEPL_LD_LIBRARY_PATH = "/usr/local/lib64"
 
 CALIBRATED_AGE = 71.7
-INGROUPS_FILE = "ingroupspecies.txt"
-OUTGROUPS_FILE = "outgroupspecies.txt"
-TREE_SUBDIRECTORY = "trees"
-ALIGNMENT_SUBDIRECTORY = "alignments"
+INGROUPS_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/6_generate_treePL_file/input/ingroupspecies.txt"
+OUTGROUPS_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/6_generate_treePL_file/input/outgroupspecies.txt"
+TREE_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/6_generate_treePL_file/input/trees"
+ALIGNMENT_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/12_WGD_detection/absolute_dating/6_generate_treePL_file/input/alignments"
 
 PROCESS_COUNT = max(1, min(12, os.cpu_count() or 1))
 RUN_OUTPUT_PREFIX = "treepl_run_"

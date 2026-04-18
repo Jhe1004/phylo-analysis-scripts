@@ -7,9 +7,9 @@ from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
-GENBANK_SUBDIRECTORY = "gb_files"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/0_把gb分割成小片段/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/0_把gb分割成小片段/output"
+GENBANK_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/0_把gb分割成小片段/input/gb_files"
 FEATURES_TO_EXTRACT = ["CDS", "rRNA", "tRNA"]
 
 

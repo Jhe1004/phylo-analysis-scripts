@@ -15,12 +15,12 @@ import pandas as pd
 from Bio import SeqIO
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/21_annotation/annotate_fasta_genes/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/21_annotation/annotate_fasta_genes/output"
 CONDA_ENV_NAME = "trinity_env"
 
-PEP_SUBDIRECTORY = "raw"
-REFERENCE_FASTA_FILE = "reference/tair_filter.fasta.transdecoder.pep"
+PEP_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/21_annotation/annotate_fasta_genes/input/raw"
+REFERENCE_FASTA_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/21_annotation/annotate_fasta_genes/input/reference/tair_filter.fasta.transdecoder.pep"
 
 PEP_FILENAME_PATTERN = "*_pep_maffted.fas"
 PEP_SUFFIX = "_pep_maffted.fas"

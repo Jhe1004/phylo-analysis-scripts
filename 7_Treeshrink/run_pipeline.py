@@ -21,17 +21,17 @@ except ImportError:
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshrink/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshrink/output"
 CONDA_ENV_NAME = "trinity_env"
 
-RAXML_OUTPUT_SUBDIR = "raxml_trees"
-TREESHRINK_OUTPUT_SUBDIR = "treeshrink"
-FINAL_ALIGNMENT_SUBDIR = "shrunk_alignments"
+RAXML_OUTPUT_SUBDIR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshrink/output/raxml_trees"
+TREESHRINK_OUTPUT_SUBDIR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshrink/output/treeshrink"
+FINAL_ALIGNMENT_SUBDIR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshrink/output/shrunk_alignments"
 
 ALIGNMENT_PATTERN = "ortho*_cds_maffted.fas"
-COMBINED_TREE_FILENAME = "combined_trees.tre"
-TAXA_TO_REMOVE_FILENAME = "output.txt"
+COMBINED_TREE_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshrink/output/treeshrink/combined_trees.tre"
+TAXA_TO_REMOVE_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshrink/output/treeshrink/output.txt"
 
 RAXML_EXECUTABLE_NAME = "raxmlHPC-PTHREADS"
 RAXML_PROCESS_COUNT = max(1, multiprocessing.cpu_count() // 4)

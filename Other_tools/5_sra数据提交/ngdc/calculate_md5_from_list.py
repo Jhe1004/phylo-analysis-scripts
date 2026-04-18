@@ -5,10 +5,10 @@ import hashlib
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
-INPUT_FILE_LIST = "md5.txt"
-OUTPUT_TSV_FILE = "md5_results.tsv"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/5_sra数据提交/ngdc/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/5_sra数据提交/ngdc/output"
+INPUT_FILE_LIST = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/5_sra数据提交/ngdc/input/md5.txt"
+OUTPUT_TSV_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/5_sra数据提交/ngdc/output/md5_results.tsv"
 BLOCK_SIZE = 65536
 
 

@@ -19,13 +19,13 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/2_treePL/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/2_treePL/output"
 
 CONDA_ENV_NAME = "trinity_env"
 TREEPL_EXECUTABLE_NAME = "treePL"
 
-CONFIG_SUBDIRECTORY = "configs"
+CONFIG_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/2_treePL/output/workspace/configs"
 PROCESS_COUNT = max(1, min(6, os.cpu_count() or 1))
 SKIP_COMPLETED = True
 # ==============================

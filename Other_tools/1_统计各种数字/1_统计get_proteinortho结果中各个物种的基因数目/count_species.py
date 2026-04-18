@@ -5,8 +5,8 @@ from collections import Counter
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/1_统计各种数字/1_统计get_proteinortho结果中各个物种的基因数目/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/1_统计各种数字/1_统计get_proteinortho结果中各个物种的基因数目/output"
 FILE_SUFFIX = "cds.fasta"
 
 

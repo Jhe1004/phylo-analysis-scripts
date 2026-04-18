@@ -22,8 +22,8 @@ def ensure_exists(path: Path, description: str) -> None:
 # 参数配置区
 # =============================
 CONDA_ENV_NAME = "reseq"
-CONSENSUS_DIRECTORY = "output/consensus_fasta_output"
-OUTPUT_FILE = "output/combined_sequences.fasta"
+CONSENSUS_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/output/consensus_fasta_output"
+OUTPUT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/output/combined_sequences.fasta"
 
 
 def setup_logger(script_name: str) -> logging.Logger:

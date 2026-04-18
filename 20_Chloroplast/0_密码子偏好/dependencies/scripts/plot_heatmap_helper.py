@@ -3,15 +3,16 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from Bio import Phylo
 import os
+from pathlib import Path
 
 def plot_final_heatmap():
     """
     主函數，讀取RSCU矩陣和系統發育樹，並繪製最終可調整細節的熱圖。
     """
     # --- 1. 定義輸入文件 ---
-    rscu_csv_file = "rscu_matrix.csv"
-    tree_file = "species_tree.nwk"
-    output_image_file = "final_heatmap_customized.png"
+    rscu_csv_file = str((Path.cwd() / "rscu_matrix.csv").resolve())
+    tree_file = str((Path.cwd() / "species_tree.nwk").resolve())
+    output_image_file = str((Path.cwd() / "final_heatmap_customized.png").resolve())
 
     # --- 2. 【新增】定義圖形調整參數 ---
     # 您可以在這裡修改這些值來自訂您的圖片

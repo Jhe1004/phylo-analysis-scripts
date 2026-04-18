@@ -7,15 +7,15 @@ from Bio.SeqRecord import SeqRecord
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
-INPUT_FILENAME = "input_alignment.fasta"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/output"
+INPUT_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/input/input_alignment.fasta"
 
-CODON1_FILENAME = "codon1_aln.fasta"
-CODON2_FILENAME = "codon2_aln.fasta"
-CODON3_FILENAME = "codon3_aln.fasta"
-COMBINED_FILENAME = "combined_aln.fasta"
-PARTITION_FILENAME = "partitions.txt"
+CODON1_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/output/codon1_aln.fasta"
+CODON2_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/output/codon2_aln.fasta"
+CODON3_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/output/codon3_aln.fasta"
+COMBINED_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/output/combined_aln.fasta"
+PARTITION_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/output/partitions.txt"
 DRY_RUN = False
 # ============================================================
 

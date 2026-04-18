@@ -4,12 +4,12 @@
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
-INPUT_TSV = "myproject.proteinortho.tsv"
-OUTPUT_CDS = "proteinortho_cds.tsv"
-OUTPUT_RNA = "proteinortho_rna.tsv"
-OUTPUT_IGS = "proteinortho_igs.tsv"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/2_split_tsv_by_type/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/2_split_tsv_by_type/output"
+INPUT_TSV = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/2_split_tsv_by_type/input/myproject.proteinortho.tsv"
+OUTPUT_CDS = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/2_split_tsv_by_type/output/proteinortho_cds.tsv"
+OUTPUT_RNA = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/2_split_tsv_by_type/output/proteinortho_rna.tsv"
+OUTPUT_IGS = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/2_split_tsv_by_type/output/proteinortho_igs.tsv"
 
 def get_fragment_type(fragment_id):
     """

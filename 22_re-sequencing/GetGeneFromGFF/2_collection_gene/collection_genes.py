@@ -7,8 +7,8 @@ from collections import defaultdict
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/GetGeneFromGFF/2_collection_gene/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/GetGeneFromGFF/2_collection_gene/output"
 FASTA_EXTENSION = ".fasta"
 
 

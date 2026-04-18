@@ -20,16 +20,16 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/9_daing/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/9_daing/output"
 
 CONDA_ENV_NAME = "trinity_env"
 TREEPL_EXECUTABLE_NAME = "treePL"
 TREEPL_LD_LIBRARY_PATH = "/usr/local/lib64"
 
-TREE_FILE = "coalescent_ml.treefile"
-ALIGNMENT_FILE = "result0.1.fas"
-OUTPUT_CONF_FILE = "dating.conf"
+TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/9_daing/input/coalescent_ml.treefile"
+ALIGNMENT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/9_daing/input/result0.1.fas"
+OUTPUT_CONF_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/9_daing/output/dating.conf"
 
 ROOT_AGE = None
 CALIBRATION_TEXT = """

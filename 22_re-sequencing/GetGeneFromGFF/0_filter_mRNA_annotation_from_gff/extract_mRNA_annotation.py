@@ -6,10 +6,10 @@ from __future__ import annotations
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
-INPUT_GFF_FILE = "ref.gff"
-OUTPUT_GFF_FILE = "filtered_mrna.gff"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/GetGeneFromGFF/0_filter_mRNA_annotation_from_gff/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/GetGeneFromGFF/0_filter_mRNA_annotation_from_gff/output"
+INPUT_GFF_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/GetGeneFromGFF/0_filter_mRNA_annotation_from_gff/input/ref.gff"
+OUTPUT_GFF_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/GetGeneFromGFF/0_filter_mRNA_annotation_from_gff/output/filtered_mrna.gff"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

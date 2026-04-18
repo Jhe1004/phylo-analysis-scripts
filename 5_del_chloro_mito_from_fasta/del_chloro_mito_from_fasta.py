@@ -19,11 +19,11 @@ except ImportError:
 
 
 # ======================= CONFIGURATION =======================
-OUTPUT_DIRECTORY = "output"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/5_del_chloro_mito_from_fasta/output"
 CONDA_ENV_NAME = "trinity_env"
 
-REFERENCE_GENBANK_DIRECTORY = "reference_gb"
-SEQUENCE_DIRECTORY = "sequences"
+REFERENCE_GENBANK_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/5_del_chloro_mito_from_fasta/reference_gb"
+SEQUENCE_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/5_del_chloro_mito_from_fasta/sequences"
 
 PEP_SUFFIX = "pep.fasta"
 CDS_SUFFIX = "cds.fasta"

@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import shutil
 import subprocess
 import re
@@ -102,8 +103,8 @@ def run_paml_analysis_parallel():
         num_processes = 4 # 如果無法獲取CPU核心數，默認為4
         
     paml_input_dir = "paml_input"
-    final_results_file = "paml_final_results.csv"
-    foreground_list_file = "foreground_species_list.txt"
+    final_results_file = str((Path.cwd() / "paml_final_results.csv").resolve())
+    foreground_list_file = str((Path.cwd() / "foreground_species_list.txt").resolve())
 
     print("="*50)
     print("PAML 分析腳本 (多進程版)：執行計算與生成結果表")

@@ -15,12 +15,12 @@ HELPER_DIR = SCRIPT_DIR / "dependencies" / "scripts"
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/2_基因正选择分析/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/2_基因正选择分析/output"
 
-GENBANK_SUBDIRECTORY = "gb_files"
-TREE_FILE = "species_tree.nwk"
-FOREGROUND_SPECIES_FILE = "foreground_species_list.txt"
+GENBANK_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/2_基因正选择分析/input/gb_files"
+TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/2_基因正选择分析/input/species_tree.nwk"
+FOREGROUND_SPECIES_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/2_基因正选择分析/input/foreground_species_list.txt"
 RUN_HEATMAP = True
 # ==============================
 

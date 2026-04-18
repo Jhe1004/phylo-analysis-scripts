@@ -5,9 +5,9 @@ import random
 from pathlib import Path
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
-INPUT_FASTA_FILE = "result.fasta"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/1_bootstrap_fasta/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/1_bootstrap_fasta/output"
+INPUT_FASTA_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/1_bootstrap_fasta/input/result.fasta"
 OUTPUT_PREFIX = "bootstrap_replicate"
 NUM_REPLICATES = 10
 

@@ -6,8 +6,8 @@ from pathlib import Path
 from Bio import SeqIO
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/1_统计各种数字/0_fasta序列N50统计/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/1_统计各种数字/0_fasta序列N50统计/output"
 INPUT_EXTENSIONS = [".fasta", ".fa", ".cds"]
 
 

@@ -8,10 +8,10 @@ import pandas as pd
 import seaborn as sns
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
-INPUT_CSV_FILE = "data.csv"
-OUTPUT_IMAGE_FILE = "distribution_plot.png"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/2_画各种图/0_频率分布直方图/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/2_画各种图/0_频率分布直方图/output"
+INPUT_CSV_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/2_画各种图/0_频率分布直方图/input/data.csv"
+OUTPUT_IMAGE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/2_画各种图/0_频率分布直方图/output/distribution_plot.png"
 CHART_TITLE = "频率分布直方图"
 X_LABEL = "数值"
 Y_LABEL = "频数"

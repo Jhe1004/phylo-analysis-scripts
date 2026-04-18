@@ -11,8 +11,8 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 
 
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/5_delmissing/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/5_delmissing/output"
 INPUT_EXTENSIONS = [".fasta", ".fas", ".fa"]
 MISSING_PROPORTION_THRESHOLD = 0.2
 PROCESS_COUNT = 8

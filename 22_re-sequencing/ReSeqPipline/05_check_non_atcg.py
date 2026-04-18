@@ -25,8 +25,8 @@ def ensure_dir(path: Path) -> None:
 # 参数配置区
 # =============================
 CONDA_ENV_NAME = "reseq"
-CONSENSUS_DIRECTORY = "output/consensus_fasta_output"
-REPORT_FILE = "output/quality_report.txt"
+CONSENSUS_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/output/consensus_fasta_output"
+REPORT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/output/quality_report.txt"
 
 
 def setup_logger(script_name: str) -> logging.Logger:

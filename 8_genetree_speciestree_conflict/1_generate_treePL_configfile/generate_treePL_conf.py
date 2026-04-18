@@ -20,12 +20,12 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # ==============================
 # 配置区：请直接修改这里
 # ==============================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/1_generate_treePL_configfile/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/1_generate_treePL_configfile/output"
 
-TREE_SUBDIRECTORY = "trees"
-ALIGNMENT_SUBDIRECTORY = "alignments"
-CALIBRATED_TREE_FILE = "dna.tree"
+TREE_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/1_generate_treePL_configfile/input/trees"
+ALIGNMENT_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/1_generate_treePL_configfile/input/alignments"
+CALIBRATED_TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/1_generate_treePL_configfile/input/dna.tree"
 
 TREE_FILE_EXTENSION = ".new"
 ALIGNMENT_EXTENSIONS = [".fasta", ".fas", ".fa", ".phy", ".phylip", ".nex", ".nexus"]

@@ -16,12 +16,12 @@ except ImportError:
 
 
 # ======================= CONFIGURATION =======================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/3_TransDecoder-master/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/3_TransDecoder-master/output"
 CONDA_ENV_NAME = "trinity_env"
 
 INPUT_EXTENSIONS = [".fasta", ".fa"]
-WORK_SUBDIRECTORY = "work"
+WORK_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/3_TransDecoder-master/output/work"
 
 LONGORFS_EXECUTABLE_NAME = "TransDecoder.LongOrfs"
 PREDICT_EXECUTABLE_NAME = "TransDecoder.Predict"

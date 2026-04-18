@@ -19,11 +19,11 @@ from Bio.SeqRecord import SeqRecord
 # =========================
 # 用户配置区
 # =========================
-INPUT_DIRECTORY = "input"
-OUTPUT_DIRECTORY = "output"
+INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/8_叶绿体用cds建树/input"
+OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/8_叶绿体用cds建树/output"
 CONDA_ENV_NAME = "trinity_env"
 
-GENBANK_SUBDIRECTORY = "gb_files"
+GENBANK_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/8_叶绿体用cds建树/input/gb_files"
 REFERENCE_FILENAME = ""
 E_VALUE_THRESHOLD = 1e-10
 MIN_OUTPUT_SEQUENCES = 2
