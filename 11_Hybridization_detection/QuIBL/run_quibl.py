@@ -19,10 +19,12 @@ GRAD_ASCENT_SCALAR = 0.5
 MULTIPROCESS = True
 MAX_CORES = 20
 
-OUTPUT_CSV_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/QuIBL/output/quibl_results.csv"
-RUNTIME_CONFIG_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/QuIBL/output/quibl_runtime.ini"
 PYTHON_EXECUTABLE_NAME = "python"
 # ============================================================
+
+
+OUTPUT_CSV_FILE = "quibl_results.csv"
+RUNTIME_CONFIG_FILE = "quibl_runtime.ini"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

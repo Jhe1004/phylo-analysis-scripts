@@ -6,10 +6,12 @@ INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridi
 OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/3_phylonet_result_to_dendroscope/output"
 
 INPUT_EXTENSIONS = [".txt"]
-TREE_OUTPUT_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/3_phylonet_result_to_dendroscope/output/tree"
-PROBABILITY_OUTPUT_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/3_phylonet_result_to_dendroscope/output/probability"
-PROBABILITY_SUMMARY_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/3_phylonet_result_to_dendroscope/input/probability/result.txt"
 # ============================================================
+
+
+TREE_OUTPUT_SUBDIRECTORY = "tree"
+PROBABILITY_OUTPUT_SUBDIRECTORY = "probability"
+PROBABILITY_SUMMARY_FILE = "result.txt"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

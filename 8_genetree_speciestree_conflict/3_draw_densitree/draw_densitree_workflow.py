@@ -36,9 +36,6 @@ RUN_SUPPORT_COUNT = True
 RUN_SUPPORT_PIE_PLOT = True
 
 DENSITREE_OUTPUT_FILE = "densi_tree_plot.svg"
-SUPPORT_CSV_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/3_draw_densitree/output/species_tree_node_support.csv"
-SUPPORT_PIE_OUTPUT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/3_draw_densitree/output/species_tree_support_pies.svg"
-
 PROCESS_COUNT = 4
 IMAGE_WIDTH = 1000
 IMAGE_HEIGHT = 1200
@@ -47,17 +44,21 @@ PIE_SCALE = 0.30
 # ==============================
 
 
+SUPPORT_CSV_FILE = "species_tree_node_support.csv"
+SUPPORT_PIE_OUTPUT_FILE = "species_tree_support_pies.svg"
+
+
 def build_path(relative_directory: str, file_name: str) -> Path:
-    return (SCRIPT_DIR / relative_directory / file_name).resolve()
+    return (Path(relative_directory) / file_name).resolve()
 
 
 def main() -> None:
-    input_dir = (SCRIPT_DIR / INPUT_DIRECTORY).resolve()
-    output_dir = (SCRIPT_DIR / OUTPUT_DIRECTORY).resolve()
+    input_dir = Path(INPUT_DIRECTORY).resolve()
+    output_dir = Path(OUTPUT_DIRECTORY).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    species_tree_path = build_path(INPUT_DIRECTORY, SPECIES_TREE_FILE)
-    gene_trees_path = build_path(INPUT_DIRECTORY, GENE_TREES_FILE)
+    species_tree_path = build_path(INPUT_DIRECTORY, Path(SPECIES_TREE_FILE).name)
+    gene_trees_path = build_path(INPUT_DIRECTORY, Path(GENE_TREES_FILE).name)
     tip_order_path = build_path(INPUT_DIRECTORY, TIP_ORDER_FILE) if TIP_ORDER_FILE else None
     name_mapping_path = build_path(INPUT_DIRECTORY, NAME_MAPPING_FILE) if NAME_MAPPING_FILE else None
     support_csv_path = build_path(OUTPUT_DIRECTORY, SUPPORT_CSV_FILE)

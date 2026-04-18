@@ -7,9 +7,10 @@ from pathlib import Path
 INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/2_split_tsv_by_type/input"
 OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/2_split_tsv_by_type/output"
 INPUT_TSV = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/2_split_tsv_by_type/input/myproject.proteinortho.tsv"
-OUTPUT_CDS = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/2_split_tsv_by_type/output/proteinortho_cds.tsv"
-OUTPUT_RNA = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/2_split_tsv_by_type/output/proteinortho_rna.tsv"
-OUTPUT_IGS = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/9_复杂基因结构建树/2_split_tsv_by_type/output/proteinortho_igs.tsv"
+
+OUTPUT_CDS = "proteinortho_cds.tsv"
+OUTPUT_RNA = "proteinortho_rna.tsv"
+OUTPUT_IGS = "proteinortho_igs.tsv"
 
 def get_fragment_type(fragment_id):
     """
@@ -38,8 +39,8 @@ def get_fragment_type(fragment_id):
 # --- 主函数 ---
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-INPUT_PATH = SCRIPT_DIR / INPUT_DIRECTORY / INPUT_TSV
-OUTPUT_DIR = SCRIPT_DIR / OUTPUT_DIRECTORY
+INPUT_PATH = Path(INPUT_TSV)
+OUTPUT_DIR = Path(OUTPUT_DIRECTORY)
 
 
 def split_tsv():
@@ -108,9 +109,9 @@ def split_tsv():
             f_out.writelines(lines_data["igs"])
 
         print("\n处理完成。文件已成功拆分：")
-        print(f" - {OUTPUT_CDS} ({len(lines_data['cds'])} 个同源组)")
-        print(f" - {OUTPUT_RNA} ({len(lines_data['rna'])} 个同源组)")
-        print(f" - {OUTPUT_IGS} ({len(lines_data['igs'])} 个同源组)")
+        print(f" - {OUTPUT_DIR / OUTPUT_CDS} ({len(lines_data['cds'])} 个同源组)")
+        print(f" - {OUTPUT_DIR / OUTPUT_RNA} ({len(lines_data['rna'])} 个同源组)")
+        print(f" - {OUTPUT_DIR / OUTPUT_IGS} ({len(lines_data['igs'])} 个同源组)")
 
         if lines_data["unknown"]:
             print(f"\n警告: 有 {len(lines_data['unknown'])} 行无法确定类型 (可能所有物种均为'*')。")

@@ -22,8 +22,10 @@ def ensure_exists(path: Path, description: str) -> None:
 # 参数配置区
 # =============================
 CONDA_ENV_NAME = "reseq"
-CONSENSUS_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/output/consensus_fasta_output"
-OUTPUT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/output/combined_sequences.fasta"
+CONSENSUS_DIRECTORY = "output/consensus_fasta_output"
+
+
+OUTPUT_FILE = "combined_sequences.fasta"
 
 
 def setup_logger(script_name: str) -> logging.Logger:
@@ -81,7 +83,7 @@ def parse_fasta(filepath: str) -> OrderedDict[str, str] | None:
 
 def main() -> None:
     consensus_dir = (SCRIPT_DIR / CONSENSUS_DIRECTORY).resolve()
-    output_file = (SCRIPT_DIR / OUTPUT_FILE).resolve()
+    output_file = (consensus_dir.parent / OUTPUT_FILE).resolve()
     ensure_exists(consensus_dir, "consensus FASTA 目录")
 
     fasta_files = sorted(glob.glob(os.path.join(str(consensus_dir), "*.fasta")))

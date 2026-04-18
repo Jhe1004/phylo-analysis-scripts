@@ -19,7 +19,6 @@ CONDA_ENV_NAME = "trinity_env"
 
 INPUT_FILES = []
 INPUT_EXTENSIONS = [".fasta", ".fas", ".nex"]
-PARTITION_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/5_mrbayes/output/joint_fragments.nex"
 AUTO_CONCAT_SMALL_MATRICES = False
 
 MODEL_NST = "mixed"
@@ -34,9 +33,12 @@ MAX_PARALLEL_JOBS = 2
 
 MRBAYES_EXECUTABLE_NAME = "mb"
 MPIRUN_EXECUTABLE_NAME = "mpirun"
-REPORT_NAME = "mrbayes_summary_report.md"
 DRY_RUN = False
 # ============================================================
+
+
+PARTITION_FILE = "joint_fragments.nex"
+REPORT_NAME = "mrbayes_summary_report.md"
 
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

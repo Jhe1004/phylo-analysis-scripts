@@ -31,10 +31,12 @@ MISSING_SITE_PROPORTION = 0.2
 PROCESS_COUNT = max(1, multiprocessing.cpu_count() // 2)
 
 NORMAL_SITE_LIST = ["A", "a", "T", "t", "C", "c", "G", "g"]
-TEMP_DIRECTORY_NAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/6_2_del_indel/output/temp"
 SPLIT_TAG = ".split."
 DRY_RUN = False
 # ============================================================
+
+
+TEMP_DIRECTORY_NAME = "temp"
 
 
 def validate_config(input_dir):

@@ -8,7 +8,9 @@ from pathlib import Path
 INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/5_newick树上的bootstrap转为后验概率/input"
 OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/5_newick树上的bootstrap转为后验概率/output"
 INPUT_TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/5_newick树上的bootstrap转为后验概率/input/input.newick"
-OUTPUT_TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/5_newick树上的bootstrap转为后验概率/output/support_as_probability.newick"
+
+
+OUTPUT_TREE_FILE = "support_as_probability.newick"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

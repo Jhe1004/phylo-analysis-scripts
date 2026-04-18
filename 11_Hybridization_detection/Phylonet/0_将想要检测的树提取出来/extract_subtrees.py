@@ -9,11 +9,12 @@ OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybrid
 
 INPUT_TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/0_将想要检测的树提取出来/input/result.tree"
 SUBTREE_SPECIES_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/0_将想要检测的树提取出来/input/list.txt"
-OUTPUT_TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/0_将想要检测的树提取出来/output/out.trees"
-
 OUTGROUP_SPECIES = "Gossypium_hirsutum_SRR8156069.fasta.transdecoder.pep"
 TREE_FORMAT = 0
 # ============================================================
+
+
+OUTPUT_TREE_FILE = "out.trees"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

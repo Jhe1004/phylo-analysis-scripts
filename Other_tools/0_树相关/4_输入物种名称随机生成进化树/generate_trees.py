@@ -12,12 +12,11 @@ OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_too
 INPUT_TAXA_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/4_输入物种名称随机生成进化树/input/taxa.txt"
 OUTGROUP_TAXON_NAME = "Clematis_songorica_Altay"
 NUM_TREES_TO_GENERATE = 10
-OUTPUT_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/4_输入物种名称随机生成进化树/output/random_trees"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 INPUT_DIR = SCRIPT_DIR / INPUT_DIRECTORY
-OUTPUT_DIR = SCRIPT_DIR / OUTPUT_DIRECTORY / OUTPUT_SUBDIRECTORY
+OUTPUT_DIR = Path(OUTPUT_DIRECTORY) / "random_trees"
 
 
 def main() -> None:

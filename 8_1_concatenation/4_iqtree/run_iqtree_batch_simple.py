@@ -18,8 +18,6 @@ CONDA_ENV_NAME = "trinity_env"
 
 INPUT_FILES = []
 INPUT_EXTENSIONS = [".fasta", ".fas", ".nex"]
-PARTITION_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/4_iqtree/output/joint_fragments.partition"
-CONCATENATED_ALIGNMENT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/4_iqtree/output/joint_fragments.fasta"
 AUTO_CONCAT_SMALL_MATRICES = False
 
 IQTREE_EXECUTABLE_NAME = "iqtree2"
@@ -33,6 +31,10 @@ PROCESS_COUNT = max(1, multiprocessing.cpu_count() // 2)
 EXTRA_ARGS = []
 DRY_RUN = False
 # ============================================================
+
+
+PARTITION_FILE = "joint_fragments.partition"
+CONCATENATED_ALIGNMENT_FILE = "joint_fragments.fasta"
 
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

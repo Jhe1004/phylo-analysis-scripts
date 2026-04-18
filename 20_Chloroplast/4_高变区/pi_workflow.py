@@ -21,11 +21,13 @@ OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloro
 ALIGNMENT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/4_高变区/input/alignment.fasta"
 WINDOW_SIZE = 600
 STEP_SIZE = 200
-OUTPUT_DATA_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/4_高变区/output/pi_window.tsv"
-OUTPUT_PLOT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/20_Chloroplast/4_高变区/output/pi_distribution.png"
 PLOT_TITLE = "Sliding Window Analysis of Nucleotide Diversity (π)"
 PLOT_COLOR = "#1f77b4"
 # ==============================
+
+
+OUTPUT_DATA_FILE = "pi_window.tsv"
+OUTPUT_PLOT_FILE = "pi_distribution.png"
 
 
 def main() -> None:

@@ -25,13 +25,7 @@ INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshri
 OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshrink/output"
 CONDA_ENV_NAME = "trinity_env"
 
-RAXML_OUTPUT_SUBDIR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshrink/output/raxml_trees"
-TREESHRINK_OUTPUT_SUBDIR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshrink/output/treeshrink"
-FINAL_ALIGNMENT_SUBDIR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshrink/output/shrunk_alignments"
-
 ALIGNMENT_PATTERN = "ortho*_cds_maffted.fas"
-COMBINED_TREE_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshrink/output/treeshrink/combined_trees.tre"
-TAXA_TO_REMOVE_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/7_Treeshrink/output/treeshrink/output.txt"
 
 RAXML_EXECUTABLE_NAME = "raxmlHPC-PTHREADS"
 RAXML_PROCESS_COUNT = max(1, multiprocessing.cpu_count() // 4)
@@ -49,6 +43,13 @@ FILTER_PROCESS_COUNT = max(1, multiprocessing.cpu_count() // 2)
 VERIFY_RANDOM_CHECKS = 5
 DRY_RUN = False
 # ============================================================
+
+
+RAXML_OUTPUT_DIRNAME = "raxml_trees"
+TREESHRINK_OUTPUT_DIRNAME = "treeshrink"
+FINAL_ALIGNMENT_DIRNAME = "shrunk_alignments"
+COMBINED_TREE_FILENAME = "combined_trees.tre"
+TAXA_TO_REMOVE_FILENAME = "output.txt"
 
 
 def load_helper_module(module_name, module_path):
@@ -268,12 +269,12 @@ def filter_alignments(alignment_dir, taxa_file, output_dir, logger):
 
 
 def main():
-    input_dir = os.path.join(SCRIPT_DIR, INPUT_DIRECTORY)
+    input_dir = INPUT_DIRECTORY
     alignment_input_dir = input_dir
-    output_dir = os.path.join(SCRIPT_DIR, OUTPUT_DIRECTORY)
-    raxml_output_dir = os.path.join(output_dir, RAXML_OUTPUT_SUBDIR)
-    treeshrink_output_dir = os.path.join(output_dir, TREESHRINK_OUTPUT_SUBDIR)
-    final_alignment_dir = os.path.join(output_dir, FINAL_ALIGNMENT_SUBDIR)
+    output_dir = OUTPUT_DIRECTORY
+    raxml_output_dir = os.path.join(output_dir, RAXML_OUTPUT_DIRNAME)
+    treeshrink_output_dir = os.path.join(output_dir, TREESHRINK_OUTPUT_DIRNAME)
+    final_alignment_dir = os.path.join(output_dir, FINAL_ALIGNMENT_DIRNAME)
     combined_tree_file = os.path.join(treeshrink_output_dir, COMBINED_TREE_FILENAME)
     taxa_to_remove_file = os.path.join(treeshrink_output_dir, TAXA_TO_REMOVE_FILENAME)
     helper_path = os.path.join(SCRIPT_DIR, "dependencies", "scripts", "build_trees_helper.py")

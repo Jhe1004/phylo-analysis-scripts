@@ -25,10 +25,12 @@ OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetre
 CONDA_ENV_NAME = "trinity_env"
 TREEPL_EXECUTABLE_NAME = "treePL"
 
-CONFIG_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_genetree_speciestree_conflict/2_treePL/output/workspace/configs"
 PROCESS_COUNT = max(1, min(6, os.cpu_count() or 1))
 SKIP_COMPLETED = True
 # ==============================
+
+
+CONFIG_SUBDIRECTORY = "configs"
 
 
 def resolve_path(relative_path: str) -> Path:

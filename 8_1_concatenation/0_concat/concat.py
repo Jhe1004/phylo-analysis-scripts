@@ -7,9 +7,11 @@ INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concat
 OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/0_concat/output"
 
 INPUT_EXTENSION = ".fas"
-OUTPUT_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/0_concat/output/result.fasta"
 DRY_RUN = False
 # ============================================================
+
+
+OUTPUT_FILENAME = "result.fasta"
 
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

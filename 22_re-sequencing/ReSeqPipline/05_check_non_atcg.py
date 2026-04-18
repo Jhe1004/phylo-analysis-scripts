@@ -25,8 +25,7 @@ def ensure_dir(path: Path) -> None:
 # 参数配置区
 # =============================
 CONDA_ENV_NAME = "reseq"
-CONSENSUS_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/output/consensus_fasta_output"
-REPORT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/22_re-sequencing/ReSeqPipline/output/quality_report.txt"
+CONSENSUS_DIRECTORY = "output/consensus_fasta_output"
 
 
 def setup_logger(script_name: str) -> logging.Logger:
@@ -57,6 +56,9 @@ def setup_logger(script_name: str) -> logging.Logger:
 LOGGER = setup_logger("05_check_non_atcg")
 
 
+REPORT_FILE = "quality_report.txt"
+
+
 def is_fasta(filename: str) -> bool:
     return filename.lower().endswith((".fasta", ".fa", ".fna", ".fas"))
 
@@ -84,7 +86,7 @@ def count_non_atcg(filepath: str) -> tuple[int, int] | None:
 
 def main() -> None:
     consensus_dir = (SCRIPT_DIR / CONSENSUS_DIRECTORY).resolve()
-    report_file = (SCRIPT_DIR / REPORT_FILE).resolve()
+    report_file = (consensus_dir.parent / REPORT_FILE).resolve()
 
     ensure_exists(consensus_dir, "consensus FASTA 目录")
     ensure_dir(report_file.parent)

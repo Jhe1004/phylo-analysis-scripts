@@ -29,7 +29,6 @@ TREEPL_LD_LIBRARY_PATH = "/usr/local/lib64"
 
 TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/9_daing/input/coalescent_ml.treefile"
 ALIGNMENT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/9_daing/input/result0.1.fas"
-OUTPUT_CONF_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/9_daing/output/dating.conf"
 
 ROOT_AGE = None
 CALIBRATION_TEXT = """
@@ -64,6 +63,9 @@ OPTCVAD = 5
 MOREDETAIL = True
 MOREDETAILAD = True
 # ==============================
+
+
+OUTPUT_CONF_FILE = "dating.conf"
 
 
 def resolve_path(relative_path: str) -> Path:

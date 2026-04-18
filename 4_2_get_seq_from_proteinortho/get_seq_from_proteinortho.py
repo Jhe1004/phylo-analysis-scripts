@@ -22,18 +22,20 @@ CONDA_ENV_NAME = "trinity_env"
 PROTEINORTHO_RESULT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/4_2_get_seq_from_proteinortho/input/proteinortho_result.proteinortho.tsv"
 HEATMAP_SPECIES_ORDER_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/4_2_get_seq_from_proteinortho/input/name_list.txt"
 
-SUMMARY_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/4_2_get_seq_from_proteinortho/output03/selected_orthologs.tsv"
 MAX_ALLOW_MISSING_SPECIES_PROPORTION = 0.3
 MAX_ALLOW_LOW_COPY_NUM = 2
 MIN_ALG_CONN = 0.1
 
 GENERATE_HEATMAP = False
 RANDOM_SEED = 42
-HEATMAP_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/4_2_get_seq_from_proteinortho/output03/heatmap.png"
 
 NUCLEOTIDE_OUTPUT_SUFFIX = "_cds.fasta"
 PROTEIN_OUTPUT_SUFFIX = "_pep.fasta"
 # ============================================================
+
+
+SUMMARY_FILENAME = "selected_orthologs.tsv"
+HEATMAP_FILENAME = "heatmap.png"
 
 
 def resolve_path(*parts):

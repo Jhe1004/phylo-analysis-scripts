@@ -11,7 +11,9 @@ INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tool
 OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/0_重命名fasta中的所有样品名称/output"
 FASTA_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/0_重命名fasta中的所有样品名称/input/input.fasta"
 MAPPING_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/0_重命名fasta中的所有样品名称/input/mapping.csv"
-OUTPUT_FASTA_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/0_重命名fasta中的所有样品名称/output/output_renamed_linear.fasta"
+
+
+OUTPUT_FASTA_FILE = "output_renamed_linear.fasta"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

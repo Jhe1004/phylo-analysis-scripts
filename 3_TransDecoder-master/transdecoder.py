@@ -21,7 +21,6 @@ OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/3_TransDe
 CONDA_ENV_NAME = "trinity_env"
 
 INPUT_EXTENSIONS = [".fasta", ".fa"]
-WORK_SUBDIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/3_TransDecoder-master/output/work"
 
 LONGORFS_EXECUTABLE_NAME = "TransDecoder.LongOrfs"
 PREDICT_EXECUTABLE_NAME = "TransDecoder.Predict"
@@ -35,6 +34,9 @@ PREDICT_ADDITIONAL_PARAMETERS = []
 
 DRY_RUN = False
 # ============================================================
+
+
+WORK_SUBDIRECTORY = "work"
 
 
 def validate_config(input_dir):
@@ -104,8 +106,8 @@ def build_sample_workdir(work_root, input_file_name):
 
 
 def main():
-    input_dir = os.path.join(SCRIPT_DIR, INPUT_DIRECTORY)
-    output_dir = os.path.join(SCRIPT_DIR, OUTPUT_DIRECTORY)
+    input_dir = INPUT_DIRECTORY
+    output_dir = OUTPUT_DIRECTORY
     work_root = os.path.join(output_dir, WORK_SUBDIRECTORY)
     os.makedirs(output_dir, exist_ok=True)
     os.makedirs(work_root, exist_ok=True)

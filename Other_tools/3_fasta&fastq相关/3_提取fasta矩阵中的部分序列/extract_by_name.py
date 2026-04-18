@@ -8,7 +8,9 @@ INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tool
 OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/3_提取fasta矩阵中的部分序列/output"
 FASTA_INPUT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/3_提取fasta矩阵中的部分序列/input/all_sequences.fasta"
 NAMES_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/3_提取fasta矩阵中的部分序列/input/names_to_extract.txt"
-FASTA_OUTPUT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/3_fasta&fastq相关/3_提取fasta矩阵中的部分序列/output/extracted_sequences.fasta"
+
+
+FASTA_OUTPUT_FILE = "extracted_sequences.fasta"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

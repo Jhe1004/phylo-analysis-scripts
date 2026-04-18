@@ -15,8 +15,10 @@ PROCESS_COUNT = 8
 
 PHYLONET_JAR = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/2_Run_phylonet/PhyloNet_3.8.0.jar"
 JAVA_EXECUTABLE_NAME = "java"
-LOG_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/Phylonet/2_Run_phylonet/output/run_phylonet.log"
 # ============================================================
+
+
+LOG_FILE = "run_phylonet.log"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

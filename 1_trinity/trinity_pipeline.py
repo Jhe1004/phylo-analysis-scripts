@@ -39,12 +39,14 @@ INPUT_FORWARD_SUFFIXES = [
     "_1.fasta.gz",
 ]
 
-LONGEST_INPUT_FILE_PATTERN = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/1_trinity/output/*/Trinity.fasta"
 LONGEST_OUTPUT_EXTENSION = ".longest.fas"
 GENE_ID_REGEX = r"^(.*)_i\d+$"
 
 DRY_RUN = False
 # ============================================================
+
+
+LONGEST_INPUT_FILE_PATTERN = "*/Trinity.fasta"
 
 
 def load_helper_module(module_name, module_path):

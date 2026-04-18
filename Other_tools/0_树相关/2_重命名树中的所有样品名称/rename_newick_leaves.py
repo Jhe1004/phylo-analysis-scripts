@@ -11,7 +11,9 @@ INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tool
 OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/2_重命名树中的所有样品名称/output"
 TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/2_重命名树中的所有样品名称/input/input_tree.newick"
 MAPPING_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/2_重命名树中的所有样品名称/input/mapping.csv"
-OUTPUT_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/0_树相关/2_重命名树中的所有样品名称/output/renamed_tree.newick"
+
+
+OUTPUT_FILE = "renamed_tree.newick"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

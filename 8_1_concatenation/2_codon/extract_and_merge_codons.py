@@ -10,23 +10,24 @@ from Bio.SeqRecord import SeqRecord
 INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/input"
 OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/output"
 INPUT_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/input/input_alignment.fasta"
-
-CODON1_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/output/codon1_aln.fasta"
-CODON2_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/output/codon2_aln.fasta"
-CODON3_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/output/codon3_aln.fasta"
-COMBINED_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/output/combined_aln.fasta"
-PARTITION_FILENAME = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/8_1_concatenation/2_codon/output/partitions.txt"
 DRY_RUN = False
 # ============================================================
+
+
+CODON1_FILENAME = "codon1_aln.fasta"
+CODON2_FILENAME = "codon2_aln.fasta"
+CODON3_FILENAME = "codon3_aln.fasta"
+COMBINED_FILENAME = "combined_aln.fasta"
+PARTITION_FILENAME = "partitions.txt"
 
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def main():
-    input_dir = os.path.join(SCRIPT_DIR, INPUT_DIRECTORY)
-    output_dir = os.path.join(SCRIPT_DIR, OUTPUT_DIRECTORY)
-    input_file = os.path.join(input_dir, INPUT_FILENAME)
+    input_dir = INPUT_DIRECTORY
+    output_dir = OUTPUT_DIRECTORY
+    input_file = INPUT_FILENAME
     os.makedirs(output_dir, exist_ok=True)
 
     if not os.path.isfile(input_file):

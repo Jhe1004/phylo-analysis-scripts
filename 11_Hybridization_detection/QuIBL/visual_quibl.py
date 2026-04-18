@@ -12,11 +12,13 @@ OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybrid
 
 TREE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/QuIBL/input/concat.newick"
 QUIBL_RESULT_CSV = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/QuIBL/input/quibl_results.csv"
-LOG_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/QuIBL/output/result_log.txt"
-HEATMAP_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/11_Hybridization_detection/QuIBL/output/heatmap_with_tree.png"
 BIC_DIFFERENCE_THRESHOLD = 20.0
 COLORMAP = "hot"
 # ============================================================
+
+
+LOG_FILE = "result_log.txt"
+HEATMAP_FILE = "heatmap_with_tree.png"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

@@ -11,7 +11,6 @@ import seaborn as sns
 INPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/2_画各种图/1_小提琴图/input"
 OUTPUT_DIRECTORY = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/2_画各种图/1_小提琴图/output"
 INPUT_CSV_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/2_画各种图/1_小提琴图/input/input.csv"
-OUTPUT_IMAGE_FILE = "/home/hejian2/My_work/disk6/phylo-analysis-scripts/Other_tools/2_画各种图/1_小提琴图/output/violin_plot_with_points.png"
 PLOT_TITLE = "数据分布小提琴图"
 Y_AXIS_LABEL = "数值"
 PLOT_COLOR = "cornflowerblue"
@@ -22,6 +21,9 @@ POINT_ALPHA = 0.6
 SET_Y_AXIS_RANGE = True
 Y_AXIS_MIN = 0.0
 Y_AXIS_MAX = 1.0
+
+
+OUTPUT_IMAGE_FILE = "violin_plot_with_points.png"
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
